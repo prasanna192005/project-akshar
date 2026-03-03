@@ -78,6 +78,21 @@ Reyna in Valorant is a "feast or famine" agent. We wanted her to feel the same.
 - **The Thinking**: Her **Devour** shouldn't be a free win; it should be a "Skill-Check."
 - **The Mechanic**: Her ability only triggers if her real-time WPM is higher than everyone else's. It's a "win-more" mechanic that rewards dominant players, staying true to her character's lore.
 
+### 2. The Math: Ability Charge Calculation
+The rate at which your ability charges is not fixed. It is a live calculation that rewards peak performance.
+
+The formula used in `lib/gameEngine.ts` is:
+```typescript
+ChargeRate = (CurrentWPM / 60) * (CurrentAccuracy / 100) * AgentModifier
+Increment = (ChargeRate / BaseFillTime) * DeltaTime
+```
+
+**Variables Explained:**
+- **CurrentWPM**: Your speed over the last few seconds. 60 WPM is the baseline.
+- **CurrentAccuracy**: Every typo reduces your charge rate multiplier. 100% accuracy provides a 1.0x bonus.
+- **AgentModifier**: Each agent has a balance-specific rate. (e.g., Zephyr = 1.4x, Killjoy = 0.7x).
+- **BaseFillTime**: Set to **8 seconds**. This means if you type a steady 60 WPM at 100% accuracy, your ability will be ready in exactly 8 seconds.
+
 ---
 
 ## 🏗️ Technical Architecture
