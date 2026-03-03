@@ -7,6 +7,7 @@ import { v4 as uuidv4 } from "uuid";
 import { PromptCategory } from "@/lib/prompts";
 import { ensureAuth } from "@/lib/firebase";
 import { useEffect } from "react";
+import Link from "next/link";
 
 export default function Home() {
   const router = useRouter();
@@ -75,6 +76,19 @@ export default function Home() {
     <main className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
       {/* Background Glow */}
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-600/10 blur-[120px] rounded-full -z-10" />
+
+      {/* Top Navigation */}
+      <div className="absolute top-8 right-8 z-50">
+        <Link
+          href="/agents"
+          className="px-6 py-2 bg-white/5 border border-white/10 hover:border-[#FF4655] hover:text-[#FF4655] transition-all text-[10px] font-black uppercase tracking-[0.2em] rounded-sm group flex items-center gap-3 backdrop-blur-sm"
+        >
+          Agent Intel
+          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform">
+            <path d="M5 12h14M12 5l7 7-7 7" />
+          </svg>
+        </Link>
+      </div>
 
       <div className="w-full max-w-md text-center space-y-8 animate-in fade-in zoom-in duration-700">
         <div>
