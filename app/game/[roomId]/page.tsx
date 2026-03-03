@@ -40,8 +40,9 @@ export default function Game() {
         progress,
         isComplete,
         words,
-        lastInputAt
-    } = useTyping(room?.prompt || "", status === 'racing', room?.raceStartAt);
+        lastInputAt,
+        skipWords
+    } = useTyping(room?.prompt || "", status === 'racing', room?.raceStartAt, player?.effects?.inputLocked);
 
     const opponents = players.filter(p => p.id !== playerId);
     const { charge, onCooldown, cooldownRemaining, activateAbility } = useAbility(
@@ -52,7 +53,8 @@ export default function Game() {
         playerId || "",
         opponents,
         lastInputAt,
-        room?.config
+        room?.config,
+        skipWords
     );
 
     // Handle Tab key for abilities
@@ -99,6 +101,8 @@ export default function Game() {
         if (player.effects.flashed) setTimeout(() => clearEffect('flashed'), 2500);
         if (player.effects.blurred) setTimeout(() => clearEffect('blurred'), 5000);
         if (player.effects.inputLocked) setTimeout(() => clearEffect('inputLocked'), 2000);
+        if (player.effects.scrambledWords?.length > 0) setTimeout(() => clearEffect('scrambledWords'), 6000);
+        if (player.effects.paranoia) setTimeout(() => clearEffect('paranoia'), 4000);
     }, [player?.effects, clearEffect, player]);
 
     // Timer and Status transition logic
@@ -212,6 +216,9 @@ export default function Game() {
                     accentColor={agent?.color || '#FF4655'}
                     isActive={status === 'racing'}
                     isBlurred={player?.effects?.blurred}
+                    isScrambled={(player?.effects?.scrambledWords?.length ?? 0) > 0}
+                    isParanoid={player?.effects?.paranoia}
+                    agentId={player?.agent || undefined}
                 />
 
                 {/* Ability Section */}

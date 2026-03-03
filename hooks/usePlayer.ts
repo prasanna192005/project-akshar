@@ -22,7 +22,8 @@ export const usePlayer = (roomId: string, playerId: string) => {
                         scrambledWords: [],
                         frozen: false,
                         inputLocked: false,
-                        progressHidden: false
+                        progressHidden: false,
+                        paranoia: false
                     }
                 });
             }

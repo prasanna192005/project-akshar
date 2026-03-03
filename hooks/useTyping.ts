@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
 import { calculateWPM, calculateAccuracy } from "../lib/gameEngine";
 
-export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?: number | null) => {
+export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?: number | null, blockInput?: boolean) => {
     const words = useMemo(() => prompt.trim().split(/\s+/), [prompt]);
     const [currentWordIndex, setCurrentWordIndex] = useState(0);
     const [currentInput, setCurrentInput] = useState("");
@@ -35,11 +35,14 @@ export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?:
     }, [isActive, startTime, startTimeOverride]);
 
     const handleInput = useCallback((value: string) => {
-        if (!isActive) return;
-        if (isComplete) return;
+        if (!isActive || isComplete || blockInput) return;
 
         setLastInputAt(Date.now());
         const targetWord = words[currentWordIndex];
+        const isBackspace = value.length < currentInput.length;
+
+        // Prevent leading space
+        if (value === " ") return;
 
         // Check if space was pressed to advance word
         if (value.endsWith(" ")) {
@@ -47,7 +50,8 @@ export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?:
 
             if (inputWord === targetWord) {
                 // Correct word - advance
-                setCorrectChars(prev => prev + targetWord.length + 1); // +1 for space
+                // For the last word, no space is needed, but if they type one it's okay
+                setCorrectChars(prev => prev + targetWord.length + 1);
 
                 if (currentWordIndex === words.length - 1) {
                     setIsComplete(true);
@@ -58,15 +62,23 @@ export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?:
                 }
             } else {
                 // Space pressed but word incorrect
+                // We IGNORE the space so their input doesn't get messed up
+                // and they don't get "stuck" by trailing spaces.
                 setErrors(prev => prev + 1);
-                setCurrentInput(value); // Keep word with space for feedback
             }
             return;
         }
 
         // Normal character input
         setCurrentInput(value);
-        setTotalTypedChars(prev => prev + 1);
+
+        if (!isBackspace) {
+            setTotalTypedChars(prev => prev + 1);
+            // Instant error feedback
+            if (value !== targetWord.substring(0, value.length)) {
+                setErrors(prev => prev + 1);
+            }
+        }
 
         // Auto-complete last word if fully correct (no space needed)
         if (currentWordIndex === words.length - 1 && value === targetWord) {
@@ -74,12 +86,7 @@ export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?:
             setIsComplete(true);
             return;
         }
-
-        // Error detection for feedback
-        if (value !== targetWord.substring(0, value.length)) {
-            setErrors(prev => prev + 1);
-        }
-    }, [isActive, isComplete, words, currentWordIndex]);
+    }, [isActive, isComplete, words, currentWordIndex, currentInput, blockInput]);
 
     const wpm = useMemo(() => {
         if (!startTime) return 0;
@@ -95,6 +102,38 @@ export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?:
         return Math.round((currentWordIndex / words.length) * 100);
     }, [currentWordIndex, words.length]);
 
+    const skipWords = useCallback((count: number) => {
+        if (!isActive || isComplete) return;
+
+        const nextIndex = Math.min(currentWordIndex + count, words.length - 1);
+        const skippedWords = words.slice(currentWordIndex, nextIndex);
+
+        // Count skipped words as correct for WPM calculation
+        const totalChars = skippedWords.reduce((sum, w) => sum + w.length + 1, 0);
+
+        setCorrectChars(prev => prev + totalChars);
+        setCurrentWordIndex(nextIndex);
+        setCurrentInput("");
+
+        if (nextIndex === words.length - 1 && words[nextIndex] === "") {
+            setIsComplete(true);
+        }
+
+        console.log(`[useTyping] Skipped ${count} words. New index: ${nextIndex}`);
+    }, [isActive, isComplete, words, currentWordIndex]);
+
+    const reset = useCallback(() => {
+        setCurrentWordIndex(0);
+        setCurrentInput("");
+        setCorrectChars(0);
+        setTotalTypedChars(0);
+        setStartTime(startTimeOverride || null);
+        setIsComplete(false);
+        setErrors(0);
+        setLastInputAt(Date.now());
+        console.log("[useTyping] Manual reset triggered");
+    }, [startTimeOverride]);
+
     return {
         currentWordIndex,
         currentInput,
@@ -106,6 +145,8 @@ export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?:
         accuracy,
         progress,
         words,
-        lastInputAt
+        lastInputAt,
+        reset,
+        skipWords
     };
 };

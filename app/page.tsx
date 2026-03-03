@@ -87,7 +87,14 @@ export default function Home() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-600/10 blur-[120px] rounded-full -z-10" />
 
       {/* Top Navigation */}
-      <div className="absolute top-8 right-8 z-50">
+      <div className="absolute top-8 right-8 z-50 flex items-center gap-4">
+        <Link
+          href="/test"
+          className="px-6 py-2 bg-white/5 border border-white/10 hover:border-yellow-500 hover:text-yellow-500 transition-all text-[10px] font-black uppercase tracking-[0.2em] rounded-sm group flex items-center gap-3 backdrop-blur-sm"
+        >
+          Testing Range
+          <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse" />
+        </Link>
         <Link
           href="/agents"
           className="px-6 py-2 bg-white/5 border border-white/10 hover:border-[#FF4655] hover:text-[#FF4655] transition-all text-[10px] font-black uppercase tracking-[0.2em] rounded-sm group flex items-center gap-3 backdrop-blur-sm"
@@ -277,7 +284,7 @@ export default function Home() {
         </div>
 
         <div className="pt-12 text-[10px] uppercase tracking-[0.3em] font-bold opacity-20">
-          Powered by Next.js + Firebase
+          YAAO PRODUCTIONS
         </div>
       </div>
     </main>

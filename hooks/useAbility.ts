@@ -13,7 +13,8 @@ export const useAbility = (
     playerId: string,
     opponents: Player[],
     lastInputAt: number,
-    config?: RoomConfig
+    config?: RoomConfig,
+    onSkipWords?: (count: number) => void
 ) => {
     const [charge, setCharge] = useState(0);
     const [onCooldown, setOnCooldown] = useState(false);
@@ -90,13 +91,20 @@ export const useAbility = (
                 effectUpdate = { scrambledWords: ['SCRAMBLED'] };
                 break;
             case 'OMEN':
-                effectUpdate = { progressHidden: true };
+                effectUpdate = { paranoia: true };
                 break;
             case 'BREACH':
                 effectUpdate = { flashed: true };
                 break;
             case 'KILLJOY':
                 effectUpdate = { inputLocked: true };
+                break;
+            case 'ZEPHYR':
+                if (onSkipWords) onSkipWords(5);
+                break;
+            case 'REYNA':
+                const isLeading = opponents.every(opp => wpmRef.current > opp.wpm);
+                if (isLeading && onSkipWords) onSkipWords(5);
                 break;
             // Self-buffs handled separately if needed
         }

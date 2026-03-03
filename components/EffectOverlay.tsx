@@ -21,15 +21,27 @@ const EffectOverlay: React.FC<EffectOverlayProps> = ({ effects }) => {
 
             {/* Input Locked (Yellow Grid) */}
             {effects.inputLocked && (
-                <div className="absolute inset-0 bg-yellow-500/5 flex items-center justify-center">
-                    <div className="text-yellow-500 font-black text-xs uppercase tracking-[1em] opacity-40 bg-black/40 px-8 py-2 border-y border-yellow-500/50">
+                <div className="absolute inset-0 bg-yellow-500/5 flex items-center justify-center border-[20px] border-yellow-500/10">
+                    <div className="text-yellow-500 font-black text-xs uppercase tracking-[1em] opacity-40 bg-black/40 px-8 py-2 border-y border-yellow-500/50 animate-pulse">
                         LOCKDOWN ACTIVE
                     </div>
                 </div>
             )}
 
-            {/* Toxins (Green Tint) - Viper Passive */}
-            {/* In a real app, logic for determining if Viper is close would trigger this */}
+            {/* Toxic Effect (Green Tint) */}
+            {effects.scrambledWords?.length > 0 && (
+                <div className="absolute inset-0 bg-green-500/5 pointer-events-none mix-blend-screen" />
+            )}
+
+            {/* Progress Hidden (Omen Shadow) */}
+            {effects.progressHidden && (
+                <div className="absolute inset-0 bg-black/20 backdrop-grayscale-[0.5] transition-all" />
+            )}
+
+            {/* Paranoia (Nearsight) */}
+            {effects.paranoia && (
+                <div className="absolute inset-0 bg-black/40 ring-[150px] ring-inset ring-black/80 blur-2xl pointer-events-none transition-opacity duration-500" />
+            )}
 
             <style jsx global>{`
         @keyframes flash {

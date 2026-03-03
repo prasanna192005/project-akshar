@@ -7,6 +7,7 @@ export interface PlayerEffects {
     frozen: boolean;
     inputLocked: boolean;
     progressHidden: boolean;
+    paranoia: boolean;
 }
 
 export interface Player {

@@ -24,14 +24,20 @@ const PlayerProgressBar: React.FC<PlayerProgressBarProps> = ({ player, isMe }) =
                     </span>
                 </div>
                 <div className="flex items-center gap-3">
-                    <span className="text-xs font-mono opacity-50">{Math.round(player.accuracy)}% ACC</span>
-                    <span className="text-sm font-black italic">{player.wpm} <span className="text-[10px] not-italic opacity-50">WPM</span></span>
+                    {player.effects?.progressHidden ? (
+                        <span className="text-[10px] font-black tracking-widest text-[#FF4655] animate-pulse">REDACTED</span>
+                    ) : (
+                        <>
+                            <span className="text-xs font-mono opacity-50">{Math.round(player.accuracy)}% ACC</span>
+                            <span className="text-sm font-black italic">{player.wpm} <span className="text-[10px] not-italic opacity-50">WPM</span></span>
+                        </>
+                    )}
                 </div>
             </div>
 
-            <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden border border-white/5">
+            <div className="h-2 w-full bg-white/5 rounded-full overflow-hidden border border-white/5 relative">
                 <div
-                    className="h-full transition-all duration-500 ease-out relative"
+                    className={`h-full transition-all duration-500 ease-out relative ${player.effects?.progressHidden ? 'opacity-0' : 'opacity-100'}`}
                     style={{
                         width: `${player.progress}%`,
                         backgroundColor: color,
@@ -42,8 +48,11 @@ const PlayerProgressBar: React.FC<PlayerProgressBarProps> = ({ player, isMe }) =
                         <div className="absolute right-0 top-0 h-full w-1 bg-white animate-pulse" />
                     )}
                 </div>
+                {player.effects?.progressHidden && (
+                    <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent animate-shimmer" />
+                )}
             </div>
-        </div>
+        </div >
     );
 };
 
