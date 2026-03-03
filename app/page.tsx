@@ -101,8 +101,8 @@ export default function Home() {
 
       <div className="w-full max-w-md text-center space-y-8 animate-in fade-in zoom-in duration-700">
         <div>
-          <h1 className="text-6xl font-black tracking-tighter italic text-white mb-2">
-            TYPE <span className="text-[#FF4655]">AGENTS</span>
+          <h1 className="text-6xl font-black tracking-tighter italic text-white mb-2 uppercase">
+            TYPHO<span className="text-[#FF4655]">Ö</span>N
           </h1>
           <p className="text-xs uppercase tracking-[0.5em] font-bold opacity-40">
             Multiplayer Typing Battle

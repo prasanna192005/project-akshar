@@ -20,7 +20,7 @@ const shareTechMono = Share_Tech_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Type Agents | Multiplayer Battle",
+  title: "Typhoön | Multiplayer Battle",
   description: "A competitive multiplayer typing race with Valorant-inspired agents and abilities.",
 };
 

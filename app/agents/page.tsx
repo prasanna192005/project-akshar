@@ -120,7 +120,7 @@ export default function AgentsIntel() {
             {/* Footer */}
             <div className="max-w-7xl mx-auto mt-32 pt-12 border-t border-white/5 text-center">
                 <span className="text-[10px] uppercase font-black tracking-[0.5em] text-white/20">
-                    TYPE AGENTS PROTOCOL // END OF FILE
+                    TYPHOÖN PROTOCOL // END OF FILE
                 </span>
             </div>
         </main>
