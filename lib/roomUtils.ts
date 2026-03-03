@@ -1,6 +1,6 @@
 import { ref, set, get, update, push, child } from "firebase/database";
 import { db } from "./firebase";
-import { Room, RoomStatus, Player, PlayerEffects } from "../types";
+import { Room, RoomStatus, Player, PlayerEffects, RoomConfig } from "../types";
 import { getRandomPrompt, PromptCategory } from "./prompts";
 
 export const INITIAL_EFFECTS: PlayerEffects = {
@@ -12,7 +12,7 @@ export const INITIAL_EFFECTS: PlayerEffects = {
     progressHidden: false,
 };
 
-export const createRoom = async (hostId: string, hostName: string, category: PromptCategory) => {
+export const createRoom = async (hostId: string, hostName: string, category: PromptCategory, config: RoomConfig) => {
     const roomId = Math.random().toString(36).substring(2, 8).toUpperCase();
     const roomRef = ref(db, `rooms/${roomId}`);
 
@@ -20,6 +20,7 @@ export const createRoom = async (hostId: string, hostName: string, category: Pro
         id: roomId,
         hostId,
         status: 'lobby',
+        config,
         prompt: getRandomPrompt(category),
         promptCategory: category,
         createdAt: Date.now(),

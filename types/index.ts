@@ -26,10 +26,16 @@ export interface Player {
 
 export type RoomStatus = 'lobby' | 'countdown' | 'racing' | 'finished';
 
+export interface RoomConfig {
+    targeting: 'random' | 'leader' | 'all';
+    abilitySpeed: 'slow' | 'normal' | 'fast';
+}
+
 export interface Room {
     id: string;
     hostId: string;
     status: RoomStatus;
+    config: RoomConfig;
     prompt: string;
     promptCategory: string;
     createdAt: number;

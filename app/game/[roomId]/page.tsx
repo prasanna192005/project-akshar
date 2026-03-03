@@ -51,7 +51,8 @@ export default function Game() {
         roomId,
         playerId || "",
         opponents,
-        lastInputAt
+        lastInputAt,
+        room?.config
     );
 
     // Handle Tab key for abilities
