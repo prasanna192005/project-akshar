@@ -10,6 +10,7 @@ export const INITIAL_EFFECTS: PlayerEffects = {
     frozen: false,
     inputLocked: false,
     progressHidden: false,
+    paranoia: false,
 };
 
 export const createRoom = async (hostId: string, hostName: string, category: PromptCategory, config: RoomConfig) => {
