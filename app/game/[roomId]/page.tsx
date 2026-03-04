@@ -13,6 +13,7 @@ import Leaderboard from "@/components/Leaderboard";
 import AbilityBar from "@/components/AbilityBar";
 import CountdownOverlay from "@/components/CountdownOverlay";
 import EffectOverlay from "@/components/EffectOverlay";
+import LoadingScreen from "@/components/LoadingScreen";
 
 import { ensureAuth } from "@/lib/firebase";
 
@@ -21,10 +22,15 @@ export default function Game() {
     const router = useRouter();
 
     const [playerId, setPlayerId] = useState<string | null>(null);
+    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         ensureAuth().catch(console.error);
         setPlayerId(sessionStorage.getItem('typeagents_player_id'));
+
+        // Show loading screen for at least 2 seconds for tips to be read
+        const timer = setTimeout(() => setIsLoading(false), 2000);
+        return () => clearTimeout(timer);
     }, []);
 
     const { room, players, status } = useRoom(roomId);
@@ -150,7 +156,7 @@ export default function Game() {
         return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     };
 
-    if (!room || !playerId) return null;
+    if (isLoading || !room || !playerId) return <LoadingScreen />;
 
     const agent = player?.agent ? AGENTS[player.agent] : null;
 

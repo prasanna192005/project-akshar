@@ -8,6 +8,7 @@ import { PromptCategory } from "@/lib/prompts";
 import { ensureAuth } from "@/lib/firebase";
 import { useEffect } from "react";
 import Link from "next/link";
+import LoadingScreen from "@/components/LoadingScreen";
 
 export default function Home() {
   const router = useRouter();
@@ -80,6 +81,8 @@ export default function Home() {
       setLoading(false);
     }
   };
+
+  if (loading) return <LoadingScreen />;
 
   return (
     <main className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">

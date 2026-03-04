@@ -8,6 +8,7 @@ import { AGENTS, AgentType } from "@/lib/agents";
 import { updateRoomStatus } from "@/lib/roomUtils";
 import AgentCard from "@/components/AgentCard";
 import RoomCodeDisplay from "@/components/RoomCodeDisplay";
+import LoadingScreen from "@/components/LoadingScreen";
 
 import { ensureAuth } from "@/lib/firebase";
 
@@ -35,11 +36,7 @@ export default function Lobby() {
     }, [status, roomId, router]);
 
     if (!room || !playerId) {
-        return (
-            <div className="min-h-screen flex items-center justify-center">
-                <div className="animate-pulse font-black tracking-widest text-white/20">LOADING ROOM...</div>
-            </div>
-        );
+        return <LoadingScreen />;
     }
 
     const allReady = players.length >= 2 && players.every(p => p.ready && p.agent);

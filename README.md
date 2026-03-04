@@ -111,6 +111,11 @@ This hook calculates **Ability Charge** based on "Perfect Typing" performance:
 - **Dynamic Charging**: The faster you type accurately, the faster your charge bar fills.
 - **Configurable Modifiers**: Each agent has a custom `chargeRateModifier`. Zephyr (Initiator) charges 40% faster than Killjoy (Sentinel).
 - **Targeting Logic**: Logic to resolve `leader`, `random`, or `all` targeting modes before pushing updates to the database.
+  - **The Implementation**:
+    - **Leader**: Sorts the `opponents` array by `progress` in descending order and selects the first element: `[[...opponents].sort((a, b) => b.progress - a.progress)[0]]`.
+    - **Random**: Uses `Math.floor(Math.random() * opponents.length)` to hit a random victim.
+    - **All**: Broadcasts the `effectUpdate` across the entire `opponents` list simultaneously.
+  - **Atomic Multi-Path Updates**: To ensure high performance and prevent "partial hits," we build a single `updates` object containing all target paths and push it in one atomic network request via Firebase's `update(ref(db), updates)`.
 
 ### 3. ☁️ Real-Time State Management (Firebase)
 Typhöön uses **Firebase Realtime Database** as a reactive global state:
