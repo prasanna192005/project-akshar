@@ -23,7 +23,8 @@ export const usePlayer = (roomId: string, playerId: string) => {
                         frozen: false,
                         inputLocked: false,
                         progressHidden: false,
-                        paranoia: false
+                        paranoia: false,
+                        empress: false
                     }
                 });
             }

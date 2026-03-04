@@ -11,8 +11,11 @@ export default function GuidePage() {
                     <Link href="/" className="text-[10px] font-black uppercase tracking-[0.4em] text-[#FF4655] mb-4 inline-block hover:translate-x-2 transition-transform">
                         ← RETURN_TO_BASE
                     </Link>
-                    <h1 className="text-7xl font-black italic tracking-tighter uppercase leading-tight">
+                    <h1 className="text-7xl font-black italic tracking-tighter uppercase leading-tight relative">
                         PROTOCOL_GUIDE
+                        <div className="absolute -top-4 -right-8 text-[8px] font-mono text-[#FF4655] opacity-50 animate-pulse">
+                            [ CONFIDENTIAL // EYES ONLY ]
+                        </div>
                     </h1>
                     <p className="text-white/40 font-mono text-sm mt-4">
                         TYPHÖÖN // TACTICAL_TYPING_SURVIVAL_MANUAL
@@ -22,7 +25,8 @@ export default function GuidePage() {
                 <div className="space-y-24 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-200">
 
                     {/* Core Philosophy */}
-                    <section>
+                    <section className="relative overflow-hidden">
+                        <div className="absolute top-0 right-0 w-64 h-64 bg-[#FF4655]/5 blur-3xl rounded-full -z-10" />
                         <div className="flex items-center gap-4 mb-8">
                             <div className="w-1.5 h-8 bg-[#FF4655]" />
                             <h2 className="text-3xl font-black tracking-tighter uppercase italic">The Core Loop</h2>
@@ -33,19 +37,44 @@ export default function GuidePage() {
                                 <p className="text-white/70 leading-relaxed italic">
                                     In TYPHÖÖN, your keyboard is your weapon. Accuracy isn't just a stat—it's your recoil control. Words per Minute (WPM) isn't just speed—it's your rate of fire.
                                 </p>
+                                <div className="pt-4 flex gap-4">
+                                    <div className="h-px flex-1 bg-gradient-to-r from-[#FF4655] to-transparent opacity-30" />
+                                </div>
                             </div>
-                            <div className="bg-white/5 border border-white/10 p-6 rounded-sm">
-                                <ul className="space-y-4 text-sm">
+                            <div className="bg-white/5 border border-white/10 p-6 rounded-sm relative group overflow-hidden">
+                                <div className="absolute inset-0 bg-gradient-to-br from-[#FF4655]/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
+                                <ul className="space-y-4 text-sm relative z-10">
                                     <li className="flex items-start gap-3">
                                         <span className="text-[#FF4655] font-black">01</span>
-                                        <span><b className="text-white">Mistakes = Jams:</b> Typing a wrong character locks your current word and forces you to correct it.</span>
+                                        <span><b className="text-white">Mistakes = Jams:</b> Key jams prevent further input. Correct the typo to resume fire.</span>
                                     </li>
                                     <li className="flex items-start gap-3">
                                         <span className="text-[#FF4655] font-black">02</span>
-                                        <span><b className="text-white">Accuracy = Lethality:</b> High accuracy charges your abilities exponentially faster than raw speed.</span>
+                                        <span><b className="text-white">Accuracy = Lethality:</b> A single typo halts all ability charging for 2 seconds.</span>
                                     </li>
                                 </ul>
                             </div>
+                        </div>
+                    </section>
+
+                    {/* NEW: HUD Interface Guide */}
+                    <section>
+                        <div className="flex items-center gap-4 mb-8">
+                            <div className="w-1.5 h-8 bg-[#FF4655]" />
+                            <h2 className="text-3xl font-black tracking-tighter uppercase italic">HUD Interface</h2>
+                        </div>
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
+                            {[
+                                { title: "Ability Core", desc: "Bottom-center bar. Shows current charge % and cooldown timers.", icon: "PWR" },
+                                { title: "Dossier Readout", desc: "Top-left metrics. Real-time WPM, Accuracy, and Progress.", icon: "LOG" },
+                                { title: "Rival Tracking", desc: "The progress bars behind your text show your distance to enemies.", icon: "DST" }
+                            ].map((item, i) => (
+                                <div key={i} className="bg-white/5 border border-white/10 p-5 rounded-sm hover:border-[#FF4655]/40 transition-colors">
+                                    <div className="text-2xl mb-3">{item.icon}</div>
+                                    <h4 className="text-[10px] font-black uppercase tracking-widest text-[#FF4655] mb-2">{item.title}</h4>
+                                    <p className="text-[11px] text-white/50 leading-relaxed">{item.desc}</p>
+                                </div>
+                            ))}
                         </div>
                     </section>
 
@@ -104,11 +133,28 @@ export default function GuidePage() {
                             <div className="col-span-1 md:col-span-2 space-y-8">
                                 <div>
                                     <h3 className="text-xs font-black uppercase tracking-[0.3em] text-[#FF4655] mb-4 underline">Ability_Charge_Formula</h3>
-                                    <code className="block bg-black/40 p-4 rounded-sm font-mono text-sm leading-relaxed border border-white/5">
-                                        Increment = (WPM / 60) * (Accuracy / 100) * Modifier * 0.2s
-                                    </code>
-                                    <p className="text-[10px] text-white/30 mt-2 font-mono italic">
-                                        *Base fill time is ~8 seconds at 60 WPM / 100% Accuracy. Accuracy is weighted heavily. Typos halt charging.
+                                    <div className="bg-black/40 p-6 rounded-sm font-mono text-sm leading-relaxed border border-white/5 relative overflow-hidden">
+                                        <div className="absolute top-0 right-0 text-[10px] p-2 bg-white/5 uppercase opacity-30">V.04_ALGO</div>
+                                        <code className="text-[#FF4655]">
+                                            Charge_Inc = (WPM / 60) * (Acc / 100)^2 * Mod / 5
+                                        </code>
+                                    </div>
+                                    <div className="grid grid-cols-2 gap-4 mt-6">
+                                        <div className="space-y-1">
+                                            <span className="text-[10px] text-white/20 uppercase font-black">Velocity Weight</span>
+                                            <div className="h-1 bg-white/10 w-full rounded-full overflow-hidden">
+                                                <div className="bg-white/40 h-full w-[40%]" />
+                                            </div>
+                                        </div>
+                                        <div className="space-y-1">
+                                            <span className="text-[10px] text-[#FF4655]/60 uppercase font-black">Precision Weight</span>
+                                            <div className="h-1 bg-white/10 w-full rounded-full overflow-hidden">
+                                                <div className="bg-[#FF4655] h-full w-[100%]" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p className="text-[10px] text-white/30 mt-4 font-mono italic">
+                                        *Precision is squared. A 50% accuracy player charges 4x slower than a 100% accuracy player at the same WPM. Error-gating adds a 2s penalty to any typo before charging resumes.
                                     </p>
                                 </div>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
@@ -133,6 +179,44 @@ export default function GuidePage() {
                             <div className="flex flex-col justify-center items-center text-center p-8 border border-white/10 bg-white/5 rounded-sm">
                                 <div className="text-5xl font-black text-[#FF4655] mb-2">8s</div>
                                 <div className="text-[10px] font-black uppercase tracking-widest opacity-40">Base Average<br />Charge Time</div>
+                            </div>
+                        </div>
+                    </section>
+
+                    {/* NEW: Advanced Tactical Protocols */}
+                    <section>
+                        <div className="flex items-center gap-4 mb-8">
+                            <div className="w-1.5 h-8 bg-[#FF4655]" />
+                            <h2 className="text-3xl font-black tracking-tighter uppercase italic">Tactical Protocols</h2>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                            <div className="space-y-6">
+                                <div className="p-6 bg-white/[0.03] border border-white/5 rounded-sm">
+                                    <h4 className="text-white font-black uppercase text-sm mb-2 italic">01 // Mistake Mitigation</h4>
+                                    <p className="text-xs text-white/50 leading-relaxed italic">
+                                        Fixing a typo immediately is faster than ignoring it. Because charging halts during errors, being "stuck" on a typo is the fastest way to lose the ability economy battle.
+                                    </p>
+                                </div>
+                                <div className="p-6 bg-white/[0.03] border border-white/5 rounded-sm">
+                                    <h4 className="text-white font-black uppercase text-sm mb-2 italic">02 // Burst Performance</h4>
+                                    <p className="text-xs text-white/50 leading-relaxed italic">
+                                        High-difficulty words (long, symbols) act as "Recoil." Slow down during these sections to protect your accuracy modifier. A 100% slow burst is better than a fast, messy spray.
+                                    </p>
+                                </div>
+                            </div>
+                            <div className="space-y-6">
+                                <div className="p-6 bg-white/[0.03] border border-white/5 rounded-sm">
+                                    <h4 className="text-white font-black uppercase text-sm mb-2 italic">03 // Tactical Economy</h4>
+                                    <p className="text-xs text-white/50 leading-relaxed italic">
+                                        Don't trigger abilities immediately. Wait until a rival is in a "Long Word Zone" (check their upcoming text) to maximize the disruption of effects like Scramble or Blur.
+                                    </p>
+                                </div>
+                                <div className="p-6 border border-[#FF4655]/20 bg-[#FF4655]/5 rounded-sm flex items-center gap-4">
+                                    <div className="text-3xl font-black text-[#FF4655]">TIP</div>
+                                    <p className="text-[11px] font-bold text-white/70 italic uppercase">
+                                        "The best typist doesn't win. The one who breaks the other's rhythm wins."
+                                    </p>
+                                </div>
                             </div>
                         </div>
                     </section>
