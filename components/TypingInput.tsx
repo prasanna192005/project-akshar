@@ -39,16 +39,20 @@ const TypingInput: React.FC<TypingInputProps> = ({
         return originalChar;
     };
 
-    // Auto-focus when game starts or when word advances
+    // Auto-focus when game starts, word advances, or effects change
     React.useEffect(() => {
         if (isActive) {
             const focus = () => inputRef.current?.focus();
             focus();
-            // Fallback for some browsers during tab switches/renders
-            const timer = setTimeout(focus, 10);
-            return () => clearTimeout(timer);
+            // Multi-stage fallback to ensure focus is snatched
+            const timers = [
+                setTimeout(focus, 10),
+                setTimeout(focus, 50),
+                setTimeout(focus, 100)
+            ];
+            return () => timers.forEach(t => clearTimeout(t));
         }
-    }, [isActive, currentWordIndex]);
+    }, [isActive, currentWordIndex, isBlurred, isScrambled, isParanoid]);
 
     const handleContainerClick = () => {
         inputRef.current?.focus();

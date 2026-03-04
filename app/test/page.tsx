@@ -8,6 +8,7 @@ import TypingInput from "@/components/TypingInput";
 import AbilityBar from "@/components/AbilityBar";
 import EffectOverlay from "@/components/EffectOverlay";
 import { PlayerEffects } from "@/types";
+import { calculateChargeIncrement } from "@/lib/gameEngine";
 
 const TEST_PROMPT = "The quick brown fox jumps over the lazy dog. Programming is the art of algorithm design and the craft of debugging errant code. Mastery of the keyboard is the first step towards digital dominance.";
 
@@ -39,7 +40,8 @@ export default function TestingRange() {
         isComplete,
         words,
         reset,
-        skipWords
+        skipWords,
+        lastInputAt
     } = useTyping(TEST_PROMPT, true, null, effects.inputLocked);
 
     // Charge logic mock
@@ -59,14 +61,22 @@ export default function TestingRange() {
 
         const chargeTimer = setInterval(() => {
             if (charge < 1 && !onCooldown) {
-                // Charge based on WPM
-                const increment = (wpm / 60) * 0.05;
+                // Only charge if player has typed in the last 2 seconds
+                if (Date.now() - lastInputAt > 2000) return;
+
+                // Sync with production 8s base fill logic
+                const increment = calculateChargeIncrement(
+                    wpm,
+                    accuracy,
+                    agent.chargeRateModifier,
+                    1
+                );
                 setCharge(prev => Math.min(1, prev + increment));
             }
         }, 1000);
 
         return () => clearInterval(chargeTimer);
-    }, [wpm, charge, onCooldown]);
+    }, [wpm, accuracy, charge, onCooldown, agent, lastInputAt]);
 
     const activateAbility = useCallback(() => {
         if (charge < 1 || onCooldown) return;
@@ -79,10 +89,10 @@ export default function TestingRange() {
             case 'PYRA': effectUpdate.blurred = true; break;
             case 'BREACH': effectUpdate.flashed = true; break;
             case 'KILLJOY': effectUpdate.inputLocked = true; break;
-            case 'OMEN': /* Progress hidden - handeled in UI */ break;
+            case 'OMEN': effectUpdate.paranoia = true; break;
             case 'VIPER': effectUpdate.scrambledWords = ['SCRAMBLED']; break;
             case 'ZEPHYR': skipWords(5); break;
-            case 'REYNA': if (wpm > 20) skipWords(5); break;
+            case 'REYNA': if (wpm > 10) skipWords(5); break;
         }
 
         setEffects(prev => ({ ...prev, ...effectUpdate }));
@@ -94,7 +104,7 @@ export default function TestingRange() {
         setTimeout(() => {
             setEffects({ flashed: false, blurred: false, inputLocked: false, scrambledWords: [], frozen: false, progressHidden: false, paranoia: false });
         }, 3000);
-    }, [charge, onCooldown, agent]);
+    }, [charge, onCooldown, agent, wpm, skipWords]);
 
     // Handle Tab key for abilities
     useEffect(() => {
@@ -219,35 +229,35 @@ export default function TestingRange() {
                                 <div className="flex gap-2">
                                     <button
                                         onClick={() => setCharge(1)}
-                                        className="px-4 py-3 bg-white/10 hover:bg-white/20 text-[9px] font-black uppercase tracking-widest transition-all rounded"
+                                        className="px-4 py-3 bg-white/10 hover:bg-white/20 text-[9px] font-black uppercase tracking-widest transition-all rounded shadow-inner"
                                     >
                                         Force Charge
                                     </button>
                                     <button
-                                        onClick={reset}
-                                        className="px-4 py-3 bg-white/10 hover:bg-white/20 text-white text-[9px] font-black uppercase tracking-widest transition-all rounded border border-white/10"
+                                        onClick={() => {
+                                            reset();
+                                            setEffects({ flashed: false, blurred: false, inputLocked: false, scrambledWords: [], frozen: false, progressHidden: false, paranoia: false });
+                                            setCharge(0);
+                                            setOnCooldown(false);
+                                            setCooldownRemaining(0);
+                                        }}
+                                        className="px-4 py-3 bg-white/10 hover:bg-[#FF4655] hover:text-black text-white text-[9px] font-black uppercase tracking-widest transition-all rounded border border-white/10"
                                     >
-                                        Reset Typing
-                                    </button>
-                                    <button
-                                        onClick={() => setEffects({ flashed: false, blurred: false, inputLocked: false, scrambledWords: [], frozen: false, progressHidden: false, paranoia: false })}
-                                        className="px-4 py-3 bg-[#FF4655]/10 hover:bg-[#FF4655]/20 text-[#FF4655] text-[9px] font-black uppercase tracking-widest transition-all rounded border border-[#FF4655]/20"
-                                    >
-                                        Clear Effects
+                                        Full Reset
                                     </button>
                                 </div>
                             </div>
+                        </div>
 
-                            <div className="mt-8 pt-8 border-t border-white/5">
-                                <span className="text-[9px] font-black uppercase tracking-widest text-white/20 block mb-4">Manual Visual Test (Test these effects on yourself)</span>
-                                <div className="flex flex-wrap gap-2">
-                                    <button onClick={() => setEffects(p => ({ ...p, flashed: true }))} className="px-3 py-2 bg-white/5 hover:bg-white/10 text-[8px] font-black uppercase tracking-widest rounded transition-all">Test Flash</button>
-                                    <button onClick={() => setEffects(p => ({ ...p, blurred: true }))} className="px-3 py-2 bg-white/5 hover:bg-white/10 text-[8px] font-black uppercase tracking-widest rounded transition-all">Test Blur</button>
-                                    <button onClick={() => setEffects(p => ({ ...p, inputLocked: true }))} className="px-3 py-2 bg-white/5 hover:bg-white/10 text-[8px] font-black uppercase tracking-widest rounded transition-all">Test Lock</button>
-                                    <button onClick={() => setEffects(p => ({ ...p, scrambledWords: ['SCRAMBLED'] }))} className="px-3 py-2 bg-white/5 hover:bg-white/10 text-[8px] font-black uppercase tracking-widest rounded transition-all">Test Scramble</button>
-                                    <button onClick={() => setEffects(p => ({ ...p, frozen: true }))} className="px-3 py-2 bg-white/5 hover:bg-white/10 text-[8px] font-black uppercase tracking-widest rounded transition-all">Test Freeze</button>
-                                    <button onClick={() => setEffects(p => ({ ...p, paranoia: true }))} className="px-3 py-2 bg-white/5 hover:bg-white/10 text-[8px] font-black uppercase tracking-widest rounded transition-all">Test Paranoia</button>
-                                </div>
+                        <div className="mt-8 pt-8 border-t border-white/5">
+                            <span className="text-[9px] font-black uppercase tracking-widest text-white/20 block mb-4">Manual Visual Test (Test these effects on yourself)</span>
+                            <div className="flex flex-wrap gap-2">
+                                <button onClick={() => setEffects(p => ({ ...p, flashed: true }))} className="px-3 py-2 bg-white/5 hover:bg-white/10 text-[8px] font-black uppercase tracking-widest rounded transition-all">Test Flash</button>
+                                <button onClick={() => setEffects(p => ({ ...p, blurred: true }))} className="px-3 py-2 bg-white/5 hover:bg-white/10 text-[8px] font-black uppercase tracking-widest rounded transition-all">Test Blur</button>
+                                <button onClick={() => setEffects(p => ({ ...p, inputLocked: true }))} className="px-3 py-2 bg-white/5 hover:bg-white/10 text-[8px] font-black uppercase tracking-widest rounded transition-all">Test Lock</button>
+                                <button onClick={() => setEffects(p => ({ ...p, scrambledWords: ['SCRAMBLED'] }))} className="px-3 py-2 bg-white/5 hover:bg-white/10 text-[8px] font-black uppercase tracking-widest rounded transition-all">Test Scramble</button>
+                                <button onClick={() => setEffects(p => ({ ...p, frozen: true }))} className="px-3 py-2 bg-white/5 hover:bg-white/10 text-[8px] font-black uppercase tracking-widest rounded transition-all">Test Freeze</button>
+                                <button onClick={() => setEffects(p => ({ ...p, paranoia: true }))} className="px-3 py-2 bg-white/5 hover:bg-white/10 text-[8px] font-black uppercase tracking-widest rounded transition-all">Test Paranoia</button>
                             </div>
                         </div>
                     </div>
