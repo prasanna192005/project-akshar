@@ -21,13 +21,15 @@ export default function TestingRange() {
         scrambledWords: [],
         frozen: false,
         progressHidden: false,
-        paranoia: false
+        paranoia: false,
+        empress: false
     });
 
     // Mock Charge state for testing
     const [charge, setCharge] = useState(0);
     const [onCooldown, setOnCooldown] = useState(false);
     const [cooldownRemaining, setCooldownRemaining] = useState(0);
+    const [effectRemaining, setEffectRemaining] = useState(0);
 
     const agent = AGENTS[selectedAgentId as keyof typeof AGENTS];
 
@@ -41,8 +43,9 @@ export default function TestingRange() {
         words,
         reset,
         skipWords,
-        lastInputAt
-    } = useTyping(TEST_PROMPT, true, null, effects.inputLocked);
+        lastInputAt,
+        isError
+    } = useTyping(TEST_PROMPT, true, null, effects.inputLocked, effects.empress);
 
     // Charge logic mock
     useEffect(() => {
@@ -61,22 +64,26 @@ export default function TestingRange() {
 
         const chargeTimer = setInterval(() => {
             if (charge < 1 && !onCooldown) {
-                // Only charge if player has typed in the last 2 seconds
+                // Restrictions:
+                // 1. Only charge if player has typed in the last 2 seconds
+                // 2. ONLY charge if there is NO error in their current input
                 if (Date.now() - lastInputAt > 2000) return;
+                if (isError) return;
 
                 // Sync with production 8s base fill logic
+                // Delta time is 0.2s for 200ms updates
                 const increment = calculateChargeIncrement(
                     wpm,
                     accuracy,
                     agent.chargeRateModifier,
-                    1
+                    0.2
                 );
                 setCharge(prev => Math.min(1, prev + increment));
             }
-        }, 1000);
+        }, 200);
 
         return () => clearInterval(chargeTimer);
-    }, [wpm, accuracy, charge, onCooldown, agent, lastInputAt]);
+    }, [wpm, accuracy, charge, onCooldown, agent, lastInputAt, isError]);
 
     const activateAbility = useCallback(() => {
         if (charge < 1 || onCooldown) return;
@@ -92,7 +99,7 @@ export default function TestingRange() {
             case 'OMEN': effectUpdate.paranoia = true; break;
             case 'VIPER': effectUpdate.scrambledWords = ['SCRAMBLED']; break;
             case 'ZEPHYR': skipWords(5); break;
-            case 'REYNA': if (wpm > 10) skipWords(5); break;
+            case 'REYNA': effectUpdate.empress = true; break;
         }
 
         setEffects(prev => ({ ...prev, ...effectUpdate }));
@@ -100,10 +107,20 @@ export default function TestingRange() {
         setOnCooldown(true);
         setCooldownRemaining(agent.cooldown);
 
-        // Auto-clear effects for testing convenience
-        setTimeout(() => {
-            setEffects({ flashed: false, blurred: false, inputLocked: false, scrambledWords: [], frozen: false, progressHidden: false, paranoia: false });
-        }, 3000);
+        // Sync duration with production: 8s for Empress, 4s for others
+        const duration = agent.id === 'REYNA' ? 8 : 4;
+        setEffectRemaining(duration);
+
+        const effectTimer = setInterval(() => {
+            setEffectRemaining(prev => {
+                if (prev <= 1) {
+                    clearInterval(effectTimer);
+                    setEffects({ flashed: false, blurred: false, inputLocked: false, scrambledWords: [], frozen: false, progressHidden: false, paranoia: false, empress: false });
+                    return 0;
+                }
+                return prev - 1;
+            });
+        }, 1000);
     }, [charge, onCooldown, agent, wpm, skipWords]);
 
     // Handle Tab key for abilities
@@ -198,8 +215,15 @@ export default function TestingRange() {
 
                         {/* Sandbox Typing 영역 */}
                         <div className="relative">
-                            <div className="absolute -top-6 left-0 text-[9px] font-black uppercase tracking-widest text-[#FF4655]">
-                                {effects.inputLocked ? ">> CRITICAL ERROR: INPUT_LOCKED" : ">> STATUS: OPERATIONAL"}
+                            <div className="absolute -top-6 left-0 text-[9px] font-black uppercase tracking-widest flex gap-4">
+                                <span className={effects.inputLocked ? "text-[#FF4655]" : "text-white/40"}>
+                                    {effects.inputLocked ? ">> CRITICAL ERROR: INPUT_LOCKED" : ">> STATUS: OPERATIONAL"}
+                                </span>
+                                {effectRemaining > 0 && (
+                                    <span className="text-[#C84FA8] animate-pulse">
+                                        {">> "} ACTIVE_EFFECT: {effectRemaining}s REMAINING
+                                    </span>
+                                )}
                             </div>
                             <TypingInput
                                 words={words}
@@ -236,7 +260,7 @@ export default function TestingRange() {
                                     <button
                                         onClick={() => {
                                             reset();
-                                            setEffects({ flashed: false, blurred: false, inputLocked: false, scrambledWords: [], frozen: false, progressHidden: false, paranoia: false });
+                                            setEffects({ flashed: false, blurred: false, inputLocked: false, scrambledWords: [], frozen: false, progressHidden: false, paranoia: false, empress: false });
                                             setCharge(0);
                                             setOnCooldown(false);
                                             setCooldownRemaining(0);

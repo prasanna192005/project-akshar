@@ -43,7 +43,22 @@ const EffectOverlay: React.FC<EffectOverlayProps> = ({ effects }) => {
                 <div className="absolute inset-0 bg-black/40 ring-[150px] ring-inset ring-black/80 blur-2xl pointer-events-none transition-opacity duration-500" />
             )}
 
+            {/* EMPRESS Effect (Soul Steal Heartbeat) */}
+            {effects.empress && (
+                <div className="absolute inset-0 border-[40px] border-[#C84FA8]/30 blur-3xl mix-blend-multiply animate-heartbeat pointer-events-none" />
+            )}
+
             <style jsx global>{`
+        @keyframes heartbeat {
+          0% { transform: scale(1); opacity: 0.3; }
+          15% { transform: scale(1.05); opacity: 0.5; }
+          30% { transform: scale(1); opacity: 0.3; }
+          45% { transform: scale(1.1); opacity: 0.6; }
+          100% { transform: scale(1); opacity: 0.3; }
+        }
+        .animate-heartbeat {
+          animation: heartbeat 1.5s ease-in-out infinite;
+        }
         @keyframes flash {
           0% { opacity: 0; }
           10% { opacity: 1; }

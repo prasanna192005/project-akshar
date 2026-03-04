@@ -36,7 +36,6 @@ export default function Game() {
     const { room, players, status } = useRoom(roomId);
     const { player, updateProgress, clearEffect } = usePlayer(roomId, playerId || "");
     const isHost = room && playerId ? room.hostId === playerId : false;
-
     const {
         currentWordIndex,
         currentInput,
@@ -47,8 +46,9 @@ export default function Game() {
         isComplete,
         words,
         lastInputAt,
-        skipWords
-    } = useTyping(room?.prompt || "", status === 'racing', room?.raceStartAt, player?.effects?.inputLocked);
+        skipWords,
+        isError
+    } = useTyping(room?.prompt || "", status === 'racing', room?.raceStartAt, player?.effects?.inputLocked, player?.effects?.empress);
 
     const opponents = players.filter(p => p.id !== playerId);
     const { charge, onCooldown, cooldownRemaining, activateAbility } = useAbility(
@@ -59,6 +59,7 @@ export default function Game() {
         playerId || "",
         opponents,
         lastInputAt,
+        isError,
         room?.config,
         skipWords
     );

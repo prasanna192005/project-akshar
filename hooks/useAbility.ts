@@ -13,6 +13,7 @@ export const useAbility = (
     playerId: string,
     opponents: Player[],
     lastInputAt: number,
+    isError: boolean,
     config?: RoomConfig,
     onSkipWords?: (count: number) => void
 ) => {
@@ -26,18 +27,23 @@ export const useAbility = (
     const wpmRef = useRef(wpm);
     const accuracyRef = useRef(accuracy);
     const lastInputAtRef = useRef(lastInputAt);
+    const isErrorRef = useRef(isError);
 
     useEffect(() => { wpmRef.current = wpm; }, [wpm]);
     useEffect(() => { accuracyRef.current = accuracy; }, [accuracy]);
     useEffect(() => { lastInputAtRef.current = lastInputAt; }, [lastInputAt]);
+    useEffect(() => { isErrorRef.current = isError; }, [isError]);
 
     // Charge logic
     useEffect(() => {
         if (!agent || onCooldown || charge >= 1) return;
 
         const interval = setInterval(() => {
-            // Only charge if player has typed in the last 2 seconds
+            // Restrictions:
+            // 1. Only charge if player has typed in the last 2 seconds
+            // 2. ONLY charge if there is NO error in their current input
             if (Date.now() - lastInputAtRef.current > 2000) return;
+            if (isErrorRef.current) return;
 
             setCharge(prev => {
                 if (prev >= 1) return 1;
@@ -47,16 +53,17 @@ export const useAbility = (
                 if (config?.abilitySpeed === 'fast') speedMultiplier = 1.5;
                 if (config?.abilitySpeed === 'slow') speedMultiplier = 0.6;
 
+                // Delta time is now 0.2s for 200ms updates
                 const increment = calculateChargeIncrement(
                     wpmRef.current,
                     accuracyRef.current,
                     agent.chargeRateModifier * speedMultiplier,
-                    1
+                    0.2
                 );
                 const next = prev + increment;
                 return next >= 1 ? 1 : next;
             });
-        }, 1000);
+        }, 200);
 
         return () => clearInterval(interval);
     }, [agent, onCooldown, config?.abilitySpeed]);
@@ -82,39 +89,58 @@ export const useAbility = (
         }
 
         // Apply effect based on agent
-        let effectUpdate = {};
+        let effectUpdate: Record<string, any> = {};
         switch (agent.id) {
+            case 'REYNA':
+                effectUpdate = { 'effects/empress': true };
+                break;
             case 'PYRA':
-                effectUpdate = { blurred: true };
+                effectUpdate = { 'effects/blurred': true };
                 break;
             case 'VIPER':
-                effectUpdate = { scrambledWords: ['SCRAMBLED'] };
+                effectUpdate = { 'effects/scrambledWords': ['SCRAMBLED'] };
                 break;
             case 'OMEN':
-                effectUpdate = { paranoia: true };
+                effectUpdate = { 'effects/paranoia': true };
                 break;
             case 'BREACH':
-                effectUpdate = { flashed: true };
+                effectUpdate = { 'effects/flashed': true };
                 break;
             case 'KILLJOY':
-                effectUpdate = { inputLocked: true };
+                effectUpdate = { 'effects/inputLocked': true };
                 break;
             case 'ZEPHYR':
                 if (onSkipWords) onSkipWords(5);
                 break;
-            case 'REYNA':
-                const isLeading = opponents.every(opp => wpmRef.current > opp.wpm);
-                if (isLeading && onSkipWords) onSkipWords(5);
-                break;
-            // Self-buffs handled separately if needed
         }
 
         if (Object.keys(effectUpdate).length > 0) {
             const updates: Record<string, any> = {};
             targets.forEach(t => {
-                updates[`rooms/${roomId}/players/${t.id}/effects`] = effectUpdate;
+                // Apply specific fields instead of whole object
+                Object.entries(effectUpdate).forEach(([field, value]) => {
+                    updates[`rooms/${roomId}/players/${t.id}/${field}`] = value;
+                });
             });
             await update(ref(db), updates);
+            console.log(`[useAbility] Effect activated. Duration set to: ${agent.id === 'REYNA' ? 8000 : 4000}ms`);
+            const startTime = Date.now();
+
+            // Auto-clear effect after duration (e.g. 8s for Empress)
+            const duration = agent.id === 'REYNA' ? 8000 : 4000;
+            setTimeout(async () => {
+                const clearUpdates: Record<string, any> = {};
+                targets.forEach(t => {
+                    if (agent.id === 'REYNA') clearUpdates[`rooms/${roomId}/players/${t.id}/effects/empress`] = false;
+                    if (agent.id === 'PYRA') clearUpdates[`rooms/${roomId}/players/${t.id}/effects/blurred`] = false;
+                    if (agent.id === 'BREACH') clearUpdates[`rooms/${roomId}/players/${t.id}/effects/flashed`] = false;
+                    if (agent.id === 'KILLJOY') clearUpdates[`rooms/${roomId}/players/${t.id}/effects/inputLocked`] = false;
+                    if (agent.id === 'OMEN') clearUpdates[`rooms/${roomId}/players/${t.id}/effects/paranoia`] = false;
+                    if (agent.id === 'VIPER') clearUpdates[`rooms/${roomId}/players/${t.id}/effects/scrambledWords`] = [];
+                });
+                await update(ref(db), clearUpdates);
+                console.log(`[useAbility] Effect cleared. Actual elapsed time: ${Date.now() - startTime}ms`);
+            }, duration);
         }
 
         // Set cooldown
@@ -133,7 +159,7 @@ export const useAbility = (
             });
         }, 1000);
 
-    }, [agent, charge, onCooldown, opponents, roomId, playerId, config]);
+    }, [agent, charge, onCooldown, opponents, roomId, playerId, config, onSkipWords]);
 
     return { charge, isReady: charge >= 1, onCooldown, cooldownRemaining, activateAbility };
 };

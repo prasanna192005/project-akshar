@@ -8,6 +8,7 @@ export interface PlayerEffects {
     inputLocked: boolean;
     progressHidden: boolean;
     paranoia: boolean;
+    empress: boolean;
 }
 
 export interface Player {

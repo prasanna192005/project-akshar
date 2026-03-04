@@ -1,7 +1,7 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
 import { calculateWPM, calculateAccuracy } from "../lib/gameEngine";
 
-export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?: number | null, blockInput?: boolean) => {
+export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?: number | null, blockInput?: boolean, penaltyOnErrors?: boolean) => {
     const words = useMemo(() => prompt.trim().split(/\s+/), [prompt]);
     const [currentWordIndex, setCurrentWordIndex] = useState(0);
     const [currentInput, setCurrentInput] = useState("");
@@ -77,6 +77,16 @@ export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?:
             // Instant error feedback
             if (value !== targetWord.substring(0, value.length)) {
                 setErrors(prev => prev + 1);
+
+                // EMPRESS EFFECT: Penalize mistakes by moving progress back
+                if (penaltyOnErrors && currentWordIndex > 0) {
+                    setCurrentWordIndex(prev => prev - 1);
+                    const prevWord = words[currentWordIndex - 1];
+                    // Subtract characters of the word we just "un-completed" plus the space
+                    setCorrectChars(prev => Math.max(0, prev - prevWord.length - 1));
+                    setCurrentInput(""); // Clear current mistake
+                    return; // Exit early as we've already handled the penalty
+                }
             }
         }
 
@@ -86,7 +96,7 @@ export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?:
             setIsComplete(true);
             return;
         }
-    }, [isActive, isComplete, words, currentWordIndex, currentInput, blockInput]);
+    }, [isActive, isComplete, words, currentWordIndex, currentInput, blockInput, penaltyOnErrors]);
 
     const wpm = useMemo(() => {
         if (!startTime) return 0;
@@ -96,6 +106,11 @@ export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?:
     const accuracy = useMemo(() => {
         return calculateAccuracy(correctChars, totalTypedChars);
     }, [correctChars, totalTypedChars]);
+
+    const isError = useMemo(() => {
+        const targetWord = words[currentWordIndex];
+        return currentInput !== "" && !targetWord.startsWith(currentInput);
+    }, [currentInput, words, currentWordIndex]);
 
     const progress = useMemo(() => {
         if (words.length === 0) return 0;
@@ -143,6 +158,7 @@ export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?:
         isComplete,
         wpm,
         accuracy,
+        isError,
         progress,
         words,
         lastInputAt,

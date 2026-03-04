@@ -90,6 +90,16 @@ export default function Home() {
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-600/10 blur-[120px] rounded-full -z-10" />
 
       {/* Top Navigation */}
+      <div className="absolute top-8 left-8 z-50">
+        <Link
+          href="/guide"
+          className="px-6 py-2 bg-white/5 border border-white/10 hover:border-[#FF4655] hover:text-[#FF4655] transition-all text-[10px] font-black uppercase tracking-[0.2em] rounded-sm group flex items-center gap-3 backdrop-blur-sm shadow-[0_0_20px_rgba(255,70,85,0.05)]"
+        >
+          <div className="w-1.5 h-1.5 bg-[#FF4655] rounded-full animate-pulse" />
+          Mission Briefing
+        </Link>
+      </div>
+
       <div className="absolute top-8 right-8 z-50 flex items-center gap-4">
         <Link
           href="/test"

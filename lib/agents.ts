@@ -90,13 +90,13 @@ export const AGENTS: Record<AgentType, Agent> = {
         id: 'REYNA',
         name: 'REYNA',
         color: '#C84FA8',
-        tagline: 'I feed on your misery.',
-        passive: 'Every 15 correctly typed words grants a 0.5s time bonus.',
-        active: 'DEVOUR — if leading in WPM, steal 3s advantage (jump forward).',
+        tagline: 'THEIR MISTAKES ARE MY STRENGTH.',
+        passive: 'Soul Harvest: Every 15 correctly typed words grants a 0.5s time bonus.',
+        active: 'EMPRESS — for 8s, every typo the target makes moves their progress BACKWARDS by one word.',
         abilityKey: 'TAB',
         chargeRateModifier: 1.2,
         cooldown: 11,
-        lore: 'Inspired by Reyna. Feast or famine.'
+        lore: 'Inspired by Reyna. A soul-eating duelist who punishes failure.'
     },
     KILLJOY: {
         id: 'KILLJOY',
