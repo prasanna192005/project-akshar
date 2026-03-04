@@ -61,11 +61,12 @@ const EffectOverlay: React.FC<EffectOverlayProps> = ({ effects }) => {
         }
         @keyframes flash {
           0% { opacity: 0; }
-          10% { opacity: 1; }
+          2% { opacity: 1; }
+          80% { opacity: 1; }
           100% { opacity: 0; }
         }
         .animate-flash {
-          animation: flash 0.5s ease-out forwards;
+          animation: flash 2s ease-out forwards;
         }
       `}</style>
         </div>

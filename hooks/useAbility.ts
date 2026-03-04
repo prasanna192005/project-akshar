@@ -123,11 +123,11 @@ export const useAbility = (
                 });
             });
             await update(ref(db), updates);
-            console.log(`[useAbility] Effect activated. Duration set to: ${agent.id === 'REYNA' ? 8000 : 4000}ms`);
+            console.log(`[useAbility] Effect activated. Duration set to: ${agent.duration * 1000}ms`);
             const startTime = Date.now();
 
             // Auto-clear effect after duration (e.g. 8s for Empress)
-            const duration = agent.id === 'REYNA' ? 8000 : 4000;
+            const duration = agent.duration * 1000;
             setTimeout(async () => {
                 const clearUpdates: Record<string, any> = {};
                 targets.forEach(t => {

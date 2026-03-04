@@ -10,6 +10,7 @@ export interface Agent {
     abilityKey: string;
     chargeRateModifier: number;
     cooldown: number;
+    duration: number;
     lore: string;
 }
 
@@ -24,6 +25,7 @@ export const AGENTS: Record<AgentType, Agent> = {
         abilityKey: 'TAB',
         chargeRateModifier: 1.4,
         cooldown: 8,
+        duration: 0,
         lore: 'Inspired by Jett. Fast and agile.'
     },
     PYRA: {
@@ -36,6 +38,7 @@ export const AGENTS: Record<AgentType, Agent> = {
         abilityKey: 'TAB',
         chargeRateModifier: 1.0,
         cooldown: 12,
+        duration: 5,
         lore: 'Inspired by Phoenix. Heals from fire.'
     },
     SAGE: {
@@ -48,6 +51,7 @@ export const AGENTS: Record<AgentType, Agent> = {
         abilityKey: 'TAB',
         chargeRateModifier: 0.8,
         cooldown: 15,
+        duration: 4,
         lore: 'Inspired by Sage. The protector.'
     },
     VIPER: {
@@ -60,6 +64,7 @@ export const AGENTS: Record<AgentType, Agent> = {
         abilityKey: 'TAB',
         chargeRateModifier: 1.0,
         cooldown: 14,
+        duration: 4,
         lore: 'Inspired by Viper. Toxic zone controller.'
     },
     OMEN: {
@@ -72,6 +77,7 @@ export const AGENTS: Record<AgentType, Agent> = {
         abilityKey: 'TAB',
         chargeRateModifier: 1.0,
         cooldown: 13,
+        duration: 4,
         lore: 'Inspired by Omen. Shadowy manipulator.'
     },
     BREACH: {
@@ -84,6 +90,7 @@ export const AGENTS: Record<AgentType, Agent> = {
         abilityKey: 'TAB',
         chargeRateModifier: 1.5,
         cooldown: 10,
+        duration: 2,
         lore: 'Inspired by Breach. The entry frag initiator.'
     },
     REYNA: {
@@ -96,6 +103,7 @@ export const AGENTS: Record<AgentType, Agent> = {
         abilityKey: 'TAB',
         chargeRateModifier: 1.2,
         cooldown: 11,
+        duration: 8,
         lore: 'Inspired by Reyna. A soul-eating duelist who punishes failure.'
     },
     KILLJOY: {
@@ -108,6 +116,7 @@ export const AGENTS: Record<AgentType, Agent> = {
         abilityKey: 'TAB',
         chargeRateModifier: 0.7,
         cooldown: 16,
+        duration: 2,
         lore: 'Inspired by Killjoy. Strategic denial.'
     }
 };

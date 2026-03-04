@@ -107,20 +107,32 @@ export default function TestingRange() {
         setOnCooldown(true);
         setCooldownRemaining(agent.cooldown);
 
-        // Sync duration with production: 8s for Empress, 4s for others
-        const duration = agent.id === 'REYNA' ? 8 : 4;
-        setEffectRemaining(duration);
+        // Sync duration with production values from agent data
+        const durationSeconds = agent.duration;
+        setEffectRemaining(durationSeconds);
 
+        // Precise state clearance using setTimeout
+        const clearTimer = setTimeout(() => {
+            setEffects({ flashed: false, blurred: false, inputLocked: false, scrambledWords: [], frozen: false, progressHidden: false, paranoia: false, empress: false });
+            setEffectRemaining(0);
+        }, durationSeconds * 1000);
+
+        // UI countdown using higher precision interval
         const effectTimer = setInterval(() => {
             setEffectRemaining(prev => {
-                if (prev <= 1) {
+                const next = Math.max(0, prev - 0.1);
+                if (next <= 0) {
                     clearInterval(effectTimer);
-                    setEffects({ flashed: false, blurred: false, inputLocked: false, scrambledWords: [], frozen: false, progressHidden: false, paranoia: false, empress: false });
                     return 0;
                 }
-                return prev - 1;
+                return next;
             });
-        }, 1000);
+        }, 100);
+
+        return () => {
+            clearTimeout(clearTimer);
+            clearInterval(effectTimer);
+        };
     }, [charge, onCooldown, agent, wpm, skipWords]);
 
     // Handle Tab key for abilities
@@ -221,7 +233,7 @@ export default function TestingRange() {
                                 </span>
                                 {effectRemaining > 0 && (
                                     <span className="text-[#C84FA8] animate-pulse">
-                                        {">> "} ACTIVE_EFFECT: {effectRemaining}s REMAINING
+                                        {">> "} ACTIVE_EFFECT: {effectRemaining.toFixed(1)}s REMAINING
                                     </span>
                                 )}
                             </div>
