@@ -254,7 +254,7 @@ export const AGENT_LORE: Record<AgentType, AgentLore> = {
 
 export const WORLD_LORE = {
     title: "PROJECT AKSHAR: THE 2038 COLLAPSE",
-    image: "/lore/world_hero.png",
+    image: "/lore/world_hero.jpg",
     content: [
         "AKSHAR: The world went silent on a Tuesday.",
         "PROLOGUE — AMRAVATI, MAHARASHTRA | 19 May 2038. 5:43 AM.",
