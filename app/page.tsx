@@ -109,6 +109,13 @@ export default function Home() {
           <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse" />
         </Link>
         <Link
+          href="/lore"
+          className="px-6 py-2 bg-[#FF4655]/10 border border-[#FF4655]/20 hover:bg-[#FF4655] hover:text-white transition-all text-[10px] font-black uppercase tracking-[0.2em] rounded-sm group flex items-center gap-3 backdrop-blur-sm shadow-[0_0_20px_rgba(255,70,85,0.1)]"
+        >
+          Tactical Archives
+          <div className="w-1.5 h-1.5 bg-white rounded-full animate-ping" />
+        </Link>
+        <Link
           href="/agents"
           className="px-6 py-2 bg-white/5 border border-white/10 hover:border-[#FF4655] hover:text-[#FF4655] transition-all text-[10px] font-black uppercase tracking-[0.2em] rounded-sm group flex items-center gap-3 backdrop-blur-sm"
         >

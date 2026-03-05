@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
+import Link from "next/link";
 import { useRoom } from "@/hooks/useRoom";
 import { usePlayer } from "@/hooks/usePlayer";
 import { AGENTS, AgentType } from "@/lib/agents";
@@ -65,7 +66,16 @@ export default function Lobby() {
                         <span className="text-[10px] uppercase font-bold tracking-[0.4em] opacity-40">Players: {players.length}/8</span>
                     </div>
                 </div>
-                <RoomCodeDisplay code={roomId} />
+                <div className="flex items-center gap-4">
+                    <Link
+                        href="/lore"
+                        className="px-6 py-2 bg-[#FF4655]/10 border border-[#FF4655]/20 hover:bg-[#FF4655] hover:text-white transition-all text-[10px] font-black uppercase tracking-[0.2em] rounded-sm group flex items-center gap-3 backdrop-blur-sm shadow-[0_0_20px_rgba(255,70,85,0.1)]"
+                    >
+                        Tactical Archives
+                        <div className="w-1.5 h-1.5 bg-white rounded-full animate-ping" />
+                    </Link>
+                    <RoomCodeDisplay code={roomId} />
+                </div>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">

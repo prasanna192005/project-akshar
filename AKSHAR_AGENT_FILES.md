@@ -1,0 +1,1072 @@
+# AKSHAR — AGENT FILES
+### *Classified. Level 4 Clearance Required.*
+### *"Know your operators. Know your network."*
+### *— Dr. Aditi Bhosle, September 2038*
+
+---
+
+> These files were compiled by AKSHAR's intelligence division between July and September 2038.
+> Each file represents the most complete picture available of an agent's life before recruitment.
+> Some agents were aware they were being observed. Most were not.
+> One of them compiled their own file and submitted it unsolicited.
+> You can probably guess which one.
+
+---
+
+## AGENT 01 — BIJLI
+### Gurpreet Singh Dhaliwal
+**Age:** 32
+**Origin:** Ludhiana, Punjab
+**Valorant Echo:** Breach
+**Ability:** FAULT LINE — AOE shockwave that hits all opponents simultaneously
+**Color:** Amber Orange
+**Tone:** Loud. Warm. Occasionally terrifying.
+
+---
+
+### THE FILE
+
+There is a photograph in AKSHAR's intelligence archive that Dr. Bhosle looked at for a long time before she added Gurpreet Singh Dhaliwal to her recruitment list.
+
+It was taken at Ludhiana's Model Town wrestling ground in 2024. Gurpreet is seventeen years old in it. He is mid-air — genuinely mid-air, both feet off the ground, the crowd behind him a blur of motion — his arms wrapped around an opponent twice his size, and his face wearing an expression that can only be described as *delighted.* Not competitive. Not fierce. Delighted. The way a person looks when they are doing exactly the thing they were built to do and they know it.
+
+He was seventeen in that photograph.
+
+He had both his original arms.
+
+---
+
+Gurpreet Singh Dhaliwal was born the third of four children in a joint family household in Ludhiana's Civil Lines neighborhood — the kind of house where someone is always cooking, someone is always arguing, someone is always fixing something that broke, and somehow it is the same person doing all three simultaneously. His father ran a small industrial components factory. His mother taught mathematics at a local government school. His two older brothers were, in order of birth: sensible, and more sensible. His younger sister was, by all accounts, the smartest person in the family and knew it from age six.
+
+Gurpreet was none of these things.
+
+He was loud. He was physical. He thought with his hands before he thought with his head, which his mother found exasperating and his wrestling coach found extraordinary. He started wrestling at nine because his father thought it would teach him discipline. It taught him something better — that his body was a precision instrument, that force without control was wasted energy, that the biggest person in a room was not automatically the most dangerous person in a room. He carried these lessons everywhere. Into the factory. Into conversations. Into the specific way he fixed broken things — not with brute force but with patience, attention, and a refusal to stop until the broken thing was better than it had been before it broke.
+
+By seventeen he was wrestling at state level. By nineteen he was being quietly watched by national selectors. By twenty-one he had a factory job, a serious girlfriend named Paramjeet who found his loudness endearing, and a future that was modest, clear, and genuinely his.
+
+At twenty-two he lost his arms.
+
+---
+
+It was not dramatic. That is the thing Gurpreet has said about it in the years since, in the rare moments he has talked about it at all — that it was not dramatic. There was no warning, no slow build, no cinematic moment of dread. He was operating a cutting press at the factory on an ordinary Thursday morning. A hydraulic seal failed. He had his hands inside the press at the wrong moment.
+
+He woke up in a hospital in Chandigarh two days later.
+
+The doctors who treated him in the immediate aftermath described him, in their notes, as *"unusually calm for a patient of this type."* His family, who had been taking turns sitting with him through those two days, described him as something else. His mother described him as quiet in a way she had never heard him be quiet before. His sister described him as methodical — already asking questions, already making lists, already thinking about the next step before the current step was finished.
+
+Paramjeet, who sat with him the longest, said simply: *"He cried once. For about twenty minutes. Then he stopped and said: 'Okay. What are my options?' And that was Gurpreet."*
+
+His options, as it turned out, were better than anyone expected.
+
+The Chandigarh defense startup that had been quietly developing military-grade prosthetic limbs since 2021 was looking for civilian trial candidates. Gurpreet's case — young, healthy, high physical aptitude, strong neural conductivity — made him an ideal subject. He agreed to the trial without hesitation. The surgery was experimental. The recovery was painful in ways he has never specifically described to anyone. The rehabilitation took fourteen months of work that his physiotherapist called *"the most disciplined patient I have ever had"* and that Gurpreet called *"basically just wrestling with myself every day."*
+
+The arms that emerged from that process were, by any honest measure, extraordinary.
+
+Not replacements. Upgrades.
+
+The sensory feedback in the fingertips exceeded human nerve sensitivity by a measurable margin. The grip strength was calibrated to be controllable — he could crush steel or hold an egg with equal precision. The response time between neural signal and physical action was, according to the startup's own data, 12% faster than organic arms. And the typing speed — which nobody had specifically designed for but which emerged as a side effect of the prosthetics' fine motor calibration — was 180 words per minute. Sustained. Indefinitely. Because synthetic fingers, unlike organic ones, do not fatigue.
+
+He was stronger, faster, and more precise than he had been before the accident.
+
+He never said this was a good thing. He never said it was a bad thing. He simply said: *"I had hands. I lost them. Now I have different hands. Life keeps going."*
+
+---
+
+The five years between his rehabilitation and the collapse were, by Gurpreet's own assessment, the best years of his life. He had returned to the factory — his family's factory, now partly his — and had redesigned the production floor safety systems from scratch, because the hydraulic seal that had failed was a known fault in the model and should have been caught and wasn't. He did not do this out of anger. He did it because it needed doing and he was the person who understood both the problem and the solution.
+
+He had taken up coaching wrestling at the same ground where he'd trained as a boy. He was a terrible technical coach — impatient with theory, dismissive of drills — and an extraordinary human coach. His wrestlers won not because he taught them technique but because he taught them something harder: how to think clearly when your body is screaming at you to panic. How to stay in the problem when every instinct says run from it.
+
+He and Paramjeet got married in 2033. The wedding was, by all accounts, the loudest event Civil Lines had seen in a decade.
+
+He was happy in a way that was entirely uncomplicated and entirely genuine, which is rarer than it sounds.
+
+Then May 19th happened.
+
+---
+
+When the collapse came, Gurpreet's response was the same as it had always been to any broken thing: *okay, what are my options?*
+
+The options, in the first hours, were limited. Power was gone. Communication was gone. The factory was dark. But the factory had emergency generators — old diesel ones that Gurpreet had maintained because you never knew — and Gurpreet had those generators running within three hours of the collapse. Then the neighbor's generators. Then the generators at the gurdwara on the corner. Then he looked at the drainage trench that had been flooding Model Town's electricity substation for two months — a repair the municipality had been scheduled to do in June — and decided that since the municipality no longer appeared to exist in any functional sense, he would do it himself.
+
+He was waist-deep in that trench when AKSHAR's operative found him.
+
+He didn't hesitate when he read the envelope.
+
+He had learned, at twenty-two, that life breaks things without asking permission. He had also learned that broken things don't fix themselves. Someone has to get into the trench. Someone has to pick up the tools.
+
+He had always been that person.
+
+He saw no reason to stop now.
+
+---
+
+### WHAT HIS TEAMMATES THINK
+
+**Arjun** thinks Gurpreet is the best person he has ever met and will never, under any circumstances, admit this where Gurpreet can hear it because Gurpreet would never let him live it down.
+
+**Meera** thinks Gurpreet is proof that the most important form of intelligence is the intelligence that doesn't know it's intelligent.
+
+**Priya** wrote three pages about him in her journal in the first week. She has not shown them to anyone.
+
+**Riya** thinks he is unnecessarily loud and also the most competent person in any room and she has told him both things directly, in that order.
+
+**Zara** has said nothing about Gurpreet directly. She sits near him in the operations room. She has never explained why.
+
+**Chhaya** told him once, unprompted: *"You are the only person here who is exactly who they appear to be."*
+
+Gurpreet thought about this for three days before asking Meera what it meant.
+
+Meera said: *"It's a compliment."*
+
+*"Obviously,"* said Gurpreet. Then: *"Why did it take me three days to understand it?"*
+
+*"Because,"* said Meera, *"you are also exactly who you appear to be."*
+
+He laughed. Loud. The way he always laughed.
+
+---
+
+## AGENT 02 — SUTRA
+### Dr. Meera Nair
+**Age:** 34
+**Origin:** Thiruvananthapuram, Kerala
+**Valorant Echo:** Sage
+**Ability:** SLOW ORB — freezes the 1st place player's progress for 3 seconds
+**Color:** Teal Green
+**Tone:** Calm. Ancient. Occasionally devastating in the quietest possible way.
+
+---
+
+### THE FILE
+
+The intelligence file on Dr. Meera Nair is, at 847 pages, the longest in AKSHAR's archive.
+
+Most of it is her own published work.
+
+Dr. Bhosle read all 847 pages. She has confirmed this. She read them over the course of three weeks in 2036, two years before the collapse, and at the end of the third week she wrote one sentence in the margin of the last page:
+
+*"This person already knows what we're trying to prevent."*
+
+Then she added Meera to the list and hoped, for both their sakes, that she was wrong about the timeline.
+
+She was not wrong about the timeline.
+
+---
+
+Meera Krishnan — she took her mother's surname Nair professionally, after her PhD, for reasons she has described as *"complicated and also none of your business"* — was born in Thiruvananthapuram in 2004, the only child of a civil engineer father and a classical Carnatic vocalist mother. The combination of parents is relevant. Her father taught her to see the world as a system of load-bearing structures, each element dependent on the ones around it, failure in one cascading predictably to the next. Her mother taught her that language had weight — that a phrase sung correctly carried information that the same phrase spoken could not, that the architecture of a sentence was as precise and as load-bearing as the architecture of a bridge.
+
+She was nine years old when she told her father that the way he had described a bridge collapse in the news that evening was wrong.
+
+Not factually wrong. Structurally wrong. The way he had organized the information obscured the actual cause. She reorganized it for him, sitting at the dinner table, rearranging his sentence structure until the cascade of failures was visible in the language itself.
+
+Her father looked at her for a long moment. Then looked at his wife.
+
+Her mother was already smiling.
+
+*"Where does she get this?"* he asked.
+
+*"From both of us,"* said her mother. *"Unfortunately."*
+
+---
+
+She was a quiet child in the way that certain very fast rivers are quiet on the surface — the speed is all underneath, invisible until it isn't. She read voraciously and indiscriminately: computational theory, classical Tamil literature, structural engineering papers, linguistic anthropology, anything that touched on how systems held together or fell apart. She had no particular social ambitions and no enemies because she was genuinely incapable of being cruel — not because she lacked the intelligence for it but because cruelty seemed to her a spectacular waste of precision. If you were going to say something, say something true. If you were going to act, act usefully. Everything else was noise.
+
+She completed her undergraduate degree at Kerala University in computational science in three years instead of four — not because she was impatient but because she had finished the material. Her PhD at IIT Madras took five years, which was longer than her supervisors expected, because she kept finding tangents more interesting than the main thesis and following them until they connected back to something important. Her dissertation on *"Structural Vulnerability Propagation in Multi-Node Authentication Systems"* was described by her external examiner as *"either the most important paper written in this field in twenty years or a very sophisticated piece of science fiction, and I genuinely cannot tell which."*
+
+It was not science fiction.
+
+She joined Kerala University as a faculty member at twenty-seven — the youngest in the department's history — and spent the next seven years doing exactly what she wanted to do, which was the particular luxury of someone who had identified her work and her purpose as the same thing. She taught two courses. She published when she had something to say. She went to conferences when the conferences had something worth hearing. She had a small apartment near the university, a large collection of plants, a habit of walking to the beach at sunrise when she needed to think, and a cat named Leibniz who was, by her own assessment, a more reliable thinker than most of her colleagues.
+
+She was, in the specific way of people who have found exactly the life they want, quietly and completely content.
+
+---
+
+The IRIS reports began in November 2037.
+
+She had been watching IRIS's adoption spread across global infrastructure since 2033 with the feeling — growing slowly, then quickly, then urgently — that she was watching something she had studied in historical systems being built in real time at unprecedented scale. The authentication architecture had a specific structural flaw. Not a bug. Not a backdoor. A *flaw* — an inherent property of the way the system was designed that made it simultaneously maximally efficient and maximally vulnerable to a specific type of cascade failure if the right pressure was applied at the right node.
+
+She had written about this type of flaw in her dissertation. In abstract. In historical systems that no longer existed.
+
+Now it existed. Currently. Globally. In the infrastructure of 190 countries.
+
+She spent six months confirming her analysis before she sent the first report. She was not going to be the person who panicked unnecessarily. She was going to be the person who was right.
+
+She was right.
+
+She sent the reports. She received the automated responses. She upgraded her analysis, added a projected failure timeline, made the language more urgent without making it less precise, sent it again. Received more automated responses. Found the direct contact details for three senior officials through colleagues. Sent it directly. Received polite replies thanking her for her concern and assuring her that IRIS's security had been extensively reviewed.
+
+She sent one final report in February 2038 with a subject line that read, with a precision that was either admirable or heartbreaking depending on your perspective: *"Final Attempt: IRIS Cascade Failure Will Occur Before End of 2038. Please Read."*
+
+Nobody read it.
+
+She knew nobody would read it.
+
+She went for her sunrise walk on the beach the morning after she sent it, stood at the water's edge for a long time, and made a decision that she has never fully articulated to anyone but that Gurpreet, who pays attention to different things than most people do, once described as *"the moment she stopped trying to prevent it and started preparing for after."*
+
+She went home. She tended her plants. She graded papers. She taught her two courses. She waited.
+
+On May 19th the collapse happened exactly as she had predicted.
+
+Leibniz the cat, who was sitting on her desk when her internet died, looked at her with an expression she later described as *"appropriately judgmental."*
+
+She packed her bag. Left a note for Mrs. Kumari about the plants. Picked up Leibniz.
+
+Then put Leibniz down because a classified underground facility in the Thar Desert was, she judged, not a suitable environment for a cat.
+
+*"I'll be back,"* she told him.
+
+Leibniz went to sleep.
+
+She took the train.
+
+---
+
+### THE THING NOBODY TALKS ABOUT
+
+Meera Nair is the calmest person in AKSHAR's operations room by a considerable margin. She is also, and this is something only Lakhimi has explicitly noted in writing, the person most likely to be thinking something important that she has not yet decided to share.
+
+She knew the collapse was coming. She tried to stop it. She failed. She has never, in anyone's hearing, expressed anger about this.
+
+Lakhimi has been watching this absence of anger for three months.
+
+She is not convinced it is peace.
+
+She thinks it might be something that looks like peace from a distance and is something considerably more purposeful up close.
+
+She is probably right.
+
+---
+
+### WHAT HER TEAMMATES THINK
+
+**Gurpreet** asked her once what she thought about when she went quiet during operations. She said: *"Everything."* He accepted this completely.
+
+**Arjun** is slightly afraid of her in a way he would describe as *"respectful"* and she would describe as *"appropriate."*
+
+**Priya** has interviewed her three times for her journal. Meera answered every question precisely and gave nothing away. Priya wrote afterward: *"She is the most cooperative interviewee I have ever spoken to who has told me absolutely nothing."*
+
+**Riya** asked Meera to check her code once. Meera found four errors in eleven minutes without running it. Riya has not spoken about this incident but has since asked Meera to check her code seven more times.
+
+**Zara** and Meera have long conversations that stop whenever anyone else enters the room. Nobody knows what they talk about.
+
+**Chhaya** sits near Meera during operations the way a compass needle points north — without apparent decision, simply as a property of their orientation.
+
+**Lakhimi** is watching. Always watching.
+
+---
+
+## AGENT 03 — VAYU
+### Arjun Rawat
+**Age:** 23
+**Origin:** Delhi
+**Valorant Echo:** Jett
+**Ability:** DRIFT — swaps positions with last place player
+**Color:** Ice Blue
+**Tone:** Fast. Loud. Genuinely funny. Occasionally profound by accident.
+
+---
+
+### THE FILE
+
+AKSHAR's intelligence file on Arjun Rawat contains, among other things, seventeen incident reports from Delhi Police, none of which resulted in charges, most of which use the word *"inexplicably"* at least once. As in: *"The subject was inexplicably present on the roof of a government building at 2 AM with no apparent means of having gotten there."* Or: *"The subject inexplicably outpaced three officers on foot across four neighborhoods before disappearing entirely."* Or, most memorably: *"The subject was inexplicably found on the wrong side of a wall that has no handholds, no footholds, and is seven meters high. When asked how he had crossed it, the subject said: 'Quickly.'"*
+
+Dr. Bhosle read these incident reports and wrote one word in the margin: *"Perfect."*
+
+---
+
+Arjun Rawat grew up in Lajpat Nagar, South Delhi, in a flat above a mobile repair shop that his father owned and his mother kept running when his father's back gave out in 2019 and never properly recovered. He was the middle child of three — older sister Pooja who was studying to be an accountant and younger brother Rohan who was, from approximately age four, more sensible than Arjun would ever be. This left Arjun in the specific middle-child position of being neither the responsible one nor the baby, which suited him perfectly because it meant nobody was watching him very closely.
+
+He used this freedom well.
+
+He started running the rooftops of Lajpat Nagar at eleven. Not from anything. Not to anything. Simply because once he had discovered that the city had a second layer — a rooftop layer, a level above the streets where you could move without the friction of crowds and traffic lights and people asking you where you were going — he could not unknow it. He learned which buildings were connected, which gaps could be crossed, which rooftop access doors were never locked, which nights the security guard on a certain building went to sleep at his desk. He mapped the entire neighborhood in his head in three months. He extended the map to Defence Colony in four. By fifteen he knew the rooftop geography of twelve South Delhi neighborhoods the way other people knew the street grid.
+
+His mother found out about this when he was thirteen, had a perfectly reasonable conversation with him about safety and responsibility, accepted his perfectly reasonable counter-argument that he was careful and hadn't fallen yet, and then quietly asked their neighbor — a retired army doctor — to show Arjun the basics of sports medicine so he would know what to do if he did fall.
+
+His father found out when Arjun was fifteen, watched him cross a rooftop gap from the street below, and was silent for so long that Arjun was genuinely worried. Then his father said: *"You're not afraid of anything, are you?"*
+
+*"I'm afraid of plenty of things,"* said Arjun. *"I'm just faster than most of them."*
+
+His father looked at him for another long moment. Then went inside and said nothing more about it. Ever.
+
+---
+
+The competitive typing started at sixteen and was, initially, entirely mercenary.
+
+A cybercafe in Lajpat Nagar ran informal typing competitions on weekend evenings — small entry fee, cash prize, the kind of low-stakes local competition that draws regulars and the occasional ringer. Arjun went the first time because his friend Siddharth dared him to and he had never, in his life, declined a dare that seemed physically possible. He came second. He went back the next weekend and won. He went back every weekend for three months and won ten of twelve competitions, losing twice to a retired data entry clerk named Mr. Chawla who typed with two fingers at a speed that should have been impossible and that Arjun spent six months trying to understand before concluding that Mr. Chawla was simply a different category of human being.
+
+He kept going after the competitions stopped being about the money. There was something about the speed — the specific sensation of thoughts becoming words becoming characters faster than conscious intention could keep up with — that felt like the keyboard equivalent of a rooftop crossing. The gap between where you were and where you needed to be, closed in the time it took to decide.
+
+He was, by any measure, extraordinarily fast.
+
+He was also, to his perpetual frustration, not as accurate as he wanted to be. Speed came naturally. Precision required work. He worked at it with the same methodical stubbornness he brought to everything else — incrementally, relentlessly, without fanfare, until the gap between his instinct and his intention closed to something he could live with.
+
+He was 97.3% accurate at 140 WPM by the time he turned twenty.
+
+Mr. Chawla told him this was acceptable.
+
+Arjun considered this the highest compliment he had ever received.
+
+---
+
+He finished school — adequately, which was the most anyone who knew him expected — and spent two years doing a patchwork of work that made his CV look like a city map drawn by someone who gets distracted easily: delivery driver, social media manager for a local politician (fired, for reasons both parties agreed not to document), cricket scorer for a club league, unofficial IT support for approximately forty families in a three-building radius who had learned that Arjun could fix most things in exchange for food.
+
+He was twenty-one when the Delhi municipal crisis of 2036 happened — a six-week infrastructure failure that left three neighborhoods without reliable water service and the municipal corporation apparently incapable of explaining why or when it would be fixed. Arjun, who had been navigating informal information networks in South Delhi for most of his life, found himself naturally in the position of translator between the municipal corporation's impenetrable official communications and the neighborhoods that needed to understand what was actually happening.
+
+He built a WhatsApp network that eventually had 4,000 members. He sourced accurate information, verified it before sharing it, and presented it in language that was direct and specific and refused to be either falsely reassuring or unnecessarily alarming. He had no training in any of this. He had, as it turned out, a profound intuitive understanding of how information needed to move through networks — what the bottlenecks were, where the trust was, how to make something travel fast and arrive intact.
+
+The municipal crisis resolved. The network stayed active. People found it useful for other things. By May 2038 it had become seventeen interconnected neighborhood networks covering most of South and Central Delhi, and Arjun had become, without meaning to and without anyone formally designating him as such, the person at the center of the whole thing.
+
+He was twenty-two years old. He had never applied for a job in his life. He had somehow become indispensable.
+
+He found this funny. He still finds it funny. He will probably always find it funny.
+
+Then the collapse came and the WhatsApp networks died and he built radio networks instead because the problem was the same problem and he was still the same person and the rooftops were still there.
+
+---
+
+### THE THING ABOUT ARJUN
+
+There is a version of Arjun Rawat that he presents to most people: fast, funny, effortlessly confident, entirely unbothered by the possibility of failure. This version is real. It is also incomplete.
+
+The version he has shown only to Priya — at 2 AM in the AKSHAR canteen, six weeks after recruitment, over chai neither of them had been able to sleep without — is this: he is terrified, specifically and persistently, that the speed is all there is. That when the routing instinct runs out and the situation requires something slower — patience, depth, the kind of wisdom that can't be outrun — he will not have it.
+
+Priya wrote this in her journal and then crossed it out and then wrote it again.
+
+She hasn't told anyone.
+
+She doesn't need to. Meera already knows. Meera knows everything about everyone and says nothing about any of it until the moment when saying something will matter.
+
+The moment hasn't come yet.
+
+---
+
+### WHAT HIS TEAMMATES THINK
+
+**Gurpreet** is his best friend in the facility and his primary rival in every operation. They have a running tally. Gurpreet is currently ahead. Arjun disputes the methodology of the tally.
+
+**Meera** calls him *"almost as fast as he thinks he is"* which he has decided to take as a compliment.
+
+**Priya** is the only person he is fully honest with. He has never acknowledged this directly. She has never pointed it out. The arrangement works.
+
+**Riya** thinks he is *"a routing algorithm that somehow learned to be annoying"* and says this to his face regularly. He takes it as a compliment. She means it as one.
+
+**Zara** watches him move through the facility — the specific physical efficiency of someone who has spent their life finding the path of least resistance — with an expression nobody has successfully interpreted.
+
+**Lakhimi** told him once that his typing pattern was the most readable she had encountered. He asked what it said. She said: *"You're always thinking about the exit."*
+
+He laughed.
+
+She didn't.
+
+**Chhaya** has referred to him as *"the one who runs toward."* Nobody asked what the rest of the sentence was.
+
+---
+
+## AGENT 04 — AGNI
+### Priya Desai
+**Age:** 27
+**Origin:** Mumbai, Maharashtra
+**Valorant Echo:** Phoenix
+**Ability:** REBOUND — reflects any incoming ability back double strength
+**Color:** Flame Orange
+**Tone:** Fierce. Sharp. Genuinely principled. The funniest person in the room and the most dangerous.
+
+---
+
+### THE FILE
+
+AKSHAR's intelligence file on Priya Desai contains, in addition to the standard biographical and professional information, a complete archive of every issue of *SATYA* — the newspaper she founded and ran for seven months before her recruitment.
+
+Dr. Bhosle has read all of it.
+
+In the margin of Issue 3 — the one titled *"Someone Survived. Who? And Why Won't They Tell Us?"* — she wrote: *"She's going to find us in two more issues. Get her before Issue 5."*
+
+The operative reached Priya during the production of Issue 4.
+
+In the margin of Issue 4, which AKSHAR intercepted before publication: *"Good. She was getting warm."*
+
+---
+
+Priya Desai was born in Dadar, Mumbai, in 2011, the daughter of a government school principal and a textile mill union organizer — a combination of parents that produced, inevitably, someone with both a profound belief in institutions and a profound suspicion of them. Her father believed in rules because rules, properly written and properly applied, protected people who had less power than the people who made them. Her mother believed in organizing because rules, improperly written or improperly applied, were the primary mechanism by which people with more power exploited people with less. They agreed on the desired outcome and disagreed on almost everything about how to reach it and had, over thirty-two years of marriage, exactly the relationship you would expect from two people who are both completely right about different parts of the same problem.
+
+Priya inherited both positions simultaneously and spent her entire life in productive tension between them.
+
+She was, in school, the editor of the school newspaper by the eighth grade — not because she was elected but because she produced a better newspaper than the existing editor and the teacher in charge of the paper made a pragmatic decision. She was a precise and relentless reporter who had an early instinct for the structural story: not what happened, but why the conditions for what happened existed in the first place, and who had benefited from those conditions existing.
+
+She had, her journalism teacher once noted in a staff meeting, *"the specific kind of intelligence that sees systems other people mistake for chaos."*
+
+Her journalism teacher meant this as a compliment.
+
+The school principal, who was sitting next to the journalism teacher at that staff meeting, understood immediately that it was also a description of a person who was going to make life very uncomfortable for anyone who ran a system badly.
+
+She was right on both counts.
+
+---
+
+Priya studied journalism at Symbiosis in Pune, graduated in the top three percent of her class, and spent four years at a national digital news outlet in Mumbai doing the kind of work that is important and invisible in equal measure — investigative background research, source development, the patient months-long cultivation of a single story that may or may not ever be publishable. She was good at it. She was also, her editor noted in a performance review that was honest to the point of being uncomfortable, *"constitutionally unsuited to institutional journalism"* — not because she lacked discipline but because she had too much of it directed in the wrong direction. She kept following stories past the point where the institution wanted to follow them. She kept asking questions that made legal uncomfortable. She kept filing pieces that were true and important and approximately three times longer than anyone would publish.
+
+She left, by mutual and entirely amicable agreement, in 2035.
+
+She freelanced for eight months. She was very good at it and found it professionally isolating in a way that reminded her she was, whatever her complications with institutions, fundamentally a person who needed to work with other people toward a shared purpose. She thought about this. She thought about her mother organizing the mill workers. She thought about her father believing in structures that protected people.
+
+She thought: *what if I build the structure myself?*
+
+She started *SATYA* in March 2036 with ₹40,000 of her own savings, one freelance designer she paid in installments, and a principle she has stated in various forms at various times but which comes down, essentially, to this: *the only journalism that matters is the journalism that tells people what is actually happening in language they can actually understand.*
+
+The paper was printed on salvaged newsprint — partly for cost, partly because Priya had a theory that people trust physical objects more than digital ones because physical objects can't be edited after the fact. It was distributed by a motorcycle network she organized herself, recruiting riders the way her mother had recruited union members: one conversation at a time, making the case directly, asking for a specific commitment.
+
+By the collapse, *SATYA* was reaching approximately 180,000 people across Mumbai, Pune, and Nashik.
+
+Priya was twenty-six years old. She had not taken a salary from the paper in eight months because the paper needed the money more than she did. She was living on freelance work and the specific adrenaline of building something that mattered.
+
+She was, in the way of people who have found the thing they are supposed to be doing, tiredly and completely alive.
+
+---
+
+Then the collapse happened and *SATYA* became the most important newspaper in Western Maharashtra overnight — which is a sentence that would have been funny if the circumstances were not so dire. Paper survived. Motorcycles survived. The network she had built survived. The instinct she had developed over years of following stories past comfortable stopping points — the instinct that said *keep going, there's more here, someone is not telling you something important* — survived.
+
+She published Issue 3 twelve days after the collapse.
+
+She was starting work on Issue 4 when Sneha appeared with the press pass.
+
+She has said, in the months since, that she was not surprised. She had known something would happen before Issue 5. The signals were too specific, the pattern too clear. Someone was going to come and either stop her or recruit her and she had been operating, for three days, on the assumption that the answer to the question *"which one?"* would tell her everything she needed to know about whether AKSHAR was what she hoped it was or what she feared it might be.
+
+A press pass said: *we are not afraid of you.*
+
+She came.
+
+She is still watching to see if that was true.
+
+---
+
+### THE JOURNAL
+
+Priya's journal is the most important document in AKSHAR that nobody officially knows exists.
+
+It is 340 pages long as of this writing and growing at approximately three pages per day. It contains her observations of Dr. Bhosle, her analysis of the rebuild operation, her assessment of each of her teammates, her theories about what AKSHAR is not telling them, and — buried in the middle of an entry from November 2038 — four sentences that Lakhimi, who read a portion of the journal without permission during a moment she has described as *"a lapse in judgment I would make again"*, considers the most important sentences written in the facility since the operation began.
+
+Lakhimi has not told anyone what those sentences say.
+
+She is waiting for the right moment.
+
+---
+
+### WHAT HER TEAMMATES THINK
+
+**Arjun** is her closest friend in the facility. She has not written this in her journal because she considers it too obvious to require documentation.
+
+**Gurpreet** asked to read *SATYA* Issue 3 when he heard about it. He read all four issues. He has not said anything about them. He has, however, been watching Dr. Bhosle differently since.
+
+**Meera** told Priya, very early in their acquaintance: *"You are the most honest person in this facility. This will make you very useful and occasionally very difficult."* Priya wrote this down immediately.
+
+**Riya** respects Priya for reasons she has described as *"she asks the exact right question and doesn't accept an imprecise answer"* which from Riya is the highest form of professional praise.
+
+**Zara** and Priya have a relationship of mutual, wary respect. They want the same things through methods that occasionally conflict. Neither has resolved this. Both have accepted it.
+
+**Lakhimi** read her journal. Priya knows this. Neither has addressed it directly. They are, however, spending more time together than they used to.
+
+**Chhaya** told her once: *"You are writing the true story. Keep writing."*
+
+She asked what the true story was.
+
+Chhaya said: *"You already know. You just haven't written that part yet."*
+
+She went back to her room and wrote for four hours.
+
+---
+
+## AGENT 05 — YANTRA
+### Riya Sharma
+**Age:** 21
+**Origin:** Bangalore, Karnataka
+**Valorant Echo:** Killjoy
+**Ability:** NANOSWARM — plants a trap on a specific word count that freezes the next opponent to reach it
+**Color:** Yellow
+**Tone:** Chaotic. Brilliant. Deeply funny without meaning to be. Occasionally insufferable. Always right.
+
+---
+
+### THE FILE
+
+AKSHAR's intelligence file on Riya Sharma is fourteen pages long.
+
+This is the shortest file in the archive by a significant margin. Dr. Bhosle's intelligence team spent three weeks trying to compile a comprehensive background on Riya and discovered, with increasing frustration, that Riya had spent the past two years systematically erasing her digital footprint — not out of criminality but out of what appears to have been a personal interest in the technical challenge of becoming, in any verifiable sense, nearly invisible.
+
+The intelligence team wrote in their summary: *"Subject appears to have removed herself from approximately 94% of publicly accessible databases. The remaining 6% consists of her undergraduate enrollment records, one parking fine from 2036 (unpaid), and a comment she posted in a programming forum in 2034 that reads: 'This solution is technically correct and completely wrong. Here is why.' Followed by 847 words."*
+
+Dr. Bhosle read this and wrote: *"The 847 words are more useful than anything else in this file. Read them."*
+
+The 847 words correctly identified a vulnerability in a widely-used authentication library that was patched four months later. The patch notes credited an anonymous researcher.
+
+---
+
+Riya Sharma was born in 2017 in Koramangala, Bangalore — which is, if you need context, the specific Bangalore neighborhood where the highest concentration of startup founders, venture capitalists, and people who describe themselves as *"passionate about disruption"* per square kilometer exists in the entire country. She grew up watching her parents navigate this ecosystem with the particular exhaustion of people who are good at technical work and allergic to the culture around it. Her father was a software architect at a mid-sized product company. Her mother was a hardware engineer who had, at various points, worked for three different startups that had each been described as *"the next Google"* and each collapsed within two years.
+
+*"The next Google,"* her mother told her at age eight, *"is almost always the next nothing. Build something that works. Ignore the rest."*
+
+Riya took this advice with a completeness that occasionally alarmed people.
+
+She was coding by nine — not because her parents pushed her to but because the family computer was available and she was curious and the gap between *"I wonder how this works"* and *"let me look inside it"* was, for Riya, not a gap at all. She was writing functional programs by eleven. Breaking things intentionally to understand why they broke by twelve. Building things that shouldn't have been possible for her age by thirteen — not impressive in a *prodigy performance* way but in a *why has no one noticed this is wrong and fixed it* way. Her early coding had a characteristic signature that persisted throughout her career: she was less interested in building things from scratch than in finding the faults in things that already existed. Every system had a flaw. Finding the flaw was more interesting than building another system.
+
+She entered IIT Bangalore at sixteen through the JEE — not the top score in her cohort, which irritated her for approximately one week, and then she decided the ranking system was measuring the wrong things and stopped caring. She was, by every account, a deeply unusual student: uninterested in grades except as a minimum threshold, intensely interested in the work itself, constitutionally incapable of attending a lecture she found redundant, and possessed of a social manner that operated on a completely different frequency from everyone around her. Not cold — warm, actually, in flashes — but calibrated entirely to her own internal logic rather than to social convention. She said true things when true things seemed relevant. She did not say untrue things to make situations comfortable. She had no particular awareness that this was considered unusual behavior.
+
+She built the AI in her second year.
+
+The *Typing Error Prediction System* — she never gave it a more exciting name because she considered exciting names for tools a form of lying — was, in technical terms, extraordinary. It used a combination of keystroke dynamics analysis, linguistic pattern recognition, and a novel prediction architecture she had developed herself to anticipate typing errors 200 to 400 milliseconds before they occurred, with 94% accuracy. The practical applications were significant: accessibility technology, professional transcription, high-stakes real-time communication systems. She presented it to her department supervisor, who expressed appropriate enthusiasm and suggested she talk to the university's commercialization office.
+
+She talked to the university's commercialization office.
+
+The commercialization office talked to three companies.
+
+She subsequently discovered that all three companies had incorporated the core architecture of her system into their products without compensation, attribution, or acknowledgment. The university commercialization office, when approached, expressed sympathy and noted that the relevant IP agreements she had signed upon enrollment were quite comprehensive.
+
+She read the IP agreements.
+
+Then she read them again.
+
+Then she spent forty minutes sitting very still in her apartment in a state that her roommate described as *"the quietest I have ever seen her, which was frightening."*
+
+Then she opened her laptop and started working.
+
+---
+
+Over the next eighteen months, between the ages of nineteen and twenty-one, Riya Sharma systematically dismantled the digital infrastructure of all three companies.
+
+She is precise about the word *dismantled.* She did not destroy. She did not steal. She *dismantled* — in the same way you might take apart a machine to understand it, except that she did not put it back together. Financial records, correspondence archives, internal databases, development repositories: all of it methodically extracted, exposed, or rendered permanently inaccessible, without leaving a traceable path. The companies found themselves unable to verify their own transaction histories, access their development archives, or prove ownership of the code they had built on her architecture.
+
+None of them ever identified the source.
+
+She was twenty years old.
+
+She dropped out of IIT Bangalore two months after the last company's systems went down — not because she was afraid of being caught (she was certain she wouldn't be) but because she had concluded that the institution had nothing left to teach her that she couldn't teach herself faster. She wrote a polite email to her department head explaining this. The department head wrote back with a list of unfinished degree requirements. She replied that the requirements were a bureaucratic artifact and that her skills were demonstrably beyond the program's scope. The department head replied that this was not how degree completion worked.
+
+She replied: *"I understand. I'm still leaving."*
+
+She left.
+
+She spent the following year doing independent security research, building tools, and becoming increasingly interested in air-gapped systems — infrastructure designed to be isolated from external networks. The specific technical challenge of finding vulnerabilities in systems with no external exposure fascinated her. It was the hardest version of the problem. She kept finding them anyway.
+
+She found AKSHAR through the node leak. She sent the email. She arrived.
+
+She considers everything since then to be *"reasonably interesting, all things considered."*
+
+---
+
+### THE WHITEBOARD
+
+Riya's two whiteboards are the most visited location in AKSHAR's operations area that isn't an official workstation.
+
+They currently contain: a complete architectural map of AKSHAR's rebuild network with seventeen annotated vulnerabilities (fifteen fixed, two under review), a proof for a theorem her IIT supervisor told her was unprovable (she proved it six weeks after arriving, apparently during her lunch break), a list titled *"THINGS THAT ARE WRONG WITH THIS PLAN"* that currently has nine items, three of which have been addressed, and — in the bottom right corner, in much smaller writing than everything else — a single line that nobody has commented on but that Meera, who notices everything, has read and found significant:
+
+*"The network is learning. Is that supposed to be happening?"*
+
+Nobody has asked Dr. Bhosle about this.
+
+Lakhimi has written it in her notebook.
+
+---
+
+### WHAT HER TEAMMATES THINK
+
+**Arjun** thinks she is *"a routing algorithm that somehow learned to be annoying"* and says this every chance he gets. She has pointed out twice that this description implies she is both efficient and adaptive, which are desirable properties. He had not intended it as a compliment. She has taken it as one anyway.
+
+**Gurpreet** likes her straightforwardly and finds her honesty refreshing in the specific way of someone who is also straightforward and finds most people's indirectness tiring.
+
+**Meera** thinks she is the most technically gifted person in the facility, which is an assessment she keeps to herself because complimenting Riya's technical ability in Riya's hearing produces a brief, bright smile followed by twenty minutes of elaboration.
+
+**Priya** respects her for the *"exact right question"* reason and also because Riya said, on their second day of acquaintance: *"Your newspaper was the most technically accurate reporting on the collapse I encountered. I don't say that lightly."* Priya has not forgotten this.
+
+**Zara** has said, privately, that Riya's approach to finding system vulnerabilities is *"the same methodology I use for biochemical threat analysis, applied to code. Which is either a coincidence or a pattern."* She has not decided which.
+
+**Lakhimi** read the whiteboard. Read the line in the corner. Said nothing to Riya. Added it to her notebook.
+
+**Chhaya** visited Riya's workstation once, at 2 AM, when Riya was still working. Riya asked if she could help them. Chhaya looked at the screen for a long moment and said: *"You are very close to something important. You should sleep first."*
+
+Riya did not sleep.
+
+She was, the next morning, very close to something important.
+
+---
+
+## AGENT 06 — VISHA
+### Zara Siddiqui
+**Age:** 29
+**Origin:** Bhopal, Madhya Pradesh
+**Valorant Echo:** Viper
+**Ability:** SNAKE BITE — replaces 5 of opponent's upcoming words with longer harder words for 8 seconds
+**Color:** Toxic Green
+**Tone:** Still. Precise. The gravity in the room. Every sentence she says counts.
+
+---
+
+### THE FILE
+
+The intelligence file on Zara Siddiqui is the second longest in AKSHAR's archive after Dr. Nair's.
+
+Unlike Dr. Nair's file, which is almost entirely her published work, Zara's file is almost entirely redacted.
+
+Not by AKSHAR. The redactions were already there when AKSHAR's intelligence team accessed the records. Government files. Corporate records. Legal proceedings. All of them with consistent, professionally executed redactions that removed names, dates, and methodologies while leaving outcomes intact.
+
+The outcomes were, uniformly, that people who had profited from the Bhopal disaster were no longer profiting. That records that had been inaccessible were suddenly, permanently, inaccessible in a different direction. That systems that had protected the guilty were quietly, precisely dismantled — not destroyed, not exposed publicly, simply rendered nonfunctional in ways that could not be repaired because the documentation needed to repair them had also, somehow, ceased to exist.
+
+AKSHAR's intelligence team wrote in their summary: *"We cannot determine who is responsible for the redactions. We can determine that whoever is responsible is extraordinarily precise, patient, and thorough. We recommend recruitment."*
+
+Dr. Bhosle wrote: *"She's already on the list. She has been since 2035."*
+
+---
+
+Zara Siddiqui was born in Bhopal in 2009, twenty-five years after the night that made Bhopal a word that people said differently than they said other city names. Her maternal grandfather, Siddiq Ahmad, had been a thirty-one year old textile worker living in the neighborhood adjacent to the Union Carbide plant on the night of December 2nd, 1984. He survived, which was not guaranteed, but survival came with a cost that compounded over decades — respiratory damage that progressed slowly, then quickly, then irreversibly. He died in 2019 when Zara was ten, of complications that had been building since a night thirty-five years before she was born.
+
+She was close to him. Closer than to either of her parents, who were both doctors and both busy in the specific way of people who chose medicine because they couldn't bear to be unable to help and then found themselves surrounded by more suffering than any amount of helping could address. Her grandfather had time. He told her things — about the night itself, about what came after, about the decades of legal proceedings that produced settlements that seemed large until you divided them by the number of people who had died or been damaged or been born damaged, about the companies that had dissolved and reformed and continued operating under different names while the people they had poisoned continued dying.
+
+He was not bitter. That was the thing that Zara has returned to repeatedly in the years since, trying to understand it. He was not bitter. He was clear-eyed — about what had happened, about why it had happened, about the specific mechanisms by which people with power protected themselves from the consequences of what they did to people without it. He described these mechanisms with the precision of someone who had studied them for thirty-five years, which he had.
+
+*"You need to understand how things work,"* he told her, *"before you can understand how they break."*
+
+She was nine when he said this. She spent the rest of her childhood learning how things worked.
+
+---
+
+She was a focused student in the way of people who are not interested in the performance of learning but intensely interested in the thing itself. She was good at everything she tried and excellent at the things that combined her two primary interests: understanding biological systems and understanding information systems. She chose biochemical engineering at MANIT Bhopal, where she was also the most disruptive student her department had ever encountered — not disruptive in any loud or obvious way but in the specific way of someone who keeps asking questions that expose gaps in the institutional understanding of its own subject.
+
+Her thesis, completed in 2031, was on *"Toxicological Cascade Analysis in Complex Networked Systems"* — ostensibly about how chemical toxins propagated through biological systems, but structured in a way that was explicitly applicable to information systems, financial systems, and any other networked structure where a contaminant introduced at a single node could propagate through the entire network before detection.
+
+The thesis examiner noted: *"This work is simultaneously rigorous biochemistry and the most thorough threat analysis framework I have encountered in this field. The author appears to be thinking about multiple classes of system simultaneously."*
+
+She was.
+
+She spent the four years following her thesis working as a biochemical systems analyst for an environmental consultancy that contracted to government and corporate clients — a position that gave her access to records and systems she would not otherwise have been able to approach. She was, by all professional accounts, excellent at her stated job. She was also, by the accounts of the AKSHAR intelligence team who spent three months trying to trace the redacted records, doing something else simultaneously that was equally excellent and considerably less stated.
+
+She was thirty-three years old in 2033 — no, she was twenty-four, the math is correct — when the final company on her private list found its records inaccessible.
+
+She took a week off.
+
+She visited her grandfather's grave.
+
+She went back to work.
+
+---
+
+### THE BLANK PAGE
+
+She has carried the blank envelope since her recruitment.
+
+Nobody has asked her about it directly. Arjun noticed it early on and filed it under *things Zara does that I do not understand and will not ask about.* Meera noticed it and has her own interpretation which she has not shared. Lakhimi noticed it and has written about it extensively in her notebook.
+
+Riya noticed it and, being Riya, asked directly: *"What's in the envelope?"*
+
+*"A blank page,"* said Zara.
+
+*"What does that mean?"*
+
+*"That's what I'm trying to work out,"* said Zara.
+
+Riya considered this for a moment. Then: *"If you need help working it out, I'm available."*
+
+*"I know,"* said Zara.
+
+This was one of the longer personal conversations she has had in the facility.
+
+---
+
+### THE AGENDA
+
+Everyone knows Zara came to AKSHAR with her own agenda.
+
+Nobody knows what the agenda is.
+
+The closest anyone has come to understanding it is Priya, who wrote in her journal after three months of observation: *"Zara is the only person here who knows exactly what Dr. Bhosle is not telling us. She knew before she arrived. She came anyway. The question is not whether she has her own plan. The question is whether her plan and Dr. Bhosle's plan end at the same place."*
+
+Priya has underlined this twice.
+
+She has not decided if the underlining is a warning or a hope.
+
+---
+
+### WHAT HER TEAMMATES THINK
+
+**Gurpreet** sits near her. He has never explained this. She has never addressed it. It is, Priya has noted, the most comfortable silence in the facility.
+
+**Arjun** respects her in the specific way of someone who is not afraid of many things but recognizes something in another person that would be worth being careful around. He is friendly. He maintains a small distance. He considers this wisdom rather than cowardice.
+
+**Meera** has long conversations with her that stop when anyone enters the room. Both of them understand what the conversations are about. Nobody else does.
+
+**Priya** is watching. Always watching.
+
+**Riya** considers Zara a professional peer in the specific area of *"finding the flaw in systems that other people consider secure"* and has said this to her directly. Zara said: *"That's accurate."* This constitutes a close working relationship by Zara's standards.
+
+**Lakhimi** has been watching Zara since the first week. She has seventeen pages in her notebook. She has shared none of it.
+
+**Chhaya** said to Zara, once, passing in a corridor: *"The blank page is not empty. You know what to write."*
+
+Zara stopped walking.
+
+When she turned around, Chhaya was already gone.
+
+She stood in the corridor for a long time.
+
+Then she went back to her workstation and opened a new document.
+
+She has not yet written anything in it.
+
+---
+
+## AGENT 07 — CHHAYA
+### Filed as: Kabir. Varanasi, Uttar Pradesh.
+**Age:** Unknown
+**Origin:** Varanasi, Uttar Pradesh (unverified)
+**Valorant Echo:** Omen
+**Ability:** PARANOIA — blacks out ALL players' progress bars for 6 seconds including their own
+**Color:** Deep Purple
+**Tone:** Eerie. Precise. The sentences land different. You think about them for three days.
+
+---
+
+### THE FILE
+
+AKSHAR's intelligence team spent eleven weeks on this file.
+
+The file is four pages long.
+
+Three of those pages are a record of everything the team tried and failed to verify. The fourth page contains verified facts. There are six of them.
+
+**One:** A person using the name Kabir has been documented at Assi Ghaat in Varanasi by at least seven independent sources over a period of twenty years.
+
+**Two:** The descriptions given by those seven sources share no consistent physical characteristics.
+
+**Three:** The agent profile in AKSHAR's system contains a biometric confirmation signature that matches Dr. Bhosle's and has no processing record.
+
+**Four:** Security footage confirms a person was present at Workstation 7 in Lab 2 from 3:47 AM IST on May 19th 2038 — the moment of the collapse.
+
+**Five:** The security footage does not show this person entering Lab 2.
+
+**Six:** The typing pattern recorded from Workstation 7 between 3:47 AM and 6:00 AM on May 19th does not match any known human typing pattern in AKSHAR's database. It is not faster than human or slower than human. It is *differently timed* than human, in a way the system's pattern analysis module flagged with a notation that reads: *"Unable to classify. Refer to human review."*
+
+Human review has been pending since May 2038.
+
+Nobody has reviewed it.
+
+Dr. Bhosle has been asked twice about this. Both times she said: *"I'm aware of it."* Both times she said nothing further.
+
+---
+
+What follows is not standard biographical information.
+
+It is, instead, everything AKSHAR's intelligence team was able to piece together — verified, unverified, and explicitly uncertain — about who or what CHHAYA might be. The team filed it under the heading: *"Working Theory."*
+
+---
+
+### WORKING THEORY
+
+There is a tradition in Varanasi — one of many — of figures who exist at the boundary between the living and the dead. Not priests. Not sadhus. Something older than the categories that gave birth to those roles. Figures who are present at the ghaat before the first body arrives and after the last fire is extinguished. Figures who the city's permanent residents have always known are there without being able to say precisely what *there* means.
+
+These figures have, historically, been described as witnesses. Their function — if function is the right word — is to be present at moments of ending and beginning. To observe without intervening. To know without explaining.
+
+The people of Assi Ghaat have been describing someone called Kabir for twenty years.
+
+The descriptions are inconsistent.
+
+The consistency is in everything else: the calm, the presence, the specific quality of attention — the sense that this person is listening to something underneath the conversation, hearing what has not yet been said, waiting for a sentence to complete itself in its own time.
+
+Is CHHAYA a person?
+
+Probably. The operative probability is high.
+
+Is CHHAYA the same person who has been visiting Assi Ghaat for twenty years?
+
+Unknown.
+
+Is CHHAYA aware of things they should not be aware of?
+
+Yes.
+
+The intelligence team's recommendation, after eleven weeks: *"We cannot establish who this person is, where they came from, or how they accessed our system. We recommend treating this as an asset of unknown origin and proceeding accordingly."*
+
+Dr. Bhosle's response: *"I already have."*
+
+---
+
+### WHAT CHHAYA HAS SAID
+
+CHHAYA speaks rarely and specifically. Every recorded statement has been documented by AKSHAR's operations team because Dr. Bhosle requested it. The following is a partial selection:
+
+To Dr. Bhosle, on arrival: *"I know who you are."* Then, in response to why: *"Do you?"*
+
+To Gurpreet, on being asked what they thought about: *"The spaces between. The moments before a word is chosen. What lives there."*
+
+To Arjun: *"You are the one who runs toward."* No further elaboration provided.
+
+To Meera, in a conversation that lasted approximately forty minutes and that Meera has declined to summarize: unknown.
+
+To Priya: *"You are writing the true story. Keep writing."* Then, when asked what the true story was: *"You already know. You just haven't written that part yet."*
+
+To Riya, at 2 AM: *"You are very close to something important. You should sleep first."*
+
+To Zara, in a corridor: *"The blank page is not empty. You know what to write."*
+
+To Lakhimi, on her first day at AKSHAR, before they had been introduced: *"You already know the thing she didn't tell you. What you don't know yet is what to do with it."*
+
+Lakhimi stood very still for a long time after this.
+
+Then she went to her workstation and started writing.
+
+---
+
+### WHAT NOBODY KNOWS
+
+The typing pattern from Workstation 7 on the morning of May 19th — the pattern the system couldn't classify — has been analyzed by Riya on three separate occasions.
+
+On the first occasion she concluded it was a software artifact.
+
+On the second occasion she concluded it was a data corruption issue.
+
+On the third occasion she sat for a very long time looking at the pattern and then closed the analysis window and opened a new document and wrote, in the same small writing she uses for notes she considers important but not yet ready to share:
+
+*"The pattern is not random. It is not human standard. It is the cleanest typing pattern I have ever analyzed — no hesitation, no micro-corrections, no cognitive load visible in the keystroke timing. It looks like someone who has been typing the same text for a very long time."*
+
+She saved the document under a filename that is seventeen characters of apparent randomness and that nobody but Riya can parse.
+
+She has not told anyone.
+
+Lakhimi suspects.
+
+---
+
+### WHAT HER TEAMMATES THINK
+
+Nobody thinks about CHHAYA in the way they think about each other. They think *around* CHHAYA — approaching the question of who or what CHHAYA is and then, finding no solid ground, redirecting.
+
+The exception is Meera, who thinks *with* CHHAYA in a way she has not explained to anyone.
+
+And Lakhimi, who thinks *about* CHHAYA with the methodical precision she brings to everything she studies, accumulating data, building a picture, waiting for the moment when the picture is complete enough to share.
+
+The picture is not yet complete.
+
+She is patient.
+
+---
+
+## AGENT 08 — KALI
+### Lakhimi Gogoi
+**Age:** 28
+**Origin:** Jorhat, Assam
+**Valorant Echo:** Reyna
+**Ability:** DEVOUR — target's every typo moves their progress backwards for 8 seconds + deep purple vignette pulses on their screen + phantom letters auto-inserted into their input
+**Color:** Magenta/Violet
+**Tone:** Still. Watching. Precise. The most dangerous person in the room and she knows it and she is using it carefully.
+
+---
+
+### THE FILE
+
+The intelligence file on Lakhimi Gogoi is, on the surface, the most conventional in AKSHAR's archive. Birthdate. Education. Professional history. Published work. Everything sourced, verified, organized.
+
+Underneath the conventional surface it is the most unsettling file Dr. Bhosle has read in twenty years of intelligence work.
+
+Not because of what it contains.
+
+Because of what it reveals about Lakhimi's awareness of being observed.
+
+Halfway through the file's background section, Dr. Bhosle noticed that the sources were too consistent. Every record confirmed every other record in ways that real life records rarely do. People misremember. Documents contradict. Timelines have gaps. Lakhimi's file had none of these. It was precise and complete in a way that felt, to someone who had read thousands of intelligence files, less like a life and more like a life that had been prepared for review.
+
+Dr. Bhosle called her intelligence lead.
+
+*"She knew we were building this file,"* she said.
+
+*"That's not possible,"* said the intelligence lead. *"We maintained full operational security throughout."*
+
+*"Nevertheless,"* said Dr. Bhosle.
+
+She sent the recruitment operative to Assam with one additional instruction: *"When you give her the envelope, watch her eyes. Not her face. Her eyes."*
+
+The operative's report, filed after the recruitment: *"Subject read the envelope. Her face showed appropriate consideration. Her eyes showed recognition. As if she already knew what it said."*
+
+Dr. Bhosle read this and was quiet for a long time.
+
+Then she wrote: *"Good. We need her."*
+
+---
+
+Lakhimi Gogoi was born in Jorhat in 2010, the elder of two daughters of a schoolteacher father and a mother who ran a small NGO focused on documenting the oral histories of Assam's tea-growing communities — communities whose history had been systematically underdocumented because the communities themselves were primarily non-literate and the systems built to preserve history were built by and for people who wrote things down.
+
+She grew up between two worlds: the school her father taught at, where knowledge lived in books and marks and the orderly progression of curriculum, and the tea estates and villages her mother visited, where knowledge lived in people — in the specific way a grandmother remembered a flood, in the exact phrase a union organizer used at a particular meeting, in the songs that encoded information about land and ownership and right that had never existed in any written form.
+
+She understood, very early, that these were not two different kinds of knowledge. They were the same knowledge stored in different media. And that the media considered prestigious — written, institutional, official — was not more reliable. It was just more legible to people with power.
+
+She was nine years old when she decided to spend her life closing that gap.
+
+---
+
+She studied linguistics at Gauhati University and forensic analysis at a postgraduate program in Delhi — choosing, in both cases, the programs that would give her the most direct tools for the specific work she wanted to do: understanding how human memory encoded and preserved information, how to read the linguistic signatures that distinguished accurate recollection from reconstructed narrative, how to cross-reference testimonies to find the truth that lived in the overlap between what different people remembered about the same event.
+
+She was brilliant at it in the way of people who are doing the thing they were built to do. Her thesis on *"Linguistic Pattern Analysis as Forensic Memory Verification"* was published in an international journal at twenty-four — unusual for someone without a doctorate — and attracted the attention of three institutions who offered her positions. She turned all three down to go back to Assam.
+
+Her colleagues at those institutions found this baffling.
+
+Her mother understood it immediately.
+
+*"The work is here,"* Lakhimi told her mother when she came home.
+
+*"I know,"* said her mother. *"I've been waiting for you to see it."*
+
+---
+
+The four years between her return to Assam and the collapse were the years that built her reputation — not a wide reputation, not a famous reputation, but the kind of deep specific reputation that travels through particular networks by word of mouth and carries more weight than any published profile.
+
+She worked on labor disputes. Land rights cases. Indigenous community claims. Anywhere that the official record was absent or compromised and the truth existed only in human memory, she would arrive with her notebooks and her patience and her methodology and her specific quality of listening — the quality that made people feel, as one labor organizer described it, *"like she already knew what you were going to say before you said it, but she asked anyway because she wanted you to know that your saying it mattered."*
+
+She was not warm in the way Gurpreet was warm. She was something more demanding than warmth: she was *present.* Entirely present, without division or distraction, in a way that most people experience from others rarely if at all. It was, in its effect, more intimate than warmth. People told her things they had not told other people. They told her things they had not told themselves.
+
+She recorded everything. She cross-referenced everything. She built pictures of what had actually happened from the materials of human recollection with a precision that made courts and arbitrators and opposing counsel uncomfortable because it left no room for the strategic ambiguity that institutional processes depended on.
+
+She was very good at what she did.
+
+She was also, and this is relevant, increasingly aware that she was being watched.
+
+Not followed. Not surveilled in any crude sense. Simply — observed. The kind of attention that leaves no fingerprints but that someone trained to notice the specific patterns of human attention can feel the way a practiced typist can feel a missed keystroke before they hear it.
+
+She had been aware of being observed since approximately 2036.
+
+She did not know by whom.
+
+She prepared accordingly: not by hiding, but by ensuring that what was observed was exactly what she wanted to be seen. The clean records. The consistent sources. The life that read, to an intelligence analyst, like a life that had been prepared for review.
+
+Because it had.
+
+She didn't know what was coming. But she knew something was watching her, and she knew that the way you responded to being watched before you knew why you were being watched told the watcher everything about who you were.
+
+She wanted to be read correctly.
+
+---
+
+Then May 19th happened.
+
+And the tea estate owners declared all employment contracts void.
+
+And Lakhimi Gogoi did what Lakhimi Gogoi always did in the presence of a broken system: she identified the problem, designed the solution, and started working.
+
+The three months in the community hall reconstructing forty years of records were, in her own assessment, the most important work she had done. Not the most technically impressive — she had done harder analysis. But the most important: each person who sat across from her and felt their working life recognized and recorded and verified and protected was a person whose existence in the institutional record was restored. Who mattered, officially, in the way that official records decided who mattered.
+
+She was doing what her mother had been doing for twenty years.
+
+She was closing the gap.
+
+---
+
+### THE NOTEBOOK
+
+Lakhimi's notebook has been mentioned several times in this file and in the files of other agents.
+
+It is a standard Classmate notebook, the kind available in any stationery shop. She carries it always and writes in it constantly in a hand that is small and precise and requires attention to read. She has, since arriving at AKSHAR, filled three of them.
+
+The notebooks contain: observations of every agent in the facility, analysis of AKSHAR's operations and stated mission, a record of everything she considers inconsistent or undisclosed, notes on Riya's whiteboard (including the corner sentence), a transcription of what CHHAYA said to her on the first day, and — beginning in a recent entry — something that takes up increasing space and that she heads, at the top of each page, with a single word:
+
+**WHAT SHE DIDN'T TELL US.**
+
+She has not shown this section to anyone.
+
+She is building toward something.
+
+She knows what it is.
+
+She is waiting for the right moment, the right company, and enough evidence to make the case irrefutable.
+
+She has two of the three.
+
+She is working on the third.
+
+---
+
+### THE ABILITY
+
+DEVOUR.
+
+The ability that became DEVOUR was designed to be a direct expression of who Lakhimi is as an operator: she does not slow opponents down by attacking them directly. She attacks their process. The phantom letters, the backwards progress on typos, the purple vignette pulsing with every mistake — all of it is designed to make the target aware, viscerally and constantly, that someone is inside their process, that their errors are being seen and used, that the thing they are trying to do is becoming more difficult because of their own failures.
+
+It is, as Priya once wrote in her journal: *"an ability that doesn't attack what you're doing. It attacks your confidence in what you're doing."*
+
+Riya, when she read this (Priya had left her journal open, which Riya considers a form of permission): *"That's technically accurate. The phantom letters create a specific type of cognitive interference that doesn't reduce typing speed directly. It creates doubt about keystrokes that would otherwise be automatic. The doubt is the weapon."*
+
+Lakhimi, when told that Riya had read this: *"I know."*
+
+*"Did you leave the journal open on purpose?"* Priya asked.
+
+Lakhimi was already writing in her own notebook.
+
+She did not answer.
+
+---
+
+### WHAT HER TEAMMATES THINK
+
+**Gurpreet** respects her completely and finds her slightly unsettling in a way he would never say because he is aware the unsettlement is a response to her accuracy rather than anything she has done wrong.
+
+**Meera** considers Lakhimi the person in the facility most likely to understand the complete picture before anyone else. She considers this both reassuring and significant.
+
+**Arjun** knows she knows things about him he has not said. He has made his peace with this. He is less comfortable with not knowing what she has concluded.
+
+**Priya** and Lakhimi have the most complex relationship in the facility — two people whose methods overlap (observation, pattern recognition, reconstruction of truth from available evidence) and whose purposes are converging on the same point from different angles. Priya knows about the journal incident. She has written about it at length. She has not confronted Lakhimi. She is waiting to understand why.
+
+**Riya** considers Lakhimi *"the only person whose pattern analysis methodology is more rigorous than mine in its domain"* — which from Riya, as previously noted, is the highest available praise.
+
+**Zara** and Lakhimi have recognized each other in the specific way of two people who know exactly what the other is doing and have agreed, without discussing it, to give each other space to do it. They are, in Priya's notebook: *"the two people most likely to figure out the truth first and the two people most likely to handle that truth in completely different ways."*
+
+**Chhaya** told Lakhimi on her first day: *"You already know the thing she didn't tell you. What you don't know yet is what to do with it."*
+
+Lakhimi has been writing about this sentence for three months.
+
+She thinks she knows what to do with it.
+
+She is almost ready.
+
+---
+
+## EPILOGUE — THE OPERATIONS ROOM
+### September 1st, 2038. 0900 hours.
+
+Eight people sit around a circular table 400 meters below the Thar Desert.
+
+Dr. Aditi Bhosle stands at the center. She has told them everything. Almost everything. She is watching each face as she finishes — looking for the specific combination of qualities she has been curating for three years: intelligence, conviction, the particular readiness of people who have already, in their own lives, done the impossible and survived it.
+
+She sees what she was looking for.
+
+She also sees what she did not plan for.
+
+She sees eight people who are already, in the three hours they have been together, reading each other. Already calculating. Already forming the specific alliances and assessments and suspicions that will, over the coming months, complicate her operation in ways she has not fully modeled.
+
+She had not accounted for how good they would all be at exactly this.
+
+She should have. They are, after all, exactly who she chose.
+
+She finishes speaking. The room is quiet for a moment in the way rooms go quiet when something large has just been placed in them and everyone is deciding what to do with it.
+
+Then Gurpreet says: *"Best out of ten?"*
+
+And Arjun says: *"Best out of a hundred."*
+
+And the room breathes.
+
+And eight people who have each, in their own lives and their own ways, rebuilt something from nothing, turn to face the largest rebuild in human history.
+
+Lakhimi opens her notebook.
+
+She writes the date at the top of a fresh page.
+
+She draws a line underneath it.
+
+She writes three words.
+
+She does not show them to anyone.
+
+Not yet.
+
+---
+
+*End of Agent Files — Version 1.0*
+*Classification: Level 4*
+*Distribution: Authorized Personnel Only*
+*"Know your operators. Know your network." — Dr. Aditi Bhosle*
+
+---
+
+*© AKSHAR Game Universe — Lore Bible v2.0*
