@@ -9,6 +9,7 @@ import { updateRoomStatus } from "@/lib/roomUtils";
 import AgentCard from "@/components/AgentCard";
 import RoomCodeDisplay from "@/components/RoomCodeDisplay";
 import LoadingScreen from "@/components/LoadingScreen";
+import ChatBox from "@/components/ChatBox";
 
 import { ensureAuth } from "@/lib/firebase";
 
@@ -139,6 +140,13 @@ export default function Lobby() {
                     </div>
                 </div>
             </div>
+
+            <ChatBox
+                roomId={roomId}
+                playerId={playerId}
+                playerName={playerName || 'Agent'}
+                agentId={player?.agent || undefined}
+            />
         </main>
     );
 }
