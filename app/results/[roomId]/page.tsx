@@ -68,8 +68,31 @@ export default function Results() {
     const winnerAgent = winner?.agent ? AGENTS[winner.agent] : null;
 
     return (
-        <main className="min-h-screen flex flex-col items-center justify-center p-8 bg-[#0F1923] overflow-hidden">
-            <div className="absolute top-0 left-0 w-full h-1 bg-[#FF4655] shadow-[0_0_20px_#FF4655]" />
+        <main className="min-h-screen flex flex-col items-center bg-[#0F1923] overflow-y-auto py-20 px-8 relative">
+            <div className="fixed top-0 left-0 w-full h-1 bg-[#FF4655] shadow-[0_0_20px_#FF4655] z-[100]" />
+
+            {/* Top Quick Actions */}
+            <div className="absolute top-8 right-8 flex gap-4 z-50 animate-in fade-in slide-in-from-right-4 duration-700 delay-300">
+                <button
+                    onClick={() => router.push('/')}
+                    className="h-10 px-6 border border-white/20 text-[10px] text-white font-black uppercase tracking-widest hover:bg-white/10 transition-all flex items-center justify-center gap-2"
+                >
+                    Return Home
+                </button>
+                {room.hostId === playerId ? (
+                    <button
+                        onClick={handlePlayAgain}
+                        className="h-10 px-8 bg-white text-black text-[10px] font-black uppercase tracking-widest hover:bg-[#FF4655] hover:text-white transition-all shadow-xl"
+                    >
+                        Play Again
+                    </button>
+                ) : (
+                    <div className="h-10 px-6 flex items-center bg-white/5 border border-white/10 text-[10px] text-white/40 font-black uppercase tracking-widest gap-2">
+                        <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-ping" />
+                        Host Choice
+                    </div>
+                )}
+            </div>
 
             <div className="text-center mb-16 animate-in fade-in slide-in-from-top-8 duration-700">
                 <h1 className="text-[80px] font-black italic tracking-tighter leading-none mb-2">MISSION COMPLETE</h1>
@@ -133,43 +156,51 @@ export default function Results() {
                 </div>
             )}
 
-            {/* Stats Table */}
-            <div className="w-full max-w-4xl bg-white/5 border border-white/10 rounded-sm overflow-hidden mb-12 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-500">
-                <div className="grid grid-cols-5 p-4 border-b border-white/10 bg-white/5 text-[10px] uppercase font-bold tracking-widest opacity-40">
-                    <div className="col-span-2">Agent / Player</div>
-                    <div className="text-center">WPM</div>
-                    <div className="text-center">Accuracy</div>
-                    <div className="text-center">Status</div>
+            {/* Stats Table / Match Report */}
+            <div className="w-full max-w-4xl mb-12 animate-in fade-in slide-in-from-bottom-8 duration-700 delay-500">
+                <div className="flex items-center gap-4 mb-4">
+                    <div className="h-px flex-1 bg-white/10" />
+                    <h3 className="text-[10px] font-black uppercase tracking-[0.5em] text-white/40 italic">Squad Combat Report</h3>
+                    <div className="h-px flex-1 bg-white/10" />
                 </div>
-                <div className="divide-y divide-white/5">
-                    {sortedPlayers.slice(1).map((p, idx) => {
-                        const agent = p.agent ? AGENTS[p.agent] : null;
-                        return (
-                            <div key={p.id} className="grid grid-cols-5 p-4 items-center group hover:bg-white/[0.02] transition-colors">
-                                <div className="col-span-2 flex items-center gap-4">
-                                    <div className="text-xs font-mono opacity-20">{(idx + 2).toString().padStart(2, '0')}</div>
-                                    <div className="flex flex-col">
-                                        <span className="font-bold text-sm text-white/80 group-hover:text-white transition-colors">
-                                            {p.name} {p.id === playerId && '(You)'}
+
+                <div className="bg-white/5 border border-white/10 rounded-sm overflow-hidden shadow-2xl">
+                    <div className="grid grid-cols-5 p-4 border-b border-white/10 bg-white/5 text-[10px] uppercase font-bold tracking-widest opacity-40">
+                        <div className="col-span-2">Agent / Player</div>
+                        <div className="text-center">WPM</div>
+                        <div className="text-center">Accuracy</div>
+                        <div className="text-center">Status</div>
+                    </div>
+                    <div className="divide-y divide-white/5">
+                        {sortedPlayers.slice(1).map((p, idx) => {
+                            const agent = p.agent ? AGENTS[p.agent] : null;
+                            return (
+                                <div key={p.id} className="grid grid-cols-5 p-4 items-center group hover:bg-white/[0.02] transition-colors">
+                                    <div className="col-span-2 flex items-center gap-4">
+                                        <div className="text-xs font-mono opacity-20">{(idx + 2).toString().padStart(2, '0')}</div>
+                                        <div className="flex flex-col">
+                                            <span className="font-bold text-sm text-white/80 group-hover:text-white transition-colors">
+                                                {p.name} {p.id === playerId && '(You)'}
+                                            </span>
+                                            <span className="text-[10px] uppercase opacity-40 font-bold" style={{ color: agent?.color }}>{agent?.name}</span>
+                                        </div>
+                                    </div>
+                                    <div className="text-center font-mono font-bold text-white/60">{p.wpm} WPM</div>
+                                    <div className="text-center font-mono text-white/40 group-hover:text-white/60 transition-colors">{p.accuracy}%</div>
+                                    <div className="text-center">
+                                        <span className="text-[10px] font-black uppercase px-2 py-1 rounded-sm bg-white/5 text-white/30 tracking-widest">
+                                            Finished
                                         </span>
-                                        <span className="text-[10px] uppercase opacity-40 font-bold" style={{ color: agent?.color }}>{agent?.name}</span>
                                     </div>
                                 </div>
-                                <div className="text-center font-mono font-bold text-white/60">{p.wpm} WPM</div>
-                                <div className="text-center font-mono text-white/40 group-hover:text-white/60 transition-colors">{p.accuracy}%</div>
-                                <div className="text-center">
-                                    <span className="text-[10px] font-black uppercase px-2 py-1 rounded-sm bg-white/5 text-white/30 tracking-widest">
-                                        Finished
-                                    </span>
-                                </div>
+                            );
+                        })}
+                        {sortedPlayers.length <= 1 && (
+                            <div className="p-12 text-center text-[10px] uppercase font-bold tracking-[0.3em] opacity-20">
+                                No additional participants detected.
                             </div>
-                        );
-                    })}
-                    {sortedPlayers.length <= 1 && (
-                        <div className="p-12 text-center text-[10px] uppercase font-bold tracking-[0.3em] opacity-20">
-                            No additional participants detected.
-                        </div>
-                    )}
+                        )}
+                    </div>
                 </div>
             </div>
 
@@ -197,28 +228,32 @@ export default function Results() {
                 </div>
             )}
 
-            {/* Actions */}
-            <div className="flex flex-col items-center gap-6 animate-in fade-in duration-500 delay-1000">
+            <div className="flex flex-col items-center gap-6 mt-12 pb-20 animate-in fade-in duration-500 delay-1000">
                 <div className="flex gap-4">
                     <button
                         onClick={() => router.push('/')}
-                        className="h-14 px-12 border border-white/20 text-white font-black uppercase tracking-widest hover:bg-white/10 transition-all"
+                        className="h-14 px-12 border border-white/20 text-white font-black uppercase tracking-widest hover:bg-white/10 transition-all flex items-center justify-center"
                     >
                         Return Home
                     </button>
                     {room.hostId === playerId ? (
                         <button
                             onClick={handlePlayAgain}
-                            className="h-14 px-12 bg-white text-black font-black uppercase tracking-widest hover:bg-[#FF4655] hover:text-white transition-all shadow-[0_0_40px_rgba(255,255,255,0.1)]"
+                            className="h-14 px-12 bg-[#FF4655] text-white font-black uppercase tracking-widest hover:bg-[#ff5d6a] transition-all shadow-[0_0_40px_rgba(255,70,85,0.2)] border-b-4 border-black/20"
                         >
-                            Play Again
+                            Start New Mission
                         </button>
                     ) : (
                         <div className="h-14 px-12 flex items-center bg-white/5 border border-white/10 text-white/40 font-black uppercase tracking-widest gap-3">
                             <div className="w-2 h-2 bg-yellow-500 rounded-full animate-ping" />
-                            Waiting for Host to Reset
+                            Waiting for Sequence Reset
                         </div>
                     )}
+                </div>
+                <div className="text-[10px] uppercase font-bold text-white/20 tracking-[0.3em] flex items-center gap-4">
+                    <span className="w-12 h-px bg-white/5" />
+                    Protocol: Terminated
+                    <span className="w-12 h-px bg-white/5" />
                 </div>
             </div>
         </main>
