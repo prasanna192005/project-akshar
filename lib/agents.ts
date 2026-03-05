@@ -12,6 +12,10 @@ export interface Agent {
     cooldown: number;
     duration: number;
     lore: string;
+    commentary: {
+        win: string;
+        loss: string;
+    };
 }
 
 export const AGENTS: Record<AgentType, Agent> = {
@@ -26,7 +30,11 @@ export const AGENTS: Record<AgentType, Agent> = {
         chargeRateModifier: 1.4,
         cooldown: 8,
         duration: 0,
-        lore: 'Inspired by Jett. Fast and agile.'
+        lore: 'Inspired by Jett. Fast and agile.',
+        commentary: {
+            win: "Caught in the crosswind. Too slow!",
+            loss: "Still faster than the wind... just not fast enough this time."
+        }
     },
     PYRA: {
         id: 'PYRA',
@@ -39,7 +47,11 @@ export const AGENTS: Record<AgentType, Agent> = {
         chargeRateModifier: 1.0,
         cooldown: 12,
         duration: 5,
-        lore: 'Inspired by Phoenix. Heals from fire.'
+        lore: 'Inspired by Phoenix. Heals from fire.',
+        commentary: {
+            win: "I'm on fire! Literally!",
+            loss: "Just a flicker. I'll be back in full blaze soon."
+        }
     },
     SAGE: {
         id: 'SAGE',
@@ -52,7 +64,11 @@ export const AGENTS: Record<AgentType, Agent> = {
         chargeRateModifier: 0.8,
         cooldown: 15,
         duration: 4,
-        lore: 'Inspired by Sage. The protector.'
+        lore: 'Inspired by Sage. The protector.',
+        commentary: {
+            win: "Balance is restored. I am the shield of this squad.",
+            loss: "I could not save us this time. We must be stronger."
+        }
     },
     VIPER: {
         id: 'VIPER',
@@ -65,7 +81,11 @@ export const AGENTS: Record<AgentType, Agent> = {
         chargeRateModifier: 1.0,
         cooldown: 14,
         duration: 4,
-        lore: 'Inspired by Viper. Toxic zone controller.'
+        lore: 'Inspired by Viper. Toxic zone controller.',
+        commentary: {
+            win: "They choked on their own failure. Predictable.",
+            loss: "The toxins didn't spread fast enough. I need more yield."
+        }
     },
     OMEN: {
         id: 'OMEN',
@@ -78,7 +98,11 @@ export const AGENTS: Record<AgentType, Agent> = {
         chargeRateModifier: 1.0,
         cooldown: 13,
         duration: 4,
-        lore: 'Inspired by Omen. Shadowy manipulator.'
+        lore: 'Inspired by Omen. Shadowy manipulator.',
+        commentary: {
+            win: "The nightmare continues... in their sleep.",
+            loss: "They stepped out of the shadows. I must retreat."
+        }
     },
     BREACH: {
         id: 'BREACH',
@@ -91,7 +115,11 @@ export const AGENTS: Record<AgentType, Agent> = {
         chargeRateModifier: 1.5,
         cooldown: 10,
         duration: 2,
-        lore: 'Inspired by Breach. The entry frag initiator.'
+        lore: 'Inspired by Breach. The entry frag initiator.',
+        commentary: {
+            win: "Like a hammer through glass! WHO IS NEXT?",
+            loss: "My arms... they need a recalibration. WE GO AGAIN!"
+        }
     },
     REYNA: {
         id: 'REYNA',
@@ -104,7 +132,11 @@ export const AGENTS: Record<AgentType, Agent> = {
         chargeRateModifier: 1.2,
         cooldown: 11,
         duration: 8,
-        lore: 'Inspired by Reyna. A soul-eating duelist who punishes failure.'
+        lore: 'Inspired by Reyna. A soul-eating duelist who punishes failure.',
+        commentary: {
+            win: "All that's left is for me to devour.",
+            loss: "The hunger... it's not satisfied. Feed me more!"
+        }
     },
     KILLJOY: {
         id: 'KILLJOY',
@@ -117,6 +149,10 @@ export const AGENTS: Record<AgentType, Agent> = {
         chargeRateModifier: 0.7,
         cooldown: 16,
         duration: 2,
-        lore: 'Inspired by Killjoy. Strategic denial.'
+        lore: 'Inspired by Killjoy. Strategic denial.',
+        commentary: {
+            win: "Efficiency 100%. Did you expect anything else?",
+            loss: "Data error. My turrets were misaligned. Unacceptable."
+        }
     }
 };

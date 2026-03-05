@@ -25,17 +25,17 @@ export default function Lobby() {
         setPlayerName(localStorage.getItem('typeagents_player_name'));
     }, []);
 
-    const { room, players, status } = useRoom(roomId);
+    const { room, players, status, loading } = useRoom(roomId);
     const { player, selectAgent, setReady } = usePlayer(roomId, playerId || "");
 
     // Redirect if game starts
     useEffect(() => {
-        if (status === 'countdown' || status === 'racing') {
+        if (!loading && (status === 'countdown' || status === 'racing')) {
             router.push(`/game/${roomId}`);
         }
-    }, [status, roomId, router]);
+    }, [status, roomId, router, loading]);
 
-    if (!room || !playerId) {
+    if (loading || !room || !playerId) {
         return <LoadingScreen />;
     }
 

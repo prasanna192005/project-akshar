@@ -7,7 +7,7 @@ import { usePlayer } from "@/hooks/usePlayer";
 import { useTyping } from "@/hooks/useTyping";
 import { useAbility } from "@/hooks/useAbility";
 import { AGENTS } from "@/lib/agents";
-import { updateRoomStatus } from "@/lib/roomUtils";
+import { updateRoomStatus, updatePlayerState, INITIAL_EFFECTS } from "@/lib/roomUtils";
 import TypingInput from "@/components/TypingInput";
 import Leaderboard from "@/components/Leaderboard";
 import AbilityBar from "@/components/AbilityBar";
@@ -33,7 +33,7 @@ export default function Game() {
         return () => clearTimeout(timer);
     }, []);
 
-    const { room, players, status } = useRoom(roomId);
+    const { room, players, status, loading } = useRoom(roomId);
     const { player, updateProgress, clearEffect } = usePlayer(roomId, playerId || "");
     const isHost = room && playerId ? room.hostId === playerId : false;
     const {
@@ -78,15 +78,22 @@ export default function Game() {
 
     // Sync progress to Firebase
     useEffect(() => {
+        // AUTH_LOCK: If the server already confirms we finished, NEVER sync again.
+        // This stops the progress bar from "resetting" due to local state cleanup.
+        if (player?.finishedAt) return;
+
         if (status === 'racing' && playerId) {
+            // When isComplete is true, we send the final 100% and a timestamp.
+            // Firebase will update, and then on next render, player?.finishedAt will be non-null,
+            // triggering the AUTH_LOCK above.
             updateProgress({
-                progress,
-                wpm,
-                accuracy,
+                progress: isComplete ? 100 : Math.min(99, progress),
+                wpm: isComplete ? player?.wpm || wpm : wpm, // Keep last WPM
+                accuracy: isComplete ? player?.accuracy || accuracy : Math.min(100, accuracy),
                 finishedAt: isComplete ? Date.now() : null
             });
         }
-    }, [progress, wpm, accuracy, isComplete, status, playerId, updateProgress]);
+    }, [progress, wpm, accuracy, isComplete, status, playerId, updateProgress, player?.finishedAt, player?.wpm, player?.accuracy]);
 
     // Handle game end
     useEffect(() => {
@@ -95,12 +102,13 @@ export default function Game() {
         }
     }, [status, players, roomId]);
 
-    // Redirect to results
+    // Redirect to results with a generous delay for celebration
     useEffect(() => {
-        if (status === 'finished') {
-            router.push(`/results/${roomId}`);
+        if (!loading && status === 'finished') {
+            const timer = setTimeout(() => router.push(`/results/${roomId}`), 4000);
+            return () => clearTimeout(timer);
         }
-    }, [status, roomId, router]);
+    }, [status, roomId, router, loading]);
 
     // Effect auto-clear timers
     useEffect(() => {
@@ -215,18 +223,45 @@ export default function Game() {
                 </div>
 
                 {/* Typing Interface */}
-                <TypingInput
-                    words={words}
-                    currentWordIndex={currentWordIndex}
-                    currentInput={currentInput}
-                    handleInput={handleInput}
-                    accentColor={agent?.color || '#FF4655'}
-                    isActive={status === 'racing'}
-                    isBlurred={player?.effects?.blurred}
-                    isScrambled={(player?.effects?.scrambledWords?.length ?? 0) > 0}
-                    isParanoid={player?.effects?.paranoia}
-                    agentId={player?.agent || undefined}
-                />
+                <div className="relative">
+                    <TypingInput
+                        words={words}
+                        currentWordIndex={currentWordIndex}
+                        currentInput={currentInput}
+                        handleInput={handleInput}
+                        accentColor={agent?.color || '#FF4655'}
+                        isActive={status === 'racing' && !isComplete}
+                        isBlurred={player?.effects?.blurred}
+                        isScrambled={(player?.effects?.scrambledWords?.length ?? 0) > 0}
+                        isParanoid={player?.effects?.paranoia}
+                        agentId={player?.agent || undefined}
+                    />
+
+                    {/* Mission Accomplished Overlay - Tactical / Industrial Design */}
+                    {(isComplete || (player && player.finishedAt)) && (
+                        <div className="absolute inset-x-[-10px] inset-y-[-10px] z-50 flex flex-col items-center justify-center bg-[#0F1923]/98 backdrop-blur-md border-y-2 border-green-500/50 animate-in fade-in slide-in-from-top-1 duration-500">
+                            {/* Background Pattern */}
+                            <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
+                                style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '16px 16px' }} />
+
+                            <div className="relative flex flex-col items-center">
+                                <div className="text-7xl font-black italic text-green-500 tracking-tighter mb-2 translate-x-[-4px]">
+                                    MISSION ACCOMPLISHED
+                                </div>
+                                <div className="flex flex-col items-center gap-2">
+                                    <div className="flex items-center gap-4 bg-white/[0.03] px-8 py-3 border border-white/10 skew-x-[-12deg]">
+                                        <div className="w-1.5 h-1.5 bg-yellow-400 rounded-none animate-pulse skew-x-[12deg]" />
+                                        <span className="text-[14px] uppercase font-black tracking-[0.5em] text-white/90 skew-x-[12deg]">WAITING FOR SQUAD</span>
+                                        <div className="w-1.5 h-1.5 bg-yellow-400 rounded-none animate-pulse skew-x-[12deg]" />
+                                    </div>
+                                    <div className="text-[10px] uppercase font-bold text-white/20 tracking-[0.3em] mt-2">
+                                        PHASE TRANSITION IMMINENT // STAND BY
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+                </div>
 
                 {/* Ability Section */}
                 {agent && (
@@ -237,6 +272,8 @@ export default function Game() {
                         cooldownRemaining={cooldownRemaining}
                     />
                 )}
+
+
 
                 {/* Overlays */}
                 {status === 'countdown' && room.countdownStartAt && (
