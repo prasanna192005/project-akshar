@@ -20,8 +20,8 @@ const shareTechMono = Share_Tech_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Typhoön | Multiplayer Battle",
-  description: "A competitive multiplayer typing race with Valorant-inspired agents and abilities.",
+  title: "AKSHAR | Multiplayer Battle",
+  description: "A competitive multiplayer typing race with agents and abilities.",
 };
 
 export default function RootLayout({
