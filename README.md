@@ -27,13 +27,13 @@ Choose your agent wisely. Every character has a unique playstyle:
 | Agent | Active Ability (`TAB`) | Passive Trait |
 | :--- | :--- | :--- |
 | **🌪️ ZEPHYR** | **Tailwind**: Instantly skip 5 words. | 10+ word streak grants a speed multiplier. |
-| **🔥 PYRA** | **Blaze**: Blurs an opponent's screen for 5s. | Lower penalty for typos. |
-| **🛡️ SAGE** | **Barrier**: Protects your progress bar from effects. | Auto-corrects errors after a short delay. |
-| **🐍 VIPER** | **Poison**: Scrambles upcoming words for an enemy. | Toxin aura affects nearby racers. |
-| **🌑 OMEN** | **Paranoia**: Redacts the next 10 words for an enemy. | Progress bar is hidden from opponents. |
-| **💥 BREACH** | **Flashpoint**: Flashes an opponent's screen white. | Abilities charge faster after each use. |
-| ** Empress REYNA** | **Devour**: Jumps forward if you are currently leading. | Time bonus for every 15 correct words. |
-| **🤖 KILLJOY** | **Lockdown**: Locks an opponent's keyboard for 2s. | Places traps that freeze enemies. |
+| **🔥 PYRA** | **Rewrite**: Blurs an opponent's screen for 5s. | Lower penalty for typos. |
+| **🛡️ SAGE** | **Foretold**: Protects your progress bar from effects. | Auto-corrects errors after a short delay. |
+| **🐍 VIPER** | **Compound**: Scrambles upcoming words for an enemy. | Toxin aura affects nearby racers. |
+| **🌑 OMEN** | **Absence**: Redacts the next 10 words for an enemy. | Progress bar is hidden from opponents. |
+| **💥 BIJLI** | **Fault Line**: Flashes an opponent's screen white. | Abilities charge faster after each use. |
+| ** Empress KALI** | **Devour**: Jumps forward if you are currently leading. | Time bonus for every 15 correct words. |
+| **🤖 YANTRA** | **Last Tuesday**: Locks an opponent's keyboard for 2s. | Places traps that freeze enemies. |
 
 ---
 
@@ -66,7 +66,7 @@ In shooters, spraying and praying leads to missed shots. In Typhöön, we treate
 ### 2. Utility as "Visual Obstruction"
 We wanted to translate "Flashes" and "Smokes" into a 2D text environment without making it unplayable.
 - **The Thinking**: A "Flash" shouldn't just turn the screen white; it should disrupt the player's *rhythm*. 
-- **The UI Logic**: We used a layered CSS engine. **Breach's Flash** applies a white-out with a long decay, while **Omen's Paranoia** uses a blur-shadow overlay on upcoming words. This forces the player to type from memory or "blind," mimicking the panic of being hit by utility in a shooter.
+- **The UI Logic**: We used a layered CSS engine. **BIJLI's Fault Line** applies a white-out with a long decay, while **OMEN's Absence** uses a blur-shadow overlay on upcoming words.
 
 ### 3. Movement as "Word Skipping"
 In a typing game, "Movement" is your position in the text.

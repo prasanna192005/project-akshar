@@ -24,7 +24,7 @@ export const AGENT_LORE: Record<AgentType, AgentLore> = {
         agentId: 'BREACH',
         title: "AGENT 01 — BIJLI",
         location: "Ludhiana, Punjab",
-        image: "/lore/bijli.png",
+        image: "/lore/bijli.jpg",
         content: [
             "---",
             "### THE FILE",
@@ -58,7 +58,7 @@ export const AGENT_LORE: Record<AgentType, AgentLore> = {
         agentId: 'SAGE',
         title: "AGENT 02 — SUTRA",
         location: "Thiruvananthapuram, Kerala",
-        image: "/lore/sutra.png",
+        image: "/lore/sutra.jpg",
         content: [
             "---",
             "### THE FILE",
@@ -91,7 +91,7 @@ export const AGENT_LORE: Record<AgentType, AgentLore> = {
         agentId: 'ZEPHYR',
         title: "AGENT 03 — VAYU",
         location: "Delhi",
-        image: "/lore/vayu.png",
+        image: "/lore/vayu.jpg",
         content: [
             "---",
             "### THE FILE",
@@ -121,7 +121,7 @@ export const AGENT_LORE: Record<AgentType, AgentLore> = {
         agentId: 'PYRA',
         title: "AGENT 04 — AGNI",
         location: "Mumbai, Maharashtra",
-        image: "/lore/agni.png",
+        image: "/lore/agni.jpg",
         content: [
             "---",
             "### THE FILE",
@@ -202,7 +202,7 @@ export const AGENT_LORE: Record<AgentType, AgentLore> = {
         agentId: 'OMEN',
         title: "AGENT 07 — CHHAYA",
         location: "Varanasi, Uttar Pradesh",
-        image: "/lore/chhaya.png",
+        image: "/lore/chhaya.jpg",
         content: [
             "---",
             "### THE FILE",

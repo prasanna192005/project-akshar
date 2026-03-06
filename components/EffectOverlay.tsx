@@ -23,7 +23,7 @@ const EffectOverlay: React.FC<EffectOverlayProps> = ({ effects }) => {
             {effects.inputLocked && (
                 <div className="absolute inset-0 bg-yellow-500/5 flex items-center justify-center border-[20px] border-yellow-500/10">
                     <div className="text-yellow-500 font-black text-xs uppercase tracking-[1em] opacity-40 bg-black/40 px-8 py-2 border-y border-yellow-500/50 animate-pulse">
-                        LOCKDOWN ACTIVE
+                        LAST TUESDAY ACTIVE
                     </div>
                 </div>
             )}
@@ -43,7 +43,7 @@ const EffectOverlay: React.FC<EffectOverlayProps> = ({ effects }) => {
                 <div className="absolute inset-0 bg-black/40 ring-[150px] ring-inset ring-black/80 blur-2xl pointer-events-none transition-opacity duration-500" />
             )}
 
-            {/* EMPRESS Effect (Soul Steal Heartbeat) */}
+            {/* DEVOUR Effect (Soul Steal Heartbeat) */}
             {effects.empress && (
                 <div className="absolute inset-0 border-[40px] border-[#C84FA8]/30 blur-3xl mix-blend-multiply animate-heartbeat pointer-events-none" />
             )}

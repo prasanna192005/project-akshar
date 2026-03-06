@@ -104,14 +104,14 @@ export default function GuidePage() {
                                     </thead>
                                     <tbody className="divide-y divide-white/5 font-medium">
                                         {[
-                                            { name: "VAYU", passive: "Speed Multiply on 10+ streak", active: "Tailwind (Next 5 words)", mod: "1.4x" },
-                                            { name: "BIJLI", passive: "Faster charge on every use", active: "Flash (Blind opponents)", mod: "1.5x" },
-                                            { name: "CHHAYA", passive: "Stealth Progress Bar", active: "Paranoia (Hides words)", mod: "1.0x" },
-                                            { name: "VISHA", passive: "Toxic tint on near rivals", active: "Poison (Scramble words)", mod: "1.0x" },
-                                            { name: "YANTRA", passive: "Type-triggered Traps", active: "Lockdown (Lock input)", mod: "0.7x" },
-                                            { name: "KALI", passive: "Soul Harvest (Time Bonus)", active: "Empress (Typos reverse progress)", mod: "1.2x" },
-                                            { name: "SUTRA", passive: "Mistake Auto-Correct", active: "Barrier (Effect Immunity)", mod: "0.8x" },
-                                            { name: "AGNI", passive: "30% reduced typo penalty", active: "Blaze (Blur screen)", mod: "1.0x" },
+                                            { name: "VAYU", passive: "Speed Multiply on 10+ streak", active: "Slipstream (Next 5 words)", mod: "1.4x" },
+                                            { name: "BIJLI", passive: "Faster charge on every use", active: "Fault Line (Blind opponents)", mod: "1.5x" },
+                                            { name: "CHHAYA", passive: "Stealth Progress Bar", active: "Absence (Hides words)", mod: "1.0x" },
+                                            { name: "VISHA", passive: "Toxic tint on near rivals", active: "Compound (Scramble words)", mod: "1.0x" },
+                                            { name: "YANTRA", passive: "Type-triggered Traps", active: "Last Tuesday (Lock input)", mod: "0.7x" },
+                                            { name: "KALI", passive: "Soul Harvest (Time Bonus)", active: "Devour (Typos reverse progress)", mod: "1.2x" },
+                                            { name: "SUTRA", passive: "Mistake Auto-Correct", active: "Foretold (Effect Immunity)", mod: "0.8x" },
+                                            { name: "AGNI", passive: "30% reduced typo penalty", active: "Rewrite (Blur screen)", mod: "1.0x" },
                                         ].sort((a, b) => b.mod.localeCompare(a.mod)).map((agent, i) => (
                                             <tr key={i} className="hover:bg-white/5 transition-colors group italic uppercase font-black">
                                                 <td className="py-4 px-2 text-[#f5a623] group-hover:translate-x-1 transition-transform">{agent.name}</td>

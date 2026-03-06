@@ -299,7 +299,7 @@ export default function TestingRange() {
                                 <SkeletalButton onClick={() => setEffects(p => ({ ...p, inputLocked: true }))} borderClassName="border-[#f5a623]/20" className="h-10 px-4 text-[9px]" variant="secondary">TEST_LOCK</SkeletalButton>
                                 <SkeletalButton onClick={() => setEffects(p => ({ ...p, scrambledWords: ['SCRAMBLED'] }))} borderClassName="border-[#f5a623]/20" className="h-10 px-4 text-[9px]" variant="secondary">TEST_SCRAMBLE</SkeletalButton>
                                 <SkeletalButton onClick={() => setEffects(p => ({ ...p, frozen: true }))} borderClassName="border-[#f5a623]/20" className="h-10 px-4 text-[9px]" variant="secondary">TEST_FREEZE</SkeletalButton>
-                                <SkeletalButton onClick={() => setEffects(p => ({ ...p, paranoia: true }))} borderClassName="border-[#f5a623]/20" className="h-10 px-4 text-[9px]" variant="secondary">TEST_PARANOIA</SkeletalButton>
+                                <SkeletalButton onClick={() => setEffects(p => ({ ...p, paranoia: true }))} borderClassName="border-[#f5a623]/20" className="h-10 px-4 text-[9px]" variant="secondary">TEST_ABSENCE</SkeletalButton>
                             </div>
                         </div>
                     </div>
