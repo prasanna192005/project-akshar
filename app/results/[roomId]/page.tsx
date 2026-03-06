@@ -7,6 +7,8 @@ import { AGENTS } from "@/lib/agents";
 import { Player } from "@/types";
 import { updateRoomStatus, updatePlayerState, INITIAL_EFFECTS } from "@/lib/roomUtils";
 import { getRandomPrompt } from "@/lib/prompts";
+import BunkerBackground from "@/components/BunkerBackground";
+import SkeletalButton from "@/components/SkeletalButton";
 
 export default function Results() {
     const { roomId } = useParams() as { roomId: string };
@@ -68,35 +70,38 @@ export default function Results() {
     const winnerAgent = winner?.agent ? AGENTS[winner.agent] : null;
 
     return (
-        <main className="min-h-screen flex flex-col items-center bg-[#0F1923] overflow-y-auto py-20 px-8 relative">
-            <div className="fixed top-0 left-0 w-full h-1 bg-[#FF4655] shadow-[0_0_20px_#FF4655] z-[100]" />
+        <main className="min-h-screen flex flex-col items-center bg-[#0d0b09] overflow-y-auto py-20 px-8 relative">
+            <BunkerBackground />
+            <div className="fixed top-0 left-0 w-full h-1 bg-[#f5a623] shadow-[0_0_20px_#f5a623] z-[100]" />
 
             {/* Top Quick Actions */}
             <div className="absolute top-8 right-8 flex gap-4 z-50 animate-in fade-in slide-in-from-right-4 duration-700 delay-300">
                 <button
                     onClick={() => router.push('/')}
-                    className="h-10 px-6 border border-white/20 text-[10px] text-white font-black uppercase tracking-widest hover:bg-white/10 transition-all flex items-center justify-center gap-2"
                 >
-                    Return Home
+                    <SkeletalButton variant="secondary" className="h-10 px-6 text-[10px]">
+                        Return Home
+                    </SkeletalButton>
                 </button>
                 {room.hostId === playerId ? (
                     <button
                         onClick={handlePlayAgain}
-                        className="h-10 px-8 bg-white text-black text-[10px] font-black uppercase tracking-widest hover:bg-[#FF4655] hover:text-white transition-all shadow-xl"
                     >
-                        Play Again
+                        <SkeletalButton className="h-10 px-8 text-[10px]">
+                            Play Again
+                        </SkeletalButton>
                     </button>
                 ) : (
                     <div className="h-10 px-6 flex items-center bg-white/5 border border-white/10 text-[10px] text-white/40 font-black uppercase tracking-widest gap-2">
-                        <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-ping" />
-                        Host Choice
+                        <div className="w-1.5 h-1.5 bg-[#f5a623] rounded-full animate-ping" />
+                        Awaiting Host
                     </div>
                 )}
             </div>
 
-            <div className="text-center mb-16 animate-in fade-in slide-in-from-top-8 duration-700">
-                <h1 className="text-[80px] font-black italic tracking-tighter leading-none mb-2">MISSION COMPLETE</h1>
-                <p className="text-xs uppercase tracking-[1em] font-bold opacity-30">Summary of Battle Record</p>
+            <div className="text-center mb-16 animate-in fade-in slide-in-from-top-8 duration-700 relative z-10">
+                <h1 className="text-[80px] font-black italic tracking-tighter leading-none mb-2">MISSION_DEBRIEF</h1>
+                <p className="text-xs uppercase tracking-[1em] font-bold text-[#f5a623]/40">Authenticated Battle Record</p>
             </div>
 
             {/* Match MVP Hero Section */}
@@ -104,9 +109,9 @@ export default function Results() {
                 <div className="w-full max-w-5xl mb-12 animate-in fade-in slide-in-from-top-12 duration-1000">
                     <div className="relative group">
                         {/* Skewed Background Panel */}
-                        <div className="absolute inset-0 bg-[#FF4655] skew-x-[-6deg] opacity-10 blur-xl group-hover:opacity-20 transition-opacity"
+                        <div className="absolute inset-0 bg-[#f5a623] skew-x-[-6deg] opacity-10 blur-xl group-hover:opacity-20 transition-opacity"
                             style={{ backgroundColor: winnerAgent?.color }} />
-                        <div className="relative bg-white/5 border border-white/10 p-10 flex items-center justify-between skew-x-[-6deg] overflow-hidden">
+                        <div className="relative bg-[#0d0b09]/40 border border-[#f5a623]/20 p-10 flex items-center justify-between skew-x-[-6deg] overflow-hidden backdrop-blur-sm">
                             {/* Inner Decorative Elements */}
                             <div className="absolute inset-0 opacity-[0.02]"
                                 style={{ backgroundImage: 'linear-gradient(45deg, white 25%, transparent 25%, transparent 50%, white 50%, white 75%, transparent 75%, transparent)', backgroundSize: '40px 40px' }} />
@@ -114,21 +119,21 @@ export default function Results() {
                             <div className="flex items-center gap-12 skew-x-[6deg]">
                                 {/* Rank Tag */}
                                 <div className="flex flex-col items-center">
-                                    <div className="text-[10px] font-black tracking-[0.4em] opacity-30 mb-2">RANK</div>
-                                    <div className="text-8xl font-black italic text-white/90 drop-shadow-[0_0_20px_rgba(255,255,255,0.2)]">#1</div>
+                                    <div className="text-[10px] font-black tracking-[0.4em] text-[#f5a623]/40 mb-2">RANK</div>
+                                    <div className="text-8xl font-black italic text-white/90 drop-shadow-[0_0_20px_rgba(245,166,35,0.3)]">#1</div>
                                 </div>
 
                                 {/* Divider */}
-                                <div className="w-1 h-32 bg-white/10" />
+                                <div className="w-1 h-32 bg-[#f5a623]/10" />
 
                                 {/* Player Info */}
                                 <div className="flex flex-col">
                                     <div className="flex items-center gap-3 mb-2">
-                                        <span className="bg-[#FF4655] text-black px-3 py-0.5 text-[10px] font-black uppercase tracking-[0.2em] animate-pulse"
+                                        <span className="bg-[#f5a623] text-black px-3 py-0.5 text-[10px] font-black uppercase tracking-[0.2em] animate-pulse"
                                             style={{ backgroundColor: winnerAgent?.color }}>
-                                            MATCH MVP
+                                            DATA_MVP
                                         </span>
-                                        <span className="text-[10px] uppercase font-bold tracking-[0.4em] text-white/30">Protocol Accomplished</span>
+                                        <span className="text-[10px] uppercase font-bold tracking-[0.4em] text-[#f5a623]/30">Protocol Accomplished</span>
                                     </div>
                                     <h2 className="text-7xl font-black italic tracking-tighter text-white mb-2 leading-none uppercase">
                                         {winner.name}
@@ -228,25 +233,27 @@ export default function Results() {
                 </div>
             )}
 
-            <div className="flex flex-col items-center gap-6 mt-12 pb-20 animate-in fade-in duration-500 delay-1000">
+            <div className="flex flex-col items-center gap-6 mt-12 pb-20 animate-in fade-in duration-500 delay-1000 relative z-10">
                 <div className="flex gap-4">
                     <button
                         onClick={() => router.push('/')}
-                        className="h-14 px-12 border border-white/20 text-white font-black uppercase tracking-widest hover:bg-white/10 transition-all flex items-center justify-center"
                     >
-                        Return Home
+                        <SkeletalButton variant="secondary" className="h-14 px-12">
+                            Return Home
+                        </SkeletalButton>
                     </button>
                     {room.hostId === playerId ? (
                         <button
                             onClick={handlePlayAgain}
-                            className="h-14 px-12 bg-[#FF4655] text-white font-black uppercase tracking-widest hover:bg-[#ff5d6a] transition-all shadow-[0_0_40px_rgba(255,70,85,0.2)] border-b-4 border-black/20"
                         >
-                            Start New Mission
+                            <SkeletalButton className="h-14 px-12">
+                                Initiate Next Sequence
+                            </SkeletalButton>
                         </button>
                     ) : (
                         <div className="h-14 px-12 flex items-center bg-white/5 border border-white/10 text-white/40 font-black uppercase tracking-widest gap-3">
-                            <div className="w-2 h-2 bg-yellow-500 rounded-full animate-ping" />
-                            Waiting for Sequence Reset
+                            <div className="w-2 h-2 bg-[#f5a623] rounded-full animate-ping" />
+                            Awaiting Sequence Reset
                         </div>
                     )}
                 </div>

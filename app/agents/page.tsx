@@ -3,15 +3,17 @@
 import React from "react";
 import Link from "next/link";
 import { AGENTS } from "@/lib/agents";
+import BunkerBackground from "@/components/BunkerBackground";
 
 export default function AgentsIntel() {
     return (
-        <main className="min-h-screen bg-[#0F1923] text-white p-8 md:p-16 lg:p-24 overflow-x-hidden">
+        <main className="min-h-screen bg-[#0d0b09] text-white p-8 md:p-16 lg:p-24 overflow-x-hidden relative">
+            <BunkerBackground />
             {/* Header section */}
-            <div className="max-w-7xl mx-auto mb-20 relative">
+            <div className="max-w-7xl mx-auto mb-20 relative z-10">
                 <Link
                     href="/"
-                    className="inline-flex items-center gap-2 text-white/40 hover:text-[#FF4655] transition-colors mb-8 group"
+                    className="inline-flex items-center gap-2 text-white/40 hover:text-[#f5a623] transition-colors mb-8 group"
                 >
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" className="group-hover:-translate-x-1 transition-transform">
                         <path d="M19 12H5M12 19l-7-7 7-7" />
@@ -21,22 +23,22 @@ export default function AgentsIntel() {
 
                 <div className="relative">
                     <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter leading-none mb-4 animate-in slide-in-from-left duration-700">
-                        AGENT <span className="text-[#FF4655]">INTEL</span>
+                        AGENT <span className="text-[#f5a623]">INTEL</span>
                     </h1>
-                    <div className="h-1 w-24 bg-[#FF4655] mb-6 animate-in zoom-in duration-1000" />
+                    <div className="h-1 w-24 bg-[#f5a623] mb-6 animate-in zoom-in duration-1000" />
                     <p className="text-white/40 max-w-xl text-sm leading-relaxed tracking-wide uppercase font-bold">
                         Detailed dossiers on the operational typing specialists. Master their passives and ultimates to dominate the battlefield.
                     </p>
                 </div>
 
                 {/* Decorative background text */}
-                <div className="absolute top-0 right-0 text-[180px] font-black text-white/[0.02] select-none pointer-events-none -mr-40 hidden lg:block">
-                    PROTOCOL
+                <div className="absolute top-0 right-0 text-[180px] font-black text-white/[0.02] select-none pointer-events-none -mr-40 hidden lg:block uppercase italic">
+                    AKSHAR
                 </div>
             </div>
 
             {/* Agents Grid */}
-            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
+            <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20 relative z-10">
                 {Object.values(AGENTS).map((agent, idx) => (
                     <div
                         key={agent.id}
@@ -52,9 +54,9 @@ export default function AgentsIntel() {
                         <div className="flex justify-between items-end mb-6">
                             <div>
                                 <span className="text-[10px] uppercase font-black tracking-[0.4em] opacity-30 mb-2 block">
-                                    Operator {agent.id.substring(0, 3)}
+                                    Operator {agent.name.substring(0, 3)}
                                 </span>
-                                <h2 className="text-4xl font-black italic tracking-tighter leading-none group-hover:text-[#FF4655] transition-colors">
+                                <h2 className="text-4xl font-black italic tracking-tighter leading-none group-hover:text-[#f5a623] transition-colors">
                                     {agent.name}
                                 </h2>
                             </div>
@@ -63,7 +65,7 @@ export default function AgentsIntel() {
                             </div>
                         </div>
 
-                        <p className="text-[#FF4655] text-xs font-black uppercase tracking-[0.2em] mb-4 italic">
+                        <p className="text-[#f5a623] text-xs font-black uppercase tracking-[0.2em] mb-4 italic">
                             "{agent.tagline}"
                         </p>
 
@@ -118,9 +120,9 @@ export default function AgentsIntel() {
             </div>
 
             {/* Footer */}
-            <div className="max-w-7xl mx-auto mt-32 pt-12 border-t border-white/5 text-center">
+            <div className="max-w-7xl mx-auto mt-32 pt-12 border-t border-white/5 text-center relative z-10">
                 <span className="text-[10px] uppercase font-black tracking-[0.5em] text-white/20">
-                    TYPHOÖN PROTOCOL // END OF FILE
+                    AKSHAR_SYSTEMS // OPERATIVE_END_OF_FILE
                 </span>
             </div>
         </main>

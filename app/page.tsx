@@ -9,6 +9,52 @@ import { ensureAuth } from "@/lib/firebase";
 import { useEffect } from "react";
 import Link from "next/link";
 import LoadingScreen from "@/components/LoadingScreen";
+import BunkerBackground from "@/components/BunkerBackground";
+import SkeletalButton from "@/components/SkeletalButton";
+
+
+function DecryptedText({ text, hoverText }: { text: string; hoverText: string }) {
+  const [displayText, setDisplayText] = useState(text);
+  const [isHovered, setIsHovered] = useState(false);
+  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()_+अआइईउऊऋएऐओऔकखगघङचछजझञटठडढणतथदधनपफबभमयरलवशषसह";
+
+  useEffect(() => {
+    let interval: NodeJS.Timeout;
+    let iteration = 0;
+    const target = isHovered ? hoverText : text;
+
+    interval = setInterval(() => {
+      setDisplayText(prev =>
+        target.split("")
+          .map((char, index) => {
+            if (index < iteration) {
+              return target[index];
+            }
+            return chars[Math.floor(Math.random() * chars.length)];
+          })
+          .join("")
+      );
+
+      if (iteration >= target.length) {
+        clearInterval(interval);
+      }
+
+      iteration += 1 / 3;
+    }, 30);
+
+    return () => clearInterval(interval);
+  }, [isHovered, text, hoverText]);
+
+  return (
+    <span
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      className="cursor-default select-none transition-colors duration-300 hover:text-[#f5a623]"
+    >
+      {displayText}
+    </span>
+  );
+}
 
 export default function Home() {
   const router = useRouter();
@@ -85,53 +131,48 @@ export default function Home() {
   if (loading) return <LoadingScreen />;
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden">
-      {/* Background Glow */}
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-600/10 blur-[120px] rounded-full -z-10" />
+    <main className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden bg-[#0d0b09] select-none">
+      <BunkerBackground />
 
       {/* Top Navigation */}
       <div className="absolute top-8 left-8 z-50">
-        <Link
-          href="/guide"
-          className="px-6 py-2 bg-white/5 border border-white/10 hover:border-[#FF4655] hover:text-[#FF4655] transition-all text-[10px] font-black uppercase tracking-[0.2em] rounded-sm group flex items-center gap-3 backdrop-blur-sm shadow-[0_0_20px_rgba(255,70,85,0.05)]"
-        >
-          <div className="w-1.5 h-1.5 bg-[#FF4655] rounded-full animate-pulse" />
-          Mission Briefing
+        <Link href="/guide">
+          <SkeletalButton variant="secondary" className="px-6 py-2 h-auto text-[10px] flex items-center gap-3 border-white/5 bg-white/5 backdrop-blur-sm">
+            <div className="w-1.5 h-1.5 bg-[#f5a623] rounded-full animate-pulse" />
+            Mission Briefing
+          </SkeletalButton>
         </Link>
       </div>
 
       <div className="absolute top-8 right-8 z-50 flex items-center gap-4">
-        <Link
-          href="/test"
-          className="px-6 py-2 bg-white/5 border border-white/10 hover:border-yellow-500 hover:text-yellow-500 transition-all text-[10px] font-black uppercase tracking-[0.2em] rounded-sm group flex items-center gap-3 backdrop-blur-sm"
-        >
-          Testing Range
-          <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse" />
+        <Link href="/test">
+          <SkeletalButton variant="secondary" className="px-6 py-2 h-auto text-[10px] flex items-center gap-3 border-white/5 bg-white/5 backdrop-blur-sm">
+            Testing Range
+            <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse" />
+          </SkeletalButton>
         </Link>
-        <Link
-          href="/lore"
-          className="px-6 py-2 bg-[#FF4655]/10 border border-[#FF4655]/20 hover:bg-[#FF4655] hover:text-white transition-all text-[10px] font-black uppercase tracking-[0.2em] rounded-sm group flex items-center gap-3 backdrop-blur-sm shadow-[0_0_20px_rgba(255,70,85,0.1)]"
-        >
-          Tactical Archives
-          <div className="w-1.5 h-1.5 bg-white rounded-full animate-ping" />
+        <Link href="/lore">
+          <SkeletalButton variant="secondary" className="px-6 py-2 h-auto text-[10px] flex items-center gap-3 border-[#f5a623]/20 bg-[#f5a623]/5 backdrop-blur-sm">
+            Tactical Archives
+            <div className="w-1.5 h-1.5 bg-white rounded-full animate-ping" />
+          </SkeletalButton>
         </Link>
-        <Link
-          href="/agents"
-          className="px-6 py-2 bg-white/5 border border-white/10 hover:border-[#FF4655] hover:text-[#FF4655] transition-all text-[10px] font-black uppercase tracking-[0.2em] rounded-sm group flex items-center gap-3 backdrop-blur-sm"
-        >
-          Agent Intel
-          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform">
-            <path d="M5 12h14M12 5l7 7-7 7" />
-          </svg>
+        <Link href="/agents">
+          <SkeletalButton variant="secondary" className="px-6 py-2 h-auto text-[10px] flex items-center gap-3 border-white/5 bg-white/5 backdrop-blur-sm">
+            OPERATIVE FILES
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7" />
+            </svg>
+          </SkeletalButton>
         </Link>
       </div>
 
-      <div className="w-full max-w-md text-center space-y-8 animate-in fade-in zoom-in duration-700">
+      <div className="w-full max-w-md text-center space-y-8 animate-in fade-in zoom-in duration-700 z-10">
         <div>
-          <h1 className="text-6xl font-black tracking-tighter italic text-white mb-2 uppercase">
-            TYPHO<span className="text-[#FF4655]">Ö</span>N
+          <h1 className="text-8xl font-black tracking-tighter italic text-white mb-2 uppercase leading-none drop-shadow-[0_0_30px_rgba(245,166,35,0.2)]">
+            <DecryptedText text="AKSHAR" hoverText="अक्षर" />
           </h1>
-          <p className="text-xs uppercase tracking-[0.5em] font-bold opacity-40">
+          <p className="text-xs uppercase tracking-[0.5em] font-bold opacity-30 text-[#f5a623]">
             Multiplayer Typing Battle
           </p>
         </div>
@@ -147,9 +188,9 @@ export default function Home() {
                 setName(e.target.value);
                 setError("");
               }}
-              className="w-full bg-white/5 border-b-2 border-white/10 px-0 py-4 text-center text-xl font-bold tracking-widest focus:border-[#FF4655] outline-none transition-all placeholder:text-white/10 uppercase"
+              className="w-full bg-white/5 border-b-2 border-white/10 px-0 py-4 text-center text-xl font-bold tracking-widest focus:border-[#f5a623] outline-none transition-all placeholder:text-white/10 uppercase text-[#e8d9c5]"
             />
-            {error && <p className="text-[#FF4655] text-[10px] mt-2 font-bold tracking-widest uppercase">{error}</p>}
+            {error && <p className="text-[#f5a623] text-[10px] mt-2 font-bold tracking-widest uppercase">{error}</p>}
           </div>
 
           {!showJoinInput && (
@@ -159,7 +200,7 @@ export default function Home() {
                 className="flex items-center justify-between py-3 border-y border-white/5 cursor-pointer group hover:bg-white/[0.02] transition-colors px-1"
               >
                 <div className="flex items-center gap-3">
-                  <div className={`w-1 h-3 ${showSettings ? 'bg-[#FF4655]' : 'bg-white/20'} group-hover:bg-[#FF4655] transition-colors`} />
+                  <div className={`w-1 h-3 ${showSettings ? 'bg-[#f5a623]' : 'bg-white/20'} group-hover:bg-[#f5a623] transition-colors`} />
                   <span className="text-[9px] font-black uppercase tracking-[0.3em] text-white/40 group-hover:text-white transition-colors">
                     Mission Protocol
                   </span>
@@ -168,14 +209,14 @@ export default function Home() {
                 <div className="flex items-center gap-4">
                   {!showSettings && (
                     <div className="hidden sm:flex items-center gap-2 opacity-20 group-hover:opacity-40 transition-opacity">
-                      <span className="text-[8px] font-bold uppercase tracking-widest">{category}</span>
+                      <span className="text-[8px] font-bold uppercase tracking-widest text-[#f5a623]">{category}</span>
                       <span className="w-1 h-1 rounded-full bg-white" />
                       <span className="text-[8px] font-bold uppercase tracking-widest">{targeting}</span>
                     </div>
                   )}
                   <svg
                     width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"
-                    className={`text-white/20 group-hover:text-[#FF4655] transition-all duration-300 ${showSettings ? 'rotate-180' : ''}`}
+                    className={`text-white/20 group-hover:text-[#f5a623] transition-all duration-300 ${showSettings ? 'rotate-180' : ''}`}
                   >
                     <path d="m6 9 12 12 12-12" />
                     <path d="m6 9 6 6 6-6" />
@@ -186,18 +227,17 @@ export default function Home() {
               {showSettings && (
                 <div className="py-6 space-y-6 animate-in fade-in slide-in-from-top-2 duration-300">
                   <div className="grid grid-cols-1 gap-6 text-left">
-                    {/* Category Selection */}
                     <div>
                       <div className="flex items-center justify-between mb-3">
-                        <label className="text-[9px] font-bold uppercase tracking-widest text-[#FF4655]">01 // Scenario</label>
-                        <span className="text-[8px] font-mono text-white/20">SELECT_PROMPT_POOL</span>
+                        <label className="text-[9px] font-bold uppercase tracking-widest text-[#f5a623]">01 // Scenario</label>
+                        <span className="text-[8px] font-mono text-white/10">SELECT_PROMPT_POOL</span>
                       </div>
                       <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
                         {(['tech', 'lore', 'quotes', 'random'] as PromptCategory[]).map((cat) => (
                           <button
                             key={cat}
                             onClick={() => setCategory(cat)}
-                            className={`py-2 text-[9px] font-black uppercase tracking-widest border transition-all ${category === cat ? 'bg-[#FF4655] border-[#FF4655] text-black shadow-[0_0_15px_rgba(255,70,85,0.3)]' : 'bg-transparent border-white/10 text-white/40 hover:border-white/20'}`}
+                            className={`py-2 text-[9px] font-black uppercase tracking-widest border transition-all ${category === cat ? 'bg-[#f5a623] border-[#f5a623] text-black shadow-[0_0_15px_rgba(245,166,35,0.3)]' : 'bg-transparent border-white/10 text-white/40 hover:border-white/20'}`}
                           >
                             {cat}
                           </button>
@@ -205,12 +245,11 @@ export default function Home() {
                       </div>
                     </div>
 
-                    {/* Targeting Selection */}
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                       <div>
                         <div className="flex items-center justify-between mb-3">
-                          <label className="text-[9px] font-bold uppercase tracking-widest text-[#FF4655]">02 // Logic</label>
-                          <span className="text-[8px] font-mono text-white/20">TARGET_SYSTEM</span>
+                          <label className="text-[9px] font-bold uppercase tracking-widest text-[#f5a623]">02 // Logic</label>
+                          <span className="text-[8px] font-mono text-white/10">TARGET_SYSTEM</span>
                         </div>
                         <div className="flex flex-col gap-2">
                           {[
@@ -221,10 +260,10 @@ export default function Home() {
                             <button
                               key={t.id}
                               onClick={() => setTargeting(t.id as any)}
-                              className={`px-4 py-2 text-left text-[9px] font-black uppercase tracking-widest border transition-all flex items-center justify-between ${targeting === t.id ? 'bg-[#FF4655]/10 border-[#FF4655] text-[#FF4655]' : 'bg-transparent border-white/5 text-white/20 hover:border-white/10'}`}
+                              className={`px-4 py-2 text-left text-[9px] font-black uppercase tracking-widest border transition-all flex items-center justify-between ${targeting === t.id ? 'bg-[#f5a623]/10 border-[#f5a623] text-[#f5a623]' : 'bg-transparent border-white/5 text-white/20 hover:border-white/10'}`}
                             >
                               {t.label}
-                              {targeting === t.id && <div className="w-1.5 h-1.5 bg-[#FF4655] rounded-full animate-pulse" />}
+                              {targeting === t.id && <div className="w-1.5 h-1.5 bg-[#f5a623] rounded-full animate-pulse" />}
                             </button>
                           ))}
                         </div>
@@ -232,18 +271,18 @@ export default function Home() {
 
                       <div>
                         <div className="flex items-center justify-between mb-3">
-                          <label className="text-[9px] font-bold uppercase tracking-widest text-[#FF4655]">03 // Intensity</label>
-                          <span className="text-[8px] font-mono text-white/20">CHARGE_RATE</span>
+                          <label className="text-[9px] font-bold uppercase tracking-widest text-[#f5a623]">03 // Intensity</label>
+                          <span className="text-[8px] font-mono text-white/10">CHARGE_RATE</span>
                         </div>
                         <div className="flex flex-col gap-2">
                           {(['slow', 'normal', 'fast'] as const).map((speed) => (
                             <button
                               key={speed}
                               onClick={() => setAbilitySpeed(speed)}
-                              className={`px-4 py-2 text-left text-[9px] font-black uppercase tracking-widest border transition-all flex items-center justify-between ${abilitySpeed === speed ? 'bg-[#FF4655]/10 border-[#FF4655] text-[#FF4655]' : 'bg-transparent border-white/5 text-white/20 hover:border-white/10'}`}
+                              className={`px-4 py-2 text-left text-[9px] font-black uppercase tracking-widest border transition-all flex items-center justify-between ${abilitySpeed === speed ? 'bg-[#f5a623]/10 border-[#f5a623] text-[#f5a623]' : 'bg-transparent border-white/5 text-white/20 hover:border-white/10'}`}
                             >
                               {speed}
-                              {abilitySpeed === speed && <div className="w-1.5 h-1.5 bg-[#FF4655] rounded-full animate-pulse" />}
+                              {abilitySpeed === speed && <div className="w-1.5 h-1.5 bg-[#f5a623] rounded-full animate-pulse" />}
                             </button>
                           ))}
                         </div>
@@ -258,21 +297,19 @@ export default function Home() {
           <div className="grid grid-cols-1 gap-3">
             {!showJoinInput ? (
               <>
-                <button
+                <SkeletalButton
                   disabled={loading}
                   onClick={handleCreateRoom}
-                  className="group relative h-14 bg-[#FF4655] text-black font-black uppercase tracking-widest overflow-hidden transition-all hover:bg-white"
                 >
-                  <span className="relative z-10">Create Room</span>
-                  {/* Decorative cut corners typical of Valorant UI can be added with CSS clips */}
-                </button>
-                <button
+                  Create Room
+                </SkeletalButton>
+                <SkeletalButton
+                  variant="secondary"
                   disabled={loading}
                   onClick={() => setShowJoinInput(true)}
-                  className="h-14 bg-white/5 border border-white/10 text-white font-black uppercase tracking-widest hover:bg-white/10 transition-all"
                 >
                   Join Room
-                </button>
+                </SkeletalButton>
               </>
             ) : (
               <div className="space-y-3 animate-in slide-in-from-top-4 duration-300">
@@ -282,29 +319,30 @@ export default function Home() {
                   maxLength={6}
                   value={roomIdInput}
                   onChange={(e) => setRoomIdInput(e.target.value.toUpperCase())}
-                  className="w-full bg-white/5 border border-white/10 h-14 text-center text-xl font-mono focus:border-[#FF4655] outline-none"
+                  className="w-full bg-white/5 border border-white/10 h-14 text-center text-xl font-mono focus:border-[#f5a623] outline-none text-[#f5a623]"
                 />
                 <div className="grid grid-cols-2 gap-3">
-                  <button
+                  <SkeletalButton
+                    variant="secondary"
                     onClick={() => setShowJoinInput(false)}
-                    className="h-14 border border-white/10 text-white/50 font-bold uppercase tracking-widest text-xs hover:text-white transition-all"
+                    className="h-14"
                   >
                     Back
-                  </button>
-                  <button
+                  </SkeletalButton>
+                  <SkeletalButton
                     onClick={handleJoinRoom}
-                    className="h-14 bg-white text-black font-black uppercase tracking-widest"
+                    className="h-14"
                   >
                     Join
-                  </button>
+                  </SkeletalButton>
                 </div>
               </div>
             )}
           </div>
         </div>
 
-        <div className="pt-12 text-[10px] uppercase tracking-[0.3em] font-bold opacity-20">
-          YAAO PRODUCTIONS
+        <div className="pt-12 text-[10px] uppercase tracking-[0.3em] font-bold opacity-10 text-[#f5a623]">
+          AKSHAR SYSTEMS // YAAO PRODUCTIONS
         </div>
       </div>
     </main>

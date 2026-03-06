@@ -5,14 +5,20 @@
   --color-foreground: #ece8e1;
   --color-valorant-red: #ff4655;
 
+  /* AKSHAR IP TOKENS */
+  --color-akshar-amber: #f5a623;
+  --color-akshar-stone: #0d0b09;
+  --color-akshar-paper: #e8d9c5;
+
   --font-orbitron: var(--font-orbitron);
   --font-rajdhani: var(--font-rajdhani);
   --font-mono: var(--font-share-tech-mono);
 }
 
 :root {
-  --background: #0f1923;
-  --foreground: #ece8e1;
+  --background: #0d0b09;
+  --foreground: #e8d9c5;
+  --akshar-amber: #f5a623;
 }
 
 body {
@@ -20,6 +26,18 @@ body {
   color: var(--foreground);
   font-family: var(--font-rajdhani), sans-serif;
   overflow-x: hidden;
+  position: relative;
+}
+
+/* Global Noise Texture */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  pointer-events: none;
+  opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
 }
 
 h1,

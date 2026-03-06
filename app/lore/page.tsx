@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { AGENTS, AgentType } from "@/lib/agents";
 import { AGENT_LORE, WORLD_LORE, AGENT_FILES_INTRO } from "@/lib/lore";
+import BunkerBackground from "@/components/BunkerBackground";
 
 export default function LorePage() {
     const [selectedView, setSelectedView] = useState<AgentType | 'WORLD' | 'AGENT_FILES'>('WORLD');
@@ -49,22 +50,24 @@ export default function LorePage() {
     const visibleContent = getVisibleContent();
 
     return (
-        <main className="min-h-screen bg-[#0F1923] text-white flex flex-col lg:flex-row relative overflow-hidden">
+        <main className="min-h-screen bg-[#0d0b09] text-white flex flex-col lg:flex-row relative overflow-hidden">
+            <BunkerBackground />
+
             {/* Background Decorative Element */}
-            <div className="fixed top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none select-none overflow-hidden">
+            <div className="fixed top-0 left-0 w-full h-full opacity-[0.03] pointer-events-none select-none overflow-hidden z-0">
                 <div className="absolute top-[-10%] right-[-10%] text-[40rem] font-black italic tracking-tighter leading-none uppercase">
                     {isWorldView ? 'AKSHAR' : agent?.name}
                 </div>
             </div>
 
             {/* Sidebar */}
-            <aside className="w-full lg:w-80 h-screen overflow-y-auto border-r border-white/10 bg-[#0F1923]/80 backdrop-blur-xl z-10 p-6 flex flex-col">
+            <aside className="w-full lg:w-80 h-screen overflow-y-auto border-r border-white/10 bg-[#0d0b09]/80 backdrop-blur-xl z-20 p-6 flex flex-col">
                 <div className="mb-12">
                     <Link href="/" className="inline-flex items-center gap-2 group mb-8">
                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="group-hover:-translate-x-1 transition-transform"><path d="m15 18-6-6 6-6" /></svg>
                         <span className="text-[10px] font-black uppercase tracking-[0.4em]">Back to HQ</span>
                     </Link>
-                    <h1 className="text-3xl font-black italic tracking-tighter mb-2">TACTICAL ARCHIVES</h1>
+                    <h1 className="text-3xl font-black italic tracking-tighter mb-2 text-[#f5a623]">TACTICAL ARCHIVES</h1>
                     <p className="text-[10px] uppercase font-bold tracking-[0.2em] text-white/40">Protocol: Origin Stories</p>
                 </div>
 
@@ -74,14 +77,14 @@ export default function LorePage() {
                         onClick={() => setSelectedView('WORLD')}
                         className={`w-full group relative flex items-center gap-4 p-4 transition-all border-l-4 mb-8
                             ${isWorldView
-                                ? 'bg-[#FF4655]/20 border-[#FF4655] translate-x-1'
+                                ? 'bg-[#f5a623]/20 border-[#f5a623] translate-x-1'
                                 : 'hover:bg-white/5 border-transparent hover:border-white/20'
                             }
                         `}
                     >
-                        <div className="w-2 h-2 rounded-full bg-[#FF4655] shadow-[0_0_10px_#FF4655]" />
+                        <div className="w-2 h-2 rounded-full bg-[#f5a623] shadow-[0_0_10px_#f5a623]" />
                         <div className="text-left">
-                            <span className={`block text-[10px] font-black uppercase tracking-widest leading-none mb-1 ${isWorldView ? 'text-[#FF4655]' : 'text-white/40'}`}>
+                            <span className={`block text-[10px] font-black uppercase tracking-widest leading-none mb-1 ${isWorldView ? 'text-[#f5a623]' : 'text-white/40'}`}>
                                 MISSION BRIEFING
                             </span>
                             <span className={`block text-xl font-black italic tracking-tighter leading-none ${isWorldView ? 'text-white' : 'text-white/60'}`}>
@@ -97,26 +100,9 @@ export default function LorePage() {
                             ${isAgentFilesIntro ? 'translate-x-1' : ''}
                         `}
                     >
-                        <h2 className={`text-xs font-black italic tracking-[0.2em] mb-4 transition-colors ${isAgentFilesIntro ? 'text-white' : 'text-[#FF4655] group-hover:text-white'}`}>
+                        <h2 className={`text-xs font-black italic tracking-[0.2em] mb-4 transition-colors ${isAgentFilesIntro ? 'text-white' : 'text-[#f5a623] group-hover:text-white'}`}>
                             AKSHAR — AGENT FILES
                         </h2>
-                        {/* {isAgentFilesIntro && (
-                            <div className="space-y-4 px-2 mb-6 animate-in fade-in slide-in-from-left-2 transition-all">
-                                <div className="text-[9px] font-bold text-white/60 leading-tight">
-                                    <span className="block text-white">Classified. Level 4 Clearance Required.</span>
-                                    <span className="block italic mt-1 text-white/40">"Know your operators. Know your network."</span>
-                                    <span className="block text-right mt-1">— Dr. Aditi Bhosle, Sept 2038</span>
-                                </div>
-                                <div className="text-[10px] text-white/30 leading-relaxed italic border-l border-white/10 pl-3">
-                                    These files were compiled by AKSHAR's intelligence division. Each represents a complete picture of an agent's life.
-                                </div>
-                            </div>
-                        )}
-                        {!isAgentFilesIntro && (
-                            <div className="text-[8px] font-black uppercase tracking-widest text-white/20 px-2 group-hover:text-white/40 transition-colors">
-                                Click to View Classified Brief
-                            </div>
-                        )} */}
                     </button>
 
                     {(['BREACH', 'SAGE', 'ZEPHYR', 'PYRA', 'KILLJOY', 'VIPER', 'OMEN', 'REYNA'] as AgentType[]).map((id) => (
@@ -125,7 +111,7 @@ export default function LorePage() {
                             onClick={() => setSelectedView(id)}
                             className={`w-full group relative flex items-center gap-4 p-4 transition-all border-l-4 
                                 ${selectedView === id
-                                    ? 'bg-white/10 border-[#FF4655] translate-x-1'
+                                    ? 'bg-white/10 border-[#f5a623] translate-x-1'
                                     : 'hover:bg-white/5 border-transparent hover:border-white/20'
                                 }
                             `}
@@ -135,7 +121,7 @@ export default function LorePage() {
                                 style={{ backgroundColor: AGENTS[id].color }}
                             />
                             <div className="text-left">
-                                <span className={`block text-[10px] font-black uppercase tracking-widest leading-none mb-1 ${selectedView === id ? 'text-[#FF4655]' : 'text-white/40'}`}>
+                                <span className={`block text-[10px] font-black uppercase tracking-widest leading-none mb-1 ${selectedView === id ? 'text-[#f5a623]' : 'text-white/40'}`}>
                                     {AGENT_LORE[id].title.split(' — ')[0]}
                                 </span>
                                 <span className={`block text-xl font-black italic tracking-tighter leading-none ${selectedView === id ? 'text-white' : 'text-white/60'}`}>
@@ -144,7 +130,7 @@ export default function LorePage() {
                             </div>
                             {selectedView === id && (
                                 <div className="absolute right-4 animate-in fade-in slide-in-from-right-2">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#FF4655" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#f5a623" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round"><path d="m9 18 6-6-6-6" /></svg>
                                 </div>
                             )}
                         </button>
@@ -161,10 +147,10 @@ export default function LorePage() {
             </aside>
 
             {/* Main Content Area */}
-            <section className="flex-1 h-screen overflow-y-auto z-10 relative story-scroll-container">
+            <section className="flex-1 h-screen overflow-y-auto relative z-10 story-scroll-container">
                 {/* Hero Header */}
                 <div className="relative h-[60vh] flex items-end p-12 overflow-hidden border-b border-white/10">
-                    <div className="absolute inset-0 bg-gradient-to-t from-[#0F1923] via-[#0F1923]/40 to-transparent z-10" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0d0b09] via-[#0d0b09]/40 to-transparent z-10" />
 
                     {/* Hero Image */}
                     <div className="absolute inset-0 z-0 bg-neutral-900 group">
@@ -173,7 +159,7 @@ export default function LorePage() {
                             alt={isWorldView ? 'AKSHAR' : agent?.name}
                             className="w-full h-full object-cover opacity-40 group-hover:scale-105 transition-transform duration-[10s] ease-linear"
                         />
-                        <div className="absolute inset-0 bg-[#FF4655]/10 mix-blend-overlay opacity-50" />
+                        <div className="absolute inset-0 bg-[#f5a623]/10 mix-blend-overlay opacity-50" />
                         <div className="absolute inset-0 flex items-center justify-center text-[20vw] font-black italic text-white/[0.02] select-none uppercase tracking-tighter">
                             {isWorldView ? 'AKSHAR' : isAgentFilesIntro ? 'DOSSIER' : agent?.name}
                         </div>
@@ -181,7 +167,7 @@ export default function LorePage() {
 
                     <div className="relative z-20 max-w-4xl w-full">
                         <div className="flex items-center gap-4 mb-4 animate-in slide-in-from-left-4 duration-500">
-                            <span className="px-3 py-1 bg-[#FF4655] text-white text-[10px] font-black uppercase tracking-widest">Archive ID: {isWorldView ? 'AKSHAR-00' : agent?.id}</span>
+                            <span className="px-3 py-1 bg-[#f5a623] text-black text-[10px] font-black uppercase tracking-widest">Archive ID: {isWorldView ? 'AKSHAR-00' : agent?.name}</span>
                             {!isWorldView && agent && (
                                 <>
                                     <span className="px-3 py-1 border border-white/20 text-white text-[10px] font-black uppercase tracking-widest animate-in fade-in slide-in-from-left-4 duration-650">
@@ -196,7 +182,7 @@ export default function LorePage() {
                         </div>
                         {!isWorldView && agent && (
                             <div className="mb-2 animate-in slide-in-from-left-6 duration-600">
-                                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-[#FF4655]">Operative Identified:</span>
+                                <span className="text-[10px] font-black uppercase tracking-[0.5em] text-[#f5a623]">Operative Identified:</span>
                                 <h3 className="text-3xl font-black italic tracking-tighter text-white uppercase drop-shadow-[0_0_15px_rgba(255,255,255,0.2)]">
                                     {agent.realName}
                                 </h3>
@@ -206,7 +192,7 @@ export default function LorePage() {
                             {isWorldView ? 'THE COLLAPSE' : isAgentFilesIntro ? 'AGENT FILES' : agent?.name.toUpperCase()}
                         </h2>
                         <div className="flex items-center gap-6">
-                            <div className="h-0.5 w-24" style={{ backgroundColor: isWorldView ? '#FF4655' : agent?.color }} />
+                            <div className="h-0.5 w-24" style={{ backgroundColor: isWorldView ? '#f5a623' : agent?.color }} />
                             <span className="text-lg font-bold tracking-[.3em] uppercase opacity-60 text-white italic">{isWorldView ? 'REBUILDING THE WORLD FROM SCRATCH' : agent?.tagline}</span>
                         </div>
                     </div>
@@ -214,13 +200,13 @@ export default function LorePage() {
 
                 {/* World Lore Sub-Navigation */}
                 {isWorldView && (
-                    <div className="sticky top-0 z-30 bg-[#0F1923]/95 backdrop-blur-sm border-b border-white/10 flex gap-4 px-12 py-6 overflow-x-auto scrollbar-none">
+                    <div className="sticky top-0 z-30 bg-[#0d0b09]/95 backdrop-blur-sm border-b border-white/10 flex gap-4 px-12 py-6 overflow-x-auto scrollbar-none">
                         {worldSections.map(section => (
                             <button
                                 key={section.id}
                                 onClick={() => setActiveSection(section.id)}
                                 className={`whitespace-nowrap px-6 py-2 text-[10px] font-black tracking-[0.3em] uppercase rounded-sm transition-all border ${activeSection === section.id
-                                    ? 'bg-[#FF4655] border-[#FF4655] text-white shadow-[0_0_20px_rgba(255,70,85,0.4)]'
+                                    ? 'bg-[#f5a623] border-[#f5a623] text-black shadow-[0_0_20px_rgba(245,166,35,0.4)]'
                                     : 'bg-white/5 border-white/10 text-white/40 hover:bg-white/10 hover:text-white'}`}
                             >
                                 {section.label}
@@ -249,7 +235,7 @@ export default function LorePage() {
 
                             if (paragraph.startsWith("## ")) {
                                 return (
-                                    <h2 key={idx} className="text-4xl font-black italic tracking-tighter text-[#FF4655] pt-8 mb-6 uppercase">
+                                    <h2 key={idx} className="text-4xl font-black italic tracking-tighter text-[#f5a623] pt-8 mb-6 uppercase">
                                         {paragraph.replace("## ", "")}
                                     </h2>
                                 );
@@ -257,7 +243,7 @@ export default function LorePage() {
 
                             if (paragraph.startsWith("### ")) {
                                 return (
-                                    <h3 key={idx} className="text-xl font-black italic tracking-tighter text-[#FF4655]/80 mb-4 uppercase">
+                                    <h3 key={idx} className="text-xl font-black italic tracking-tighter text-[#f5a623]/80 mb-4 uppercase">
                                         {paragraph.replace("### ", "").replace(/\*/g, "")}
                                     </h3>
                                 );
@@ -281,7 +267,7 @@ export default function LorePage() {
                                 return (
                                     <h3
                                         key={idx}
-                                        className="text-4xl font-black italic tracking-tighter text-[#FF4655] pt-8 border-t border-white/5"
+                                        className="text-4xl font-black italic tracking-tighter text-[#f5a623] pt-8 border-t border-white/5"
                                     >
                                         {paragraph}
                                     </h3>
@@ -306,7 +292,7 @@ export default function LorePage() {
                                     className={`text-2xl font-medium leading-relaxed transition-all duration-700 animate-in fade-in slide-in-from-bottom-4 
                                         ${isAgentProfile ? 'text-white font-black py-4 text-3xl' :
                                             isRepresentation ? 'text-white/40 text-lg uppercase tracking-widest' :
-                                                isDevanagari ? 'text-white font-bold py-2 border-l-2 border-[#FF4655] pl-6' : 'text-white/70 italic'}`}
+                                                isDevanagari ? 'text-white font-bold py-2 border-l-2 border-[#f5a623] pl-6' : 'text-white/70 italic'}`}
                                 >
                                     {cleanParagraph}
                                 </p>
@@ -348,19 +334,19 @@ export default function LorePage() {
                                         }}
                                         className="group relative h-16 w-full sm:w-80 flex items-center justify-center overflow-hidden"
                                     >
-                                        <div className="absolute inset-0 bg-white/5 border border-white/20 skew-x-[-12deg] group-hover:bg-[#FF4655] group-hover:border-[#FF4655] transition-all" />
-                                        <span className="relative z-10 text-white font-black uppercase tracking-[0.3em] flex items-center gap-3">
+                                        <div className="absolute inset-0 bg-white/5 border border-white/20 skew-x-[-12deg] group-hover:bg-[#f5a623] group-hover:border-[#f5a623] transition-all" />
+                                        <span className="relative z-10 text-white group-hover:text-black font-black uppercase tracking-[0.3em] flex items-center gap-3">
                                             Next Chapter
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="m9 18 6-6-6-6" /></svg>
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="m9 18 6-6 6-6" /></svg>
                                         </span>
                                     </button>
                                 ) : (
                                     <Link
-                                        href="/lobby/create"
+                                        href="/"
                                         className="group relative h-16 w-full sm:w-80 flex items-center justify-center overflow-hidden"
                                     >
-                                        <div className="absolute inset-0 bg-[#FF4655] skew-x-[-12deg] group-hover:bg-white transition-colors" />
-                                        <span className="relative z-10 text-white group-hover:text-black font-black uppercase tracking-[0.3em]">
+                                        <div className="absolute inset-0 bg-[#f5a623] skew-x-[-12deg] group-hover:bg-white transition-colors" />
+                                        <span className="relative z-10 text-black font-black uppercase tracking-[0.3em]">
                                             Join the Resistance
                                         </span>
                                     </Link>
@@ -379,8 +365,8 @@ export default function LorePage() {
                                                     }}
                                                     className="group relative h-16 w-full sm:w-80 flex items-center justify-center overflow-hidden"
                                                 >
-                                                    <div className="absolute inset-0 bg-[#FF4655] skew-x-[-12deg] group-hover:bg-white transition-colors" />
-                                                    <span className="relative z-10 text-white group-hover:text-black font-black uppercase tracking-[0.3em] flex items-center gap-3">
+                                                    <div className="absolute inset-0 bg-[#f5a623] skew-x-[-12deg] group-hover:bg-white transition-colors" />
+                                                    <span className="relative z-10 text-black font-black uppercase tracking-[0.3em] flex items-center gap-3">
                                                         Open First File: BIJLI
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="m9 18 6-6-6-6" /></svg>
                                                     </span>
@@ -400,8 +386,8 @@ export default function LorePage() {
                                                     }}
                                                     className="group relative h-16 w-full sm:w-80 flex items-center justify-center overflow-hidden"
                                                 >
-                                                    <div className="absolute inset-0 bg-white/5 border border-white/20 skew-x-[-12deg] group-hover:bg-[#FF4655] group-hover:border-[#FF4655] transition-all" />
-                                                    <span className="relative z-10 text-white font-black uppercase tracking-[0.3em] flex items-center gap-3">
+                                                    <div className="absolute inset-0 bg-white/5 border border-white/20 skew-x-[-12deg] group-hover:bg-[#f5a623] group-hover:border-[#f5a623] transition-all" />
+                                                    <span className="relative z-10 text-white group-hover:text-black font-black uppercase tracking-[0.3em] flex items-center gap-3">
                                                         Next File: {AGENTS[nextAgentId].name}
                                                         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round" className="group-hover:translate-x-1 transition-transform"><path d="m9 18 6-6-6-6" /></svg>
                                                     </span>
@@ -413,11 +399,11 @@ export default function LorePage() {
 
                                     {!isAgentFilesIntro && (
                                         <Link
-                                            href="/lobby/create"
+                                            href="/"
                                             className="group relative h-16 w-full sm:w-80 flex items-center justify-center overflow-hidden"
                                         >
-                                            <div className="absolute inset-0 bg-[#FF4655] skew-x-[-12deg] group-hover:bg-white transition-colors" />
-                                            <span className="relative z-10 text-white group-hover:text-black font-black uppercase tracking-[0.3em]">
+                                            <div className="absolute inset-0 bg-[#f5a623] skew-x-[-12deg] group-hover:bg-white transition-colors" />
+                                            <span className="relative z-10 text-black font-black uppercase tracking-[0.3em]">
                                                 Join the Resistance
                                             </span>
                                         </Link>

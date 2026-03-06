@@ -9,6 +9,8 @@ import AbilityBar from "@/components/AbilityBar";
 import EffectOverlay from "@/components/EffectOverlay";
 import { PlayerEffects } from "@/types";
 import { calculateChargeIncrement } from "@/lib/gameEngine";
+import BunkerBackground from "@/components/BunkerBackground";
+import SkeletalButton from "@/components/SkeletalButton";
 
 const TEST_PROMPT = "The quick brown fox jumps over the lazy dog. Programming is the art of algorithm design and the craft of debugging errant code. Mastery of the keyboard is the first step towards digital dominance.";
 
@@ -148,30 +150,32 @@ export default function TestingRange() {
     }, [activateAbility]);
 
     return (
-        <main className="min-h-screen bg-[#0F1923] text-white p-8">
-            <div className="max-w-6xl mx-auto">
+        <main className="min-h-screen bg-[#0d0b09] text-white p-8 relative overflow-hidden">
+            <BunkerBackground />
+
+            <div className="max-w-6xl mx-auto relative z-10">
                 {/* Header */}
                 <div className="flex justify-between items-start mb-12">
                     <div>
-                        <Link href="/" className="text-[10px] font-black uppercase tracking-[.3em] text-white/40 hover:text-[#FF4655] transition-colors mb-4 block">
-                            ← Exit Range
+                        <Link href="/" className="text-[10px] font-black uppercase tracking-[.3em] text-[#f5a623]/40 hover:text-[#f5a623] transition-colors mb-4 block">
+                            ← EXIT_RANGE
                         </Link>
                         <h1 className="text-5xl font-black italic tracking-tighter">
-                            TESTING <span className="text-[#FF4655]">RANGE</span>
+                            TESTING <span className="text-[#f5a623]">RANGE_S1</span>
                         </h1>
-                        <p className="text-white/40 uppercase text-[10px] font-bold tracking-widest mt-2">
-                            Operator Authorization: Active // Sandbox Environment
+                        <p className="text-[#f5a623]/40 uppercase text-[10px] font-bold tracking-widest mt-2 italic">
+                            Authorization_Key: Active // Sandbox_Environment_v1.2
                         </p>
                     </div>
 
-                    <div className="flex bg-white/5 border border-white/10 p-4 rounded gap-8">
+                    <div className="flex bg-white/5 border border-[#f5a623]/20 p-4 rounded gap-8 backdrop-blur-md">
                         <div>
-                            <span className="text-[10px] uppercase font-bold text-white/20 block mb-1">Current Speed</span>
-                            <span className="text-2xl font-mono font-black">{wpm} WPM</span>
+                            <span className="text-[10px] uppercase font-bold text-[#f5a623]/40 block mb-1">Signal Speed</span>
+                            <span className="text-2xl font-mono font-black text-[#f5a623]">{wpm} WPM</span>
                         </div>
-                        <div className="w-px bg-white/10" />
+                        <div className="w-px bg-[#f5a623]/10" />
                         <div>
-                            <span className="text-[10px] uppercase font-bold text-white/20 block mb-1">Precision</span>
+                            <span className="text-[10px] uppercase font-bold text-[#f5a623]/40 block mb-1">Precision</span>
                             <span className="text-2xl font-mono font-black">{accuracy}%</span>
                         </div>
                     </div>
@@ -186,7 +190,7 @@ export default function TestingRange() {
                                 <button
                                     key={a.id}
                                     onClick={() => setSelectedAgentId(a.id)}
-                                    className={`p-3 text-left border transition-all relative overflow-hidden group ${selectedAgentId === a.id ? 'bg-[#FF4655] border-[#FF4655]' : 'bg-white/5 border-white/10 hover:border-white/30'}`}
+                                    className={`p-3 text-left border transition-all relative overflow-hidden group ${selectedAgentId === a.id ? 'bg-[#f5a623] border-[#f5a623]' : 'bg-white/5 border-white/10 hover:border-[#f5a623]/40'}`}
                                 >
                                     <span className={`text-xs font-black uppercase tracking-widest relative z-10 ${selectedAgentId === a.id ? 'text-black' : 'text-white/60'}`}>
                                         {a.name}
@@ -204,13 +208,13 @@ export default function TestingRange() {
                         {/* Agent Summary Card */}
                         <div className="bg-white/5 border border-white/10 p-6 rounded-sm relative overflow-hidden">
                             <div className="absolute top-0 right-0 p-4 text-[40px] font-black text-white/[0.03] pointer-events-none select-none">
-                                {agent.id}
+                                {agent.name}
                             </div>
                             <div className="flex items-center gap-4 mb-4">
                                 <div className="w-2 h-8" style={{ backgroundColor: agent.color }} />
                                 <div>
                                     <h3 className="text-2xl font-black italic tracking-tighter uppercase">{agent.name}</h3>
-                                    <p className="text-[9px] font-bold text-[#FF4655] tracking-widest uppercase">Specialist Dossier</p>
+                                    <p className="text-[9px] font-bold text-[#f5a623] tracking-widest uppercase italic">Specialist_Dossier</p>
                                 </div>
                             </div>
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -227,13 +231,13 @@ export default function TestingRange() {
 
                         {/* Sandbox Typing 영역 */}
                         <div className="relative">
-                            <div className="absolute -top-6 left-0 text-[9px] font-black uppercase tracking-widest flex gap-4">
-                                <span className={effects.inputLocked ? "text-[#FF4655]" : "text-white/40"}>
-                                    {effects.inputLocked ? ">> CRITICAL ERROR: INPUT_LOCKED" : ">> STATUS: OPERATIONAL"}
+                            <div className="absolute -top-6 left-0 text-[10px] font-black uppercase tracking-widest flex gap-4">
+                                <span className={effects.inputLocked ? "text-[#f5a623]" : "text-[#f5a623]/40"}>
+                                    {effects.inputLocked ? ">> CRITICAL_ERROR: INPUT_LOCKED" : ">> STATUS: OPERATIONAL"}
                                 </span>
                                 {effectRemaining > 0 && (
-                                    <span className="text-[#C84FA8] animate-pulse">
-                                        {">> "} ACTIVE_EFFECT: {effectRemaining.toFixed(1)}s REMAINING
+                                    <span className="text-[#f5a623] animate-pulse">
+                                        {">> "} SIGNAL_INTERRUPTION: {effectRemaining.toFixed(1)}s REMAINING
                                     </span>
                                 )}
                             </div>
@@ -262,12 +266,13 @@ export default function TestingRange() {
                                         cooldownRemaining={cooldownRemaining}
                                     />
                                 </div>
-                                <div className="flex gap-2">
+                                <div className="flex gap-4">
                                     <button
                                         onClick={() => setCharge(1)}
-                                        className="px-4 py-3 bg-white/10 hover:bg-white/20 text-[9px] font-black uppercase tracking-widest transition-all rounded shadow-inner"
                                     >
-                                        Force Charge
+                                        <SkeletalButton variant="secondary" className="h-14 px-6 text-[10px]">
+                                            FORCE_CHARGE
+                                        </SkeletalButton>
                                     </button>
                                     <button
                                         onClick={() => {
@@ -277,23 +282,24 @@ export default function TestingRange() {
                                             setOnCooldown(false);
                                             setCooldownRemaining(0);
                                         }}
-                                        className="px-4 py-3 bg-white/10 hover:bg-[#FF4655] hover:text-black text-white text-[9px] font-black uppercase tracking-widest transition-all rounded border border-white/10"
                                     >
-                                        Full Reset
+                                        <SkeletalButton className="h-14 px-8 text-[10px]">
+                                            FULL_RESET_SEQUENCE
+                                        </SkeletalButton>
                                     </button>
                                 </div>
                             </div>
                         </div>
 
-                        <div className="mt-8 pt-8 border-t border-white/5">
-                            <span className="text-[9px] font-black uppercase tracking-widest text-white/20 block mb-4">Manual Visual Test (Test these effects on yourself)</span>
-                            <div className="flex flex-wrap gap-2">
-                                <button onClick={() => setEffects(p => ({ ...p, flashed: true }))} className="px-3 py-2 bg-white/5 hover:bg-white/10 text-[8px] font-black uppercase tracking-widest rounded transition-all">Test Flash</button>
-                                <button onClick={() => setEffects(p => ({ ...p, blurred: true }))} className="px-3 py-2 bg-white/5 hover:bg-white/10 text-[8px] font-black uppercase tracking-widest rounded transition-all">Test Blur</button>
-                                <button onClick={() => setEffects(p => ({ ...p, inputLocked: true }))} className="px-3 py-2 bg-white/5 hover:bg-white/10 text-[8px] font-black uppercase tracking-widest rounded transition-all">Test Lock</button>
-                                <button onClick={() => setEffects(p => ({ ...p, scrambledWords: ['SCRAMBLED'] }))} className="px-3 py-2 bg-white/5 hover:bg-white/10 text-[8px] font-black uppercase tracking-widest rounded transition-all">Test Scramble</button>
-                                <button onClick={() => setEffects(p => ({ ...p, frozen: true }))} className="px-3 py-2 bg-white/5 hover:bg-white/10 text-[8px] font-black uppercase tracking-widest rounded transition-all">Test Freeze</button>
-                                <button onClick={() => setEffects(p => ({ ...p, paranoia: true }))} className="px-3 py-2 bg-white/5 hover:bg-white/10 text-[8px] font-black uppercase tracking-widest rounded transition-all">Test Paranoia</button>
+                        <div className="mt-8 pt-8 border-t border-[#f5a623]/10">
+                            <span className="text-[10px] font-black uppercase tracking-widest text-[#f5a623]/20 block mb-4 italic">SIGNAL_STRESS_TEST // Apply effects to local node</span>
+                            <div className="flex flex-wrap gap-3">
+                                <SkeletalButton onClick={() => setEffects(p => ({ ...p, flashed: true }))} borderClassName="border-[#f5a623]/20" className="h-10 px-4 text-[9px]" variant="secondary">TEST_FLASH</SkeletalButton>
+                                <SkeletalButton onClick={() => setEffects(p => ({ ...p, blurred: true }))} borderClassName="border-[#f5a623]/20" className="h-10 px-4 text-[9px]" variant="secondary">TEST_BLUR</SkeletalButton>
+                                <SkeletalButton onClick={() => setEffects(p => ({ ...p, inputLocked: true }))} borderClassName="border-[#f5a623]/20" className="h-10 px-4 text-[9px]" variant="secondary">TEST_LOCK</SkeletalButton>
+                                <SkeletalButton onClick={() => setEffects(p => ({ ...p, scrambledWords: ['SCRAMBLED'] }))} borderClassName="border-[#f5a623]/20" className="h-10 px-4 text-[9px]" variant="secondary">TEST_SCRAMBLE</SkeletalButton>
+                                <SkeletalButton onClick={() => setEffects(p => ({ ...p, frozen: true }))} borderClassName="border-[#f5a623]/20" className="h-10 px-4 text-[9px]" variant="secondary">TEST_FREEZE</SkeletalButton>
+                                <SkeletalButton onClick={() => setEffects(p => ({ ...p, paranoia: true }))} borderClassName="border-[#f5a623]/20" className="h-10 px-4 text-[9px]" variant="secondary">TEST_PARANOIA</SkeletalButton>
                             </div>
                         </div>
                     </div>
@@ -304,8 +310,8 @@ export default function TestingRange() {
             <EffectOverlay effects={effects} />
 
             {/* Background Decorations */}
-            <div className="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-[0.03]">
-                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[300px] font-black tracking-tighter italic">SANDBOX</div>
+            <div className="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-[0.02]">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[300px] font-black tracking-tighter italic text-[#f5a623]">SANDBOX</div>
             </div>
         </main>
     );

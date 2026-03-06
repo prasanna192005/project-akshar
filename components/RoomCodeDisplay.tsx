@@ -44,7 +44,7 @@ const RoomCodeDisplay: React.FC<RoomCodeDisplayProps> = ({ code }) => {
                 onClick={handleShare}
                 title="Share Lobby Link"
                 className={`flex items-center gap-2 px-6 h-[42px] rounded-full font-black uppercase tracking-widest text-[10px] transition-all border
-                    ${copiedLink ? 'bg-green-500 border-green-500 text-black' : 'bg-[#FF4655] border-[#FF4655] text-white hover:bg-white hover:text-black hover:border-white shadow-[0_0_20px_rgba(255,70,85,0.3)]'}
+                    ${copiedLink ? 'bg-green-500 border-green-500 text-black' : 'bg-[#f5a623] border-[#f5a623] text-black hover:bg-[#0d0b09] hover:text-[#f5a623] hover:border-[#f5a623] shadow-[0_0_20px_rgba(245,166,35,0.2)]'}
                 `}
             >
                 <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><circle cx="18" cy="5" r="3"></circle><circle cx="6" cy="12" r="3"></circle><circle cx="18" cy="19" r="3"></circle><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line></svg>

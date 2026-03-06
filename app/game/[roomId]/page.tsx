@@ -14,6 +14,7 @@ import AbilityBar from "@/components/AbilityBar";
 import CountdownOverlay from "@/components/CountdownOverlay";
 import EffectOverlay from "@/components/EffectOverlay";
 import LoadingScreen from "@/components/LoadingScreen";
+import BunkerBackground from "@/components/BunkerBackground";
 
 import { ensureAuth } from "@/lib/firebase";
 
@@ -170,9 +171,11 @@ export default function Game() {
     const agent = player?.agent ? AGENTS[player.agent] : null;
 
     return (
-        <main className="min-h-screen grid grid-cols-1 lg:grid-cols-4 overflow-hidden">
+        <main className="min-h-screen grid grid-cols-1 lg:grid-cols-4 overflow-hidden bg-[#0d0b09] relative">
+            <BunkerBackground />
+
             {/* Game Area */}
-            <div className="lg:col-span-3 flex flex-col p-12 justify-center relative">
+            <div className="lg:col-span-3 flex flex-col p-12 justify-center relative z-10">
                 {/* Top Stats */}
                 <div className="flex justify-between items-center mb-12">
                     <div className="flex items-center gap-6">
@@ -216,8 +219,8 @@ export default function Game() {
                         STATUS: {status}
                     </span>
                     {isHost && (
-                        <span className="text-[10px] font-black uppercase tracking-[0.4em] px-3 py-1 rounded-full bg-[#FF4655]/20 text-[#FF4655] border border-[#FF4655]/30">
-                            YOU ARE HOST
+                        <span className="text-[10px] font-black uppercase tracking-[0.4em] px-3 py-1 rounded-full bg-[#f5a623]/20 text-[#f5a623] border border-[#f5a623]/30">
+                            HOST_OVERRIDE_ENABLED
                         </span>
                     )}
                 </div>
@@ -229,7 +232,7 @@ export default function Game() {
                         currentWordIndex={currentWordIndex}
                         currentInput={currentInput}
                         handleInput={handleInput}
-                        accentColor={agent?.color || '#FF4655'}
+                        accentColor={agent?.color || '#f5a623'}
                         isActive={status === 'racing' && !isComplete}
                         isBlurred={player?.effects?.blurred}
                         isScrambled={(player?.effects?.scrambledWords?.length ?? 0) > 0}
@@ -239,20 +242,20 @@ export default function Game() {
 
                     {/* Mission Accomplished Overlay - Tactical / Industrial Design */}
                     {(isComplete || (player && player.finishedAt)) && (
-                        <div className="absolute inset-x-[-10px] inset-y-[-10px] z-50 flex flex-col items-center justify-center bg-[#0F1923]/98 backdrop-blur-md border-y-2 border-green-500/50 animate-in fade-in slide-in-from-top-1 duration-500">
+                        <div className="absolute inset-x-[-10px] inset-y-[-10px] z-50 flex flex-col items-center justify-center bg-[#0d0b09]/95 backdrop-blur-md border-y-2 border-[#f5a623]/50 animate-in fade-in slide-in-from-top-1 duration-500">
                             {/* Background Pattern */}
                             <div className="absolute inset-0 opacity-[0.03] pointer-events-none"
                                 style={{ backgroundImage: 'radial-gradient(circle at 2px 2px, white 1px, transparent 0)', backgroundSize: '16px 16px' }} />
 
                             <div className="relative flex flex-col items-center">
-                                <div className="text-7xl font-black italic text-green-500 tracking-tighter mb-2 translate-x-[-4px]">
-                                    MISSION ACCOMPLISHED
+                                <div className="text-7xl font-black italic text-[#f5a623] tracking-tighter mb-2 translate-x-[-4px]">
+                                    EXTRACTED_SUCCESS
                                 </div>
                                 <div className="flex flex-col items-center gap-2">
-                                    <div className="flex items-center gap-4 bg-white/[0.03] px-8 py-3 border border-white/10 skew-x-[-12deg]">
-                                        <div className="w-1.5 h-1.5 bg-yellow-400 rounded-none animate-pulse skew-x-[12deg]" />
-                                        <span className="text-[14px] uppercase font-black tracking-[0.5em] text-white/90 skew-x-[12deg]">WAITING FOR SQUAD</span>
-                                        <div className="w-1.5 h-1.5 bg-yellow-400 rounded-none animate-pulse skew-x-[12deg]" />
+                                    <div className="flex items-center gap-4 bg-[#f5a623]/10 px-8 py-3 border border-[#f5a623]/20 skew-x-[-12deg]">
+                                        <div className="w-1.5 h-1.5 bg-[#f5a623] rounded-none animate-pulse skew-x-[12deg]" />
+                                        <span className="text-[14px] uppercase font-black tracking-[0.5em] text-[#f5a623] skew-x-[12deg]">WAITING_FOR_SQUAD_SYNC</span>
+                                        <div className="w-1.5 h-1.5 bg-[#f5a623] rounded-none animate-pulse skew-x-[12deg]" />
                                     </div>
                                     <div className="text-[10px] uppercase font-bold text-white/20 tracking-[0.3em] mt-2">
                                         PHASE TRANSITION IMMINENT // STAND BY

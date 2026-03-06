@@ -6,6 +6,8 @@ import { ref, onValue, update, get } from "firebase/database";
 import { AGENTS, AgentType } from "@/lib/agents";
 import { updateRoomStatus, updatePlayerState, INITIAL_EFFECTS } from "@/lib/roomUtils";
 import { Room, Player, RoomStatus } from "@/types";
+import BunkerBackground from "@/components/BunkerBackground";
+import SkeletalButton from "@/components/SkeletalButton";
 
 export default function DebugCenter() {
     const [roomId, setRoomId] = useState("");
@@ -116,13 +118,15 @@ export default function DebugCenter() {
     }, [simulateBotTyping, botSpeed]);
 
     return (
-        <div className="min-h-screen bg-[#0F1923] text-white p-8 font-mono">
-            <div className="max-w-4xl mx-auto border border-white/10 rounded-xl overflow-hidden shadow-2xl bg-black/40 backdrop-blur-md">
+        <div className="min-h-screen bg-[#0d0b09] text-white p-8 font-mono relative overflow-hidden">
+            <BunkerBackground />
+
+            <div className="max-w-4xl mx-auto border border-[#f5a623]/20 rounded-xl overflow-hidden shadow-2xl bg-black/40 backdrop-blur-md relative z-10">
                 {/* Header */}
-                <div className="bg-[#FF4655] p-4 flex justify-between items-center">
-                    <h1 className="text-sm font-black tracking-[0.3em] uppercase">Protocol Debug Center v1.1</h1>
+                <div className="bg-[#f5a623] p-4 flex justify-between items-center text-black">
+                    <h1 className="text-sm font-black tracking-[0.3em] uppercase">DEBUG_CENTER // v1.2</h1>
                     <div className="flex gap-2 text-[10px] font-bold">
-                        <span className="opacity-50">STATUS:</span>
+                        <span className="opacity-50 text-black/60">SYSTEM_AUTH:</span>
                         <span className="animate-pulse">CONNECTED</span>
                     </div>
                 </div>
@@ -130,40 +134,42 @@ export default function DebugCenter() {
                 <div className="p-8 space-y-12">
                     {/* Room Connection */}
                     <div className="space-y-4">
-                        <label className="text-[10px] uppercase font-bold tracking-[0.2em] opacity-40">Room Interface</label>
+                        <label className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#f5a623]/60">Room Interface</label>
                         <div className="flex gap-4">
                             <input
                                 type="text"
                                 value={roomId}
                                 onChange={(e) => setRoomId(e.target.value.toUpperCase())}
-                                placeholder="ENTER ROOM ID"
-                                className="flex-1 bg-white/5 border border-white/10 rounded p-4 text-xs font-bold tracking-widest focus:border-[#FF4655] outline-none transition-colors"
+                                placeholder="ENTER_ROOM_ID"
+                                className="flex-1 bg-white/5 border border-white/10 rounded p-4 text-xs font-bold tracking-widest focus:border-[#f5a623] outline-none transition-colors"
                             />
                         </div>
                         {room ? (
-                            <div className="flex gap-4 justify-between items-center bg-white/5 p-4 rounded border border-white/5">
+                            <div className="flex gap-4 justify-between items-center bg-white/5 p-4 rounded border border-[#f5a623]/10">
                                 <div className="flex gap-6">
-                                    <span className="text-[10px] uppercase font-bold tracking-[0.2em]">Status: <span className="text-[#FF4655]">{room.status}</span></span>
-                                    <span className="text-[10px] uppercase font-bold tracking-[0.2em]">Players: {Object.keys(room.players || {}).length}</span>
+                                    <span className="text-[10px] uppercase font-bold tracking-[0.2em]">Status: <span className="text-[#f5a623]">{room.status}</span></span>
+                                    <span className="text-[10px] uppercase font-bold tracking-[0.2em]">Nodes: {Object.keys(room.players || {}).length}</span>
                                 </div>
                                 <div className="flex gap-2">
-                                    <button
+                                    <SkeletalButton
+                                        variant="secondary"
                                         onClick={() => updateRoomStatus(roomId, 'lobby')}
-                                        className="text-[9px] uppercase font-black px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded"
-                                    >Back to Lobby</button>
-                                    <button
+                                        className="h-8 px-3 text-[9px]"
+                                    >BACK_TO_LOBBY</SkeletalButton>
+                                    <SkeletalButton
+                                        variant="secondary"
                                         onClick={() => updateRoomStatus(roomId, 'finished')}
-                                        className="text-[9px] uppercase font-black px-3 py-1.5 bg-white/10 hover:bg-white/20 rounded text-yellow-500"
-                                    >Force Finished</button>
-                                    <button
+                                        className="h-8 px-3 text-[9px] text-[#f5a623]"
+                                    >FORCE_FINISH</SkeletalButton>
+                                    <SkeletalButton
                                         onClick={() => updateRoomStatus(roomId, 'racing')}
-                                        className="text-[9px] uppercase font-black px-3 py-1.5 bg-[#FF4655] hover:bg-white hover:text-black rounded"
-                                    >Force Race</button>
+                                        className="h-8 px-3 text-[9px]"
+                                    >INITIALIZE_RACE</SkeletalButton>
                                 </div>
                             </div>
                         ) : roomId ? (
-                            <div className="text-center py-4 bg-red-500/10 border border-red-500/20 rounded text-[10px] font-bold text-red-400 uppercase tracking-widest">
-                                Sector Not Found
+                            <div className="text-center py-4 bg-[#f5a623]/5 border border-[#f5a623]/20 rounded text-[10px] font-bold text-[#f5a623] uppercase tracking-widest italic">
+                                Sector Not Located
                             </div>
                         ) : null}
                     </div>
@@ -171,18 +177,19 @@ export default function DebugCenter() {
                     {/* Squad Simulation */}
                     <div className="space-y-6">
                         <div className="flex justify-between items-end">
-                            <label className="text-[10px] uppercase font-bold tracking-[0.2em] opacity-40">Squad Simulation</label>
+                            <label className="text-[10px] uppercase font-bold tracking-[0.2em] text-[#f5a623]/60">Node Simulation</label>
                             <div className="flex gap-3">
-                                <button
+                                <SkeletalButton
                                     onClick={spawnBot}
                                     disabled={!room}
-                                    className="text-[10px] uppercase font-black px-4 py-2 border border-white/20 hover:border-[#FF4655] hover:text-[#FF4655] disabled:opacity-20 transition-all rounded"
-                                >+ Add Target Bot</button>
-                                <button
+                                    className="h-10 px-4 text-[10px]"
+                                >+ ADD_BOT_NODE</SkeletalButton>
+                                <SkeletalButton
+                                    variant="secondary"
                                     onClick={removeBots}
                                     disabled={!room}
-                                    className="text-[10px] uppercase font-black px-4 py-2 border border-white/20 hover:border-white/40 disabled:opacity-20 transition-all rounded"
-                                >Clear All Bots</button>
+                                    className="h-10 px-4 text-[10px]"
+                                >PURGE_BOTS</SkeletalButton>
                             </div>
                         </div>
 
@@ -190,56 +197,56 @@ export default function DebugCenter() {
                             {/* Bot Config */}
                             <div className="flex items-center justify-between pb-6 border-b border-white/5">
                                 <div className="flex flex-col gap-1">
-                                    <span className="text-[10px] uppercase font-bold tracking-[0.2em]">Bot Typing Intensity</span>
-                                    <span className="text-[9px] opacity-40 font-bold uppercase">Applied to all active bots</span>
+                                    <span className="text-[10px] uppercase font-bold tracking-[0.2em]">Signal Intensity</span>
+                                    <span className="text-[9px] opacity-40 font-bold uppercase italic">Global bot WPM override</span>
                                 </div>
                                 <div className="flex items-center gap-6">
                                     <input
                                         type="range" min="10" max="250" value={botSpeed}
                                         onChange={(e) => setBotSpeed(parseInt(e.target.value))}
-                                        className="w-48 accent-[#FF4655]"
+                                        className="w-48 accent-[#f5a623]"
                                     />
-                                    <span className="text-2xl font-black italic tracking-tighter w-20 text-[#FF4655]">{botSpeed} <span className="text-[10px] not-italic opacity-40 text-white">WPM</span></span>
+                                    <span className="text-2xl font-black italic tracking-tighter w-20 text-[#f5a623]">{botSpeed} <span className="text-[10px] not-italic opacity-40 text-white">WPM</span></span>
                                 </div>
                             </div>
 
                             {/* Player/Bot List */}
                             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                                 {room && Object.values(room.players || {}).map(p => (
-                                    <div key={p.id} className={`p-4 rounded border transition-all ${p.id.startsWith('bot_') ? 'bg-black/40 border-white/5' : 'bg-[#FF4655]/5 border-[#FF4655]/30'}`}>
+                                    <div key={p.id} className={`p-4 rounded border transition-all ${p.id.startsWith('bot_') ? 'bg-black/40 border-white/5' : 'bg-[#f5a623]/5 border-[#f5a623]/30'}`}>
                                         <div className="flex justify-between items-center mb-4">
                                             <div className="flex flex-col">
-                                                <span className={`text-[10px] font-black tracking-widest ${p.id.startsWith('bot_') ? 'text-white/60' : 'text-[#FF4655]'}`}>
-                                                    {p.name} {p.id.startsWith('bot_') ? '(BOT)' : '(HUMAN)'}
+                                                <span className={`text-[10px] font-black tracking-widest ${p.id.startsWith('bot_') ? 'text-white/60' : 'text-[#f5a623]'}`}>
+                                                    {p.name} {p.id.startsWith('bot_') ? '(BOT)' : '(SIGNAL)'}
                                                 </span>
-                                                <span className="text-[8px] opacity-40 font-bold uppercase">{p.agent || 'NO AGENT'}</span>
+                                                <span className="text-[8px] opacity-40 font-bold uppercase">{p.agent ? AGENTS[p.agent as AgentType].name : 'NO_AGENT'}</span>
                                             </div>
                                             <button
                                                 onClick={() => forceComplete(p.id)}
-                                                className="text-[9px] uppercase font-black px-2 py-1 bg-white/5 hover:bg-white/20 rounded border border-white/10"
-                                            >Finish Now</button>
+                                                className="text-[9px] uppercase font-black px-2 py-1 bg-white/5 hover:bg-[#f5a623]/20 rounded border border-white/10 transition-colors"
+                                            >Finish Node</button>
                                         </div>
 
                                         <div className="space-y-2">
                                             <div className="flex justify-between items-center text-[9px] font-black uppercase tracking-tighter">
-                                                <span>Progress</span>
+                                                <span>Data Trace</span>
                                                 <span>{p.progress}%</span>
                                             </div>
                                             <div className="h-1.5 w-full bg-white/5 rounded-full overflow-hidden">
                                                 <div
-                                                    className={`h-full transition-all duration-1000 ${p.finishedAt ? 'bg-green-500' : 'bg-white/40'}`}
+                                                    className={`h-full transition-all duration-1000 ${p.finishedAt ? 'bg-[#f5a623]' : 'bg-white/40'}`}
                                                     style={{ width: `${p.progress}%` }}
                                                 />
                                             </div>
-                                            <div className="flex justify-between items-center text-[8px] font-bold opacity-40">
+                                            <div className="flex justify-between items-center text-[8px] font-bold opacity-40 italic">
                                                 <span>{p.wpm} WPM</span>
-                                                <span>{p.finishedAt ? 'MISSION SUCCESS' : 'IN PURSUIT'}</span>
+                                                <span>{p.finishedAt ? 'EXTRACTION_COMPLETE' : 'TRACE_ACTIVE'}</span>
                                             </div>
                                         </div>
                                     </div>
                                 ))}
                                 {room && Object.keys(room.players || {}).length === 0 && (
-                                    <div className="col-span-2 py-8 text-center text-[10px] uppercase font-bold tracking-[0.3em] opacity-20">No Signatures Detected</div>
+                                    <div className="col-span-2 py-8 text-center text-[10px] uppercase font-bold tracking-[0.3em] opacity-20 italic">No Node Signatures Detected</div>
                                 )}
                             </div>
                         </div>
@@ -247,20 +254,20 @@ export default function DebugCenter() {
 
                     {/* Operational Tips */}
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                        <div className="p-6 bg-blue-500/5 border border-blue-500/20 rounded-lg">
-                            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-blue-400 mb-4">Scenario Verification</h3>
-                            <ul className="text-[9px] space-y-2 opacity-60 font-bold uppercase leading-relaxed">
-                                <li>• Finisher Logic: Finish yourself, then use "Finish Now" on a bot to trigger results.</li>
-                                <li>• High Speed Test: Set bots to 200 WPM to test leaderboard sorting.</li>
-                                <li>• Rematch Test: After result screen, force status to "Lobby" to reset all.</li>
+                        <div className="p-6 bg-[#f5a623]/5 border border-[#f5a623]/20 rounded-lg">
+                            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-[#f5a623]/80 mb-4">Verification Protocols</h3>
+                            <ul className="text-[9px] space-y-2 opacity-60 font-bold uppercase leading-relaxed italic">
+                                <li>• Finisher Logic: Finish yourself, then use "Finish Node" on a bot.</li>
+                                <li>• Intensity Test: High WPM checks leaderboard sorting/sync.</li>
+                                <li>• Reset Protocol: Force lobby status to re-initialize sectors.</li>
                             </ul>
                         </div>
-                        <div className="p-6 bg-[#FF4655]/5 border border-[#FF4655]/20 rounded-lg">
-                            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-[#FF4655] mb-4">Caution</h3>
+                        <div className="p-6 bg-white/[0.02] border border-white/10 rounded-lg">
+                            <h3 className="text-[10px] font-black uppercase tracking-[0.2em] text-white/40 mb-4">Terminal Caution</h3>
                             <ul className="text-[9px] space-y-2 opacity-60 font-bold uppercase leading-relaxed">
-                                <li>• Don't use Force Race if players are still in lobby without agents.</li>
-                                <li>• Clear bots before starting a real production match.</li>
-                                <li>• Browser may throttle bot typing if this tab is in background.</li>
+                                <li>• Sector failures may occur if nodes lack operative profiles.</li>
+                                <li>• Purge simulated nodes before high-stakes operations.</li>
+                                <li>• Signal bandwidth may drop if terminal is backgrounded.</li>
                             </ul>
                         </div>
                     </div>
