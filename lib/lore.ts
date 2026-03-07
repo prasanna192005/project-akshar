@@ -149,7 +149,7 @@ export const AGENT_LORE: Record<AgentType, AgentLore> = {
         agentId: 'KILLJOY',
         title: "AGENT 05 — YANTRA",
         location: "Bangalore, Karnataka",
-        image: "/lore/yantra.png",
+        image: "/lore/yantra.jpg",
         content: [
             "---",
             "### THE FILE",
@@ -176,7 +176,7 @@ export const AGENT_LORE: Record<AgentType, AgentLore> = {
         agentId: 'VIPER',
         title: "AGENT 06 — VISHA",
         location: "Bhopal, Madhya Pradesh",
-        image: "/lore/visha.png",
+        image: "/lore/visha.jpg",
         content: [
             "---",
             "### THE FILE",
@@ -223,7 +223,7 @@ export const AGENT_LORE: Record<AgentType, AgentLore> = {
         agentId: 'REYNA',
         title: "AGENT 08 — KALI",
         location: "Jorhat, Assam",
-        image: "/lore/kali.png",
+        image: "/lore/kali.jpg",
         content: [
             "---",
             "### THE FILE",
