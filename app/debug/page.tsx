@@ -14,10 +14,19 @@ export default function DebugCenter() {
     const [room, setRoom] = useState<Room | null>(null);
     const roomRef = useRef<Room | null>(null);
     const [botSpeed, setBotSpeed] = useState(60); // WPM
+    const [isAuthorized, setIsAuthorized] = useState(false);
+    const [accessInput, setAccessInput] = useState("");
+    const [authError, setAuthError] = useState(false);
+
+    // Initial Auth Check
+    useEffect(() => {
+        const granted = localStorage.getItem('akshar_debug_access') === 'true';
+        if (granted) setIsAuthorized(true);
+    }, []);
 
     // Attach to room
     useEffect(() => {
-        if (!roomId) return;
+        if (!roomId || !isAuthorized) return;
         const rRef = ref(db, `rooms/${roomId}`);
         const unsubscribe = onValue(rRef, (snapshot) => {
             if (snapshot.exists()) {
@@ -30,7 +39,20 @@ export default function DebugCenter() {
             }
         });
         return () => unsubscribe();
-    }, [roomId]);
+    }, [roomId, isAuthorized]);
+
+    const handleAuthenticate = () => {
+        const masterKey = process.env.NEXT_PUBLIC_DEBUG_ACCESS_KEY;
+        if (accessInput === masterKey) {
+            setIsAuthorized(true);
+            localStorage.setItem('akshar_debug_access', 'true');
+            setAuthError(false);
+        } else {
+            setAuthError(true);
+            setTimeout(() => setAuthError(false), 2000);
+        }
+    };
+
 
     const spawnBot = async () => {
         if (!roomId) return;
@@ -115,7 +137,56 @@ export default function DebugCenter() {
         }, 1000);
 
         return () => clearInterval(interval);
-    }, [simulateBotTyping, botSpeed]);
+    }, [simulateBotTyping, botSpeed, isAuthorized]);
+
+    if (!isAuthorized) {
+        return (
+            <div className="min-h-screen bg-[#0d0b09] text-white flex items-center justify-center p-8 font-mono relative overflow-hidden">
+                <BunkerBackground />
+                <div className="relative z-10 w-full max-w-md bg-black/60 backdrop-blur-xl border border-red-500/20 p-8 space-y-8 rounded-lg shadow-[0_0_100px_rgba(255,0,0,0.1)]">
+                    <div className="text-center space-y-2">
+                        <div className="text-red-500 text-[10px] font-black tracking-[0.5em] uppercase flex items-center justify-center gap-2">
+                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3">
+                                <path d="M12 2v4M12 18v4M4.93 4.93l2.83 2.83M16.24 16.24l2.83 2.83M2 12h4M18 12h4M4.93 19.07l2.83-2.83M16.24 7.76l2.83-2.83" />
+                            </svg>
+                            Restricted Sector
+                        </div>
+                        <h1 className="text-2xl font-black italic tracking-tighter uppercase text-white/90">TERMINAL_LOCKED</h1>
+                    </div>
+
+                    <div className="space-y-4">
+                        <div className="relative">
+                            <input
+                                autoFocus
+                                type="password"
+                                value={accessInput}
+                                onChange={(e) => setAccessInput(e.target.value)}
+                                onKeyDown={(e) => e.key === 'Enter' && handleAuthenticate()}
+                                placeholder="ENTER_ACCESS_CODE"
+                                className={`w-full bg-white/5 border ${authError ? 'border-red-500 animate-shake' : 'border-white/10'} rounded p-4 text-center text-xl font-bold tracking-[0.3em] outline-none focus:border-[#f5a623] transition-colors`}
+                            />
+                            {authError && (
+                                <div className="absolute -bottom-6 left-0 right-0 text-center text-[8px] font-bold text-red-500 uppercase tracking-widest">
+                                    Invalid Protocol Key // Access Denied
+                                </div>
+                            )}
+                        </div>
+                        <SkeletalButton
+                            onClick={handleAuthenticate}
+                            className="w-full py-4 h-auto text-xs uppercase tracking-[0.3em]"
+                        >
+                            Establish Link
+                        </SkeletalButton>
+                    </div>
+
+                    <div className="pt-8 border-t border-white/5 flex justify-between items-center text-[8px] font-bold text-white/20 uppercase tracking-widest">
+                        <span>Cleared Operatives Only</span>
+                        <span>UID_LOGGED</span>
+                    </div>
+                </div>
+            </div>
+        );
+    }
 
     return (
         <div className="min-h-screen bg-[#0d0b09] text-white p-8 font-mono relative overflow-hidden">
