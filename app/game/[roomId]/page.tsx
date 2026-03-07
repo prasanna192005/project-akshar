@@ -36,6 +36,11 @@ export default function Game() {
 
     const { room, players, status, loading } = useRoom(roomId);
     const { player, updateProgress, clearEffect } = usePlayer(roomId, playerId || "");
+
+    if (loading || !room || isLoading) {
+        return <LoadingScreen />;
+    }
+
     const isHost = room && playerId ? room.hostId === playerId : false;
     const {
         currentWordIndex,

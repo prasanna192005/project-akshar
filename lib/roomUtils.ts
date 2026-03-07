@@ -14,7 +14,7 @@ export const INITIAL_EFFECTS: PlayerEffects = {
     empress: false,
 };
 
-export const createRoom = async (hostId: string, hostName: string, category: PromptCategory, config: RoomConfig) => {
+export const createRoom = async (hostId: string, hostName: string, category: PromptCategory, config: RoomConfig, isVerified: boolean = false) => {
     const roomId = Math.random().toString(36).substring(2, 8).toUpperCase();
     const roomRef = ref(db, `rooms/${roomId}`);
 
@@ -42,6 +42,7 @@ export const createRoom = async (hostId: string, hostName: string, category: Pro
                 finishedAt: null,
                 placement: null,
                 effects: INITIAL_EFFECTS,
+                isVerified,
             },
         },
     };
@@ -50,7 +51,7 @@ export const createRoom = async (hostId: string, hostName: string, category: Pro
     return roomId;
 };
 
-export const joinRoom = async (roomId: string, playerId: string, playerName: string) => {
+export const joinRoom = async (roomId: string, playerId: string, playerName: string, isVerified: boolean = false) => {
     const roomRef = ref(db, `rooms/${roomId}`);
     const snapshot = await get(roomRef);
 
@@ -81,6 +82,7 @@ export const joinRoom = async (roomId: string, playerId: string, playerName: str
             finishedAt: null,
             placement: null,
             effects: INITIAL_EFFECTS,
+            isVerified,
         };
         await set(playerRef, newPlayer);
     }

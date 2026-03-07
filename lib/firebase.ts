@@ -1,6 +1,6 @@
 import { initializeApp, getApps, getApp } from "firebase/app";
 import { getDatabase } from "firebase/database";
-import { getAuth, signInAnonymously } from "firebase/auth";
+import { getAuth, signInAnonymously, GoogleAuthProvider, linkWithPopup, signInWithPopup } from "firebase/auth";
 
 const firebaseConfig = {
     apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -16,6 +16,7 @@ const firebaseConfig = {
 const app = getApps().length > 0 ? getApp() : initializeApp(firebaseConfig);
 const db = getDatabase(app);
 const auth = getAuth(app);
+const googleProvider = new GoogleAuthProvider();
 
 export const ensureAuth = async () => {
     if (auth.currentUser) return auth.currentUser;
@@ -28,4 +29,4 @@ export const ensureAuth = async () => {
     }
 };
 
-export { app, db, auth };
+export { app, db, auth, googleProvider, linkWithPopup, signInWithPopup };

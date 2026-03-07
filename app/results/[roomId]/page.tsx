@@ -9,27 +9,30 @@ import { updateRoomStatus, updatePlayerState, INITIAL_EFFECTS } from "@/lib/room
 import { getRandomPrompt } from "@/lib/prompts";
 import BunkerBackground from "@/components/BunkerBackground";
 import SkeletalButton from "@/components/SkeletalButton";
-
+import LoadingScreen from "@/components/LoadingScreen";
+import { useAuth } from "@/hooks/useAuth";
+import { saveUserStats, subscribeToUserProfile, UserProfile } from "@/lib/userService";
+import { PREMADE_AVATARS } from "@/lib/avatars";
 export default function Results() {
     const { roomId } = useParams() as { roomId: string };
     const router = useRouter();
-
+    const { user } = useAuth();
+    const [profile, setProfile] = useState<UserProfile | null>(null);
     const [playerId, setPlayerId] = useState<string | null>(null);
 
     useEffect(() => {
-        setPlayerId(sessionStorage.getItem('typeagents_player_id'));
-    }, []);
+        const id = sessionStorage.getItem('typeagents_player_id');
+        setPlayerId(id);
+
+        if (user?.uid) {
+            const unsubscribe = subscribeToUserProfile(user.uid, (data) => {
+                setProfile(data);
+            });
+            return () => unsubscribe();
+        }
+    }, [user?.uid]);
 
     const { room, players, status, loading } = useRoom(roomId);
-
-    // Redirect if game restarts - ONLY after loading is done
-    useEffect(() => {
-        if (!loading && status === 'lobby') {
-            router.push(`/lobby/${roomId}`);
-        }
-    }, [status, roomId, router, loading]);
-
-    if (loading || !room || !playerId) return null;
 
     const sortedPlayers = [...players].sort((a, b) => {
         if (a.finishedAt && b.finishedAt) return a.finishedAt - b.finishedAt;
@@ -40,11 +43,23 @@ export default function Results() {
 
     const userPlacement = sortedPlayers.findIndex((p: Player) => p.id === playerId);
     const userPlayer = players.find(p => p.id === playerId);
+
+    // Save stats for authenticated users
+    useEffect(() => {
+        if (!loading && user && !user.isAnonymous && userPlayer && userPlayer.finishedAt && userPlacement !== -1) {
+            saveUserStats(user.uid, {
+                wpm: userPlayer.wpm,
+                accuracy: userPlayer.accuracy,
+                placement: userPlacement + 1,
+                roomId
+            }).catch(console.error);
+        }
+    }, [loading, user, userPlayer, userPlacement, roomId]);
     const userAgent = userPlayer?.agent ? AGENTS[userPlayer.agent] : null;
     const commentary = userAgent ? (userPlacement === 0 ? userAgent.commentary.win : userAgent.commentary.loss) : null;
 
     const handlePlayAgain = async () => {
-        if (room.hostId === playerId) {
+        if (room?.hostId === playerId) {
             // Reset all players
             for (const p of players) {
                 await updatePlayerState(roomId, p.id, {
@@ -59,7 +74,7 @@ export default function Results() {
                 });
             }
             await updateRoomStatus(roomId, 'lobby', {
-                prompt: getRandomPrompt((room.promptCategory as any) || 'tech'),
+                prompt: getRandomPrompt((room?.promptCategory as any) || 'tech'),
                 countdownStartAt: null,
                 raceStartAt: null
             });
@@ -68,6 +83,10 @@ export default function Results() {
 
     const winner = sortedPlayers[0];
     const winnerAgent = winner?.agent ? AGENTS[winner.agent] : null;
+
+    if (loading || !room) {
+        return <LoadingScreen />;
+    }
 
     return (
         <main className="min-h-screen flex flex-col items-center bg-[#0d0b09] overflow-y-auto py-20 px-8 relative">
@@ -83,7 +102,7 @@ export default function Results() {
                         Return Home
                     </SkeletalButton>
                 </button>
-                {room.hostId === playerId ? (
+                {room?.hostId === playerId ? (
                     <button
                         onClick={handlePlayAgain}
                     >
@@ -136,9 +155,22 @@ export default function Results() {
                                         <span className="text-[10px] uppercase font-bold tracking-[0.4em] text-[#f5a623]/30">Protocol Accomplished</span>
                                     </div>
                                     <h2 className="text-7xl font-black italic tracking-tighter text-white mb-2 leading-none uppercase">
-                                        {winner.name}
+                                        {winner.id === playerId && profile?.operativeHandle ? profile.operativeHandle : winner.name}
                                     </h2>
                                     <div className="flex items-center gap-4">
+                                        <div className="w-10 h-10 rounded-full border border-white/10 overflow-hidden bg-[#0d0b09]">
+                                            {winner.id === playerId && profile?.selectedAvatar ? (
+                                                <img
+                                                    src={PREMADE_AVATARS.find(a => a.id === profile.selectedAvatar)?.url}
+                                                    alt="Avatar"
+                                                    className="w-full h-full rounded-full scale-125"
+                                                />
+                                            ) : winner.agent ? (
+                                                <div className="w-full h-full flex items-center justify-center font-black text-xs" style={{ color: winnerAgent?.color, backgroundColor: `${winnerAgent?.color}10` }}>
+                                                    {winnerAgent?.name[0]}
+                                                </div>
+                                            ) : null}
+                                        </div>
                                         <span className="text-xl font-bold tracking-[0.2em]" style={{ color: winnerAgent?.color }}>{winnerAgent?.name}</span>
                                         <span className="text-xs uppercase font-bold text-white/20 tracking-widest">// COMBAT REPORT OVERVIEW</span>
                                     </div>
@@ -185,7 +217,7 @@ export default function Results() {
                                         <div className="text-xs font-mono opacity-20">{(idx + 2).toString().padStart(2, '0')}</div>
                                         <div className="flex flex-col">
                                             <span className="font-bold text-sm text-white/80 group-hover:text-white transition-colors">
-                                                {p.name} {p.id === playerId && '(You)'}
+                                                {p.id === playerId && profile?.operativeHandle ? profile.operativeHandle : p.name} {p.id === playerId && '(You)'}
                                             </span>
                                             <span className="text-[10px] uppercase opacity-40 font-bold" style={{ color: agent?.color }}>{agent?.name}</span>
                                         </div>
@@ -242,7 +274,7 @@ export default function Results() {
                             Return Home
                         </SkeletalButton>
                     </button>
-                    {room.hostId === playerId ? (
+                    {room?.hostId === playerId ? (
                         <button
                             onClick={handlePlayAgain}
                         >

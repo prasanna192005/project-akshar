@@ -11,6 +11,9 @@ import Link from "next/link";
 import LoadingScreen from "@/components/LoadingScreen";
 import BunkerBackground from "@/components/BunkerBackground";
 import SkeletalButton from "@/components/SkeletalButton";
+import { useAuth } from "@/hooks/useAuth";
+import { subscribeToUserProfile, UserProfile } from "@/lib/userService";
+import { PREMADE_AVATARS } from "@/lib/avatars";
 
 
 function DecryptedText({ text, hoverText }: { text: string; hoverText: string }) {
@@ -69,6 +72,32 @@ export default function Home() {
   const [targeting, setTargeting] = useState<'random' | 'leader' | 'all'>('leader');
   const [abilitySpeed, setAbilitySpeed] = useState<'slow' | 'normal' | 'fast'>('normal');
   const [showSettings, setShowSettings] = useState(false);
+  const [authProcessing, setAuthProcessing] = useState(false);
+  const [authMessage, setAuthMessage] = useState("");
+
+  const { user, isGuest, loginWithGoogle, linkGoogleAccount, loading: authLoading } = useAuth();
+  const [profile, setProfile] = useState<UserProfile | null>(null);
+
+  useEffect(() => {
+    if (user && !user.isAnonymous) {
+      return subscribeToUserProfile(user.uid, (data) => {
+        setProfile(data);
+      });
+    } else {
+      setProfile(null);
+    }
+  }, [user]);
+
+  useEffect(() => {
+    if (profile?.operativeHandle) {
+      setName(profile.operativeHandle);
+    } else if (user && !user.isAnonymous && user.displayName) {
+      setName(user.displayName.split(' ')[0].toUpperCase());
+    } else {
+      const savedName = localStorage.getItem('typeagents_player_name');
+      if (savedName) setName(savedName);
+    }
+  }, [user, profile]);
 
   useEffect(() => {
     ensureAuth().catch(console.error);
@@ -92,7 +121,7 @@ export default function Home() {
       const newRoomId = await createRoom(playerId, name, category, {
         targeting,
         abilitySpeed
-      });
+      }, user ? !user.isAnonymous : false);
       router.push(`/lobby/${newRoomId}`);
     } catch (err: any) {
       setError(err.message);
@@ -120,7 +149,7 @@ export default function Home() {
       localStorage.setItem('typeagents_player_name', name);
 
       const rid = roomIdInput.toUpperCase();
-      await joinRoom(rid, playerId, name);
+      await joinRoom(rid, playerId, name, user ? !user.isAnonymous : false);
       router.push(`/lobby/${rid}`);
     } catch (err: any) {
       setError(err.message);
@@ -165,6 +194,54 @@ export default function Home() {
             </svg>
           </SkeletalButton>
         </Link>
+
+        {isGuest ? (
+          <div className="flex flex-col items-end gap-2">
+            <SkeletalButton
+              onClick={async () => {
+                setAuthProcessing(true);
+                setAuthMessage("");
+                try {
+                  await linkGoogleAccount();
+                  setAuthMessage("UPLINK SUCCESSFUL");
+                  setTimeout(() => setAuthMessage(""), 3000);
+                } catch (err: any) {
+                  setAuthMessage("UPLINK FAILED");
+                  console.error(err);
+                } finally {
+                  setAuthProcessing(false);
+                }
+              }}
+              disabled={authProcessing}
+              variant="secondary"
+              className="px-6 py-2 h-auto text-[10px] flex items-center gap-3 border-[#f5a623]/20 bg-[#f5a623]/10 backdrop-blur-sm hover:bg-[#f5a623]/20"
+            >
+              {authProcessing ? "CONNECTING..." : "SIGN IN WITH GOOGLE"}
+              <div className={`w-1.5 h-1.5 bg-[#f5a623] rounded-full ${authProcessing ? 'animate-ping' : 'animate-pulse'}`} />
+            </SkeletalButton>
+            {authMessage && <span className="text-[8px] font-bold tracking-widest text-[#f5a623] animate-pulse">{authMessage}</span>}
+          </div>
+        ) : (
+          <Link href="/dashboard">
+            <SkeletalButton
+              variant="secondary"
+              className="px-6 py-2 h-auto text-[10px] flex items-center gap-3 border-[#f5a623]/20 bg-[#f5a623]/10 backdrop-blur-sm"
+            >
+              {profile?.operativeHandle || "COMMAND CENTER"}
+              {profile?.selectedAvatar ? (
+                <img
+                  src={PREMADE_AVATARS.find(a => a.id === profile.selectedAvatar)?.url}
+                  alt="Avatar"
+                  className="w-4 h-4 rounded-full border border-[#f5a623]/50 scale-110"
+                />
+              ) : user?.photoURL ? (
+                <img src={user.photoURL} alt="Profile" className="w-4 h-4 rounded-full border border-[#f5a623]/50" />
+              ) : (
+                <div className="w-1.5 h-1.5 bg-[#f5a623] rounded-full" />
+              )}
+            </SkeletalButton>
+          </Link>
+        )}
       </div>
 
       <div className="w-full max-w-md text-center space-y-8 animate-in fade-in zoom-in duration-700 z-10">
@@ -190,6 +267,12 @@ export default function Home() {
               }}
               className="w-full bg-white/5 border-b-2 border-white/10 px-0 py-4 text-center text-xl font-bold tracking-widest focus:border-[#f5a623] outline-none transition-all placeholder:text-white/10 uppercase text-[#e8d9c5]"
             />
+            {profile?.operativeHandle === name && (
+              <div className="absolute right-0 top-1/2 -translate-y-1/2 flex items-center gap-1 opacity-40">
+                <div className="w-1 h-1 bg-[#f5a623] rounded-full animate-pulse" />
+                <span className="text-[7px] font-black tracking-widest text-[#f5a623]">SECURE_UPLINK</span>
+              </div>
+            )}
             {error && <p className="text-[#f5a623] text-[10px] mt-2 font-bold tracking-widest uppercase">{error}</p>}
           </div>
 

@@ -13,13 +13,14 @@ import LoadingScreen from "@/components/LoadingScreen";
 import ChatBox from "@/components/ChatBox";
 import BunkerBackground from "@/components/BunkerBackground";
 import SkeletalButton from "@/components/SkeletalButton";
-
+import { useAuth } from "@/hooks/useAuth";
 import { ensureAuth } from "@/lib/firebase";
 
 export default function Lobby() {
     const { roomId } = useParams() as { roomId: string };
     const router = useRouter();
 
+    const { user } = useAuth();
     const [playerId, setPlayerId] = useState<string | null>(null);
     const [playerName, setPlayerName] = useState<string | null>(null);
 
@@ -114,6 +115,9 @@ export default function Lobby() {
                                             <span className={`text-sm font-bold ${p.id === playerId ? 'text-white' : 'text-white/60'}`}>
                                                 {p.name}
                                             </span>
+                                            {p.isVerified && (
+                                                <div className="px-1.5 py-0.5 bg-[#f5a623]/20 border border-[#f5a623]/30 text-[#f5a623] text-[7px] font-bold tracking-widest uppercase rounded">Verified</div>
+                                            )}
                                         </div>
                                         {p.ready ? (
                                             <span className="text-[10px] font-black text-[#f5a623] uppercase tracking-tighter shadow-[#f5a623]/20 shadow-sm px-2 py-0.5 rounded border border-[#f5a623]/20 bg-[#f5a623]/10">LOCKED_IN</span>

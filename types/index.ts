@@ -24,6 +24,7 @@ export interface Player {
     finishedAt: number | null;
     placement: number | null;
     effects: PlayerEffects;
+    isVerified?: boolean;
 }
 
 export type RoomStatus = 'lobby' | 'countdown' | 'racing' | 'finished';
