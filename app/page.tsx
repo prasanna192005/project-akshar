@@ -75,6 +75,8 @@ export default function Home() {
   const [authProcessing, setAuthProcessing] = useState(false);
   const [authMessage, setAuthMessage] = useState("");
 
+  const [showSystemMenu, setShowSystemMenu] = useState(false);
+
   const { user, isGuest, loginWithGoogle, linkGoogleAccount, loading: authLoading } = useAuth();
   const [profile, setProfile] = useState<UserProfile | null>(null);
 
@@ -164,34 +166,61 @@ export default function Home() {
       <BunkerBackground />
 
       {/* Top Navigation */}
-      <div className="absolute top-8 left-8 z-50">
-        <Link href="/guide">
-          <SkeletalButton variant="secondary" className="px-6 py-2 h-auto text-[10px] flex items-center gap-3 border-white/5 bg-white/5 backdrop-blur-sm">
-            <div className="w-1.5 h-1.5 bg-[#f5a623] rounded-full animate-pulse" />
-            Mission Briefing
+      <div className="absolute top-8 left-8 z-[60]">
+        <div
+          className="relative"
+          onMouseEnter={() => setShowSystemMenu(true)}
+          onMouseLeave={() => setShowSystemMenu(false)}
+        >
+          <SkeletalButton
+            variant="secondary"
+            className={`px-6 py-2 h-auto text-[10px] flex items-center gap-3 transition-all duration-300 ${showSystemMenu ? 'bg-[#f5a623] border-[#f5a623] text-black' : 'border-white/5 bg-white/5 backdrop-blur-sm'}`}
+          >
+            <div className={`w-1.5 h-1.5 rounded-full animate-pulse ${showSystemMenu ? 'bg-black' : 'bg-[#f5a623]'}`} />
+            [ SYSTEM_PROTOCOLS ]
+            <svg
+              width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4"
+              className={`transition-transform duration-300 ${showSystemMenu ? 'rotate-180' : ''}`}
+            >
+              <path d="m6 9 6 6 6-6" />
+            </svg>
           </SkeletalButton>
-        </Link>
+
+          {/* Tactical Dropdown */}
+          {showSystemMenu && (
+            <div className="absolute top-full left-0 pt-2 animate-in fade-in slide-in-from-top-2 duration-200">
+              <div className="w-64 bg-[#0d0b09]/95 backdrop-blur-xl border border-[#f5a623]/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden">
+                <div className="border-b border-[#f5a623]/10 px-4 py-2 bg-[#f5a623]/5">
+                  <span className="text-[7px] font-black tracking-[0.3em] uppercase opacity-40">AKSHAR_FILES_v4.2</span>
+                </div>
+                <div className="flex flex-col">
+                  <Link href="/guide" className="px-4 py-3 flex items-center justify-between group hover:bg-[#f5a623]/10 transition-colors border-b border-white/5">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/60 group-hover:text-[#f5a623]">Mission Briefing</span>
+                    <div className="w-1 h-1 bg-white/10 group-hover:bg-[#f5a623] rounded-full" />
+                  </Link>
+                  <Link href="/lore" className="px-4 py-3 flex items-center justify-between group hover:bg-[#f5a623]/10 transition-colors border-b border-white/5">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/60 group-hover:text-[#f5a623]">Tactical Archives</span>
+                    <div className="w-1 h-1 bg-white/10 group-hover:bg-white rounded-full" />
+                  </Link>
+                  <Link href="/agents" className="px-4 py-3 flex items-center justify-between group hover:bg-[#f5a623]/10 transition-colors">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/60 group-hover:text-[#f5a623]">Operative Files</span>
+                    <div className="w-1 h-1 bg-white/10 group-hover:bg-white rounded-full" />
+                  </Link>
+                </div>
+                <div className="px-4 py-2 bg-white/[0.02] border-t border-white/5">
+                  <p className="text-[7px] font-bold italic opacity-20 uppercase tracking-[0.2em]">Authorized access only // Sector 7</p>
+                </div>
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       <div className="absolute top-8 right-8 z-50 flex items-center gap-4">
         <Link href="/test">
-          <SkeletalButton variant="secondary" className="px-6 py-2 h-auto text-[10px] flex items-center gap-3 border-white/5 bg-white/5 backdrop-blur-sm">
+          <SkeletalButton variant="secondary" className="px-6 py-2 h-auto text-[10px] flex items-center gap-3 border-white/5 bg-white/5 backdrop-blur-sm group hover:border-yellow-500/50">
             Testing Range
-            <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse" />
-          </SkeletalButton>
-        </Link>
-        <Link href="/lore">
-          <SkeletalButton variant="secondary" className="px-6 py-2 h-auto text-[10px] flex items-center gap-3 border-[#f5a623]/20 bg-[#f5a623]/5 backdrop-blur-sm">
-            Tactical Archives
-            <div className="w-1.5 h-1.5 bg-white rounded-full animate-ping" />
-          </SkeletalButton>
-        </Link>
-        <Link href="/agents">
-          <SkeletalButton variant="secondary" className="px-6 py-2 h-auto text-[10px] flex items-center gap-3 border-white/5 bg-white/5 backdrop-blur-sm">
-            OPERATIVE FILES
-            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="4" strokeLinecap="round" strokeLinejoin="round">
-              <path d="M5 12h14M12 5l7 7-7 7" />
-            </svg>
+            <div className="w-1.5 h-1.5 bg-yellow-500 rounded-full animate-pulse group-hover:animate-ping" />
           </SkeletalButton>
         </Link>
 
