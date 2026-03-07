@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
+import { v4 as uuidv4 } from "uuid";
 import Link from "next/link";
 import { useRoom } from "@/hooks/useRoom";
 import { usePlayer } from "@/hooks/usePlayer";
@@ -23,12 +24,28 @@ export default function Lobby() {
     const { user } = useAuth();
     const [playerId, setPlayerId] = useState<string | null>(null);
     const [playerName, setPlayerName] = useState<string | null>(null);
+    const [isRedirecting, setIsRedirecting] = useState(false);
 
     useEffect(() => {
+        let storedId = sessionStorage.getItem('typeagents_player_id');
+        const storedName = localStorage.getItem('typeagents_player_name');
+
+        if (!storedName) {
+            setIsRedirecting(true);
+            router.push(`/?join=${roomId}`);
+            return;
+        }
+
+        if (!storedId) {
+            const newId = uuidv4();
+            sessionStorage.setItem('typeagents_player_id', newId);
+            storedId = newId;
+        }
+
         ensureAuth().catch(console.error);
-        setPlayerId(sessionStorage.getItem('typeagents_player_id'));
-        setPlayerName(localStorage.getItem('typeagents_player_name'));
-    }, []);
+        setPlayerId(storedId);
+        setPlayerName(storedName);
+    }, [roomId, router]);
 
     const { room, players, status, loading } = useRoom(roomId);
     const { player, selectAgent, setReady } = usePlayer(roomId, playerId || "");
@@ -40,7 +57,9 @@ export default function Lobby() {
         }
     }, [status, roomId, router, loading]);
 
-    if (loading || !room || !playerId) {
+    if (isRedirecting || !playerId) return null;
+
+    if (loading || !room) {
         return <LoadingScreen />;
     }
 

@@ -37,11 +37,7 @@ export default function Game() {
     const { room, players, status, loading } = useRoom(roomId);
     const { player, updateProgress, clearEffect } = usePlayer(roomId, playerId || "");
 
-    if (loading || !room || isLoading) {
-        return <LoadingScreen />;
-    }
-
-    const isHost = room && playerId ? room.hostId === playerId : false;
+    const opponents = players.filter(p => p.id !== playerId);
     const {
         currentWordIndex,
         currentInput,
@@ -56,7 +52,6 @@ export default function Game() {
         isError
     } = useTyping(room?.prompt || "", status === 'racing', room?.raceStartAt, player?.effects?.inputLocked, player?.effects?.empress);
 
-    const opponents = players.filter(p => p.id !== playerId);
     const { charge, onCooldown, cooldownRemaining, activateAbility } = useAbility(
         player?.agent || null,
         wpm,
@@ -86,7 +81,7 @@ export default function Game() {
     useEffect(() => {
         // AUTH_LOCK: If the server already confirms we finished, NEVER sync again.
         // This stops the progress bar from "resetting" due to local state cleanup.
-        if (player?.finishedAt) return;
+        if (!player || player.finishedAt) return;
 
         if (status === 'racing' && playerId) {
             // When isComplete is true, we send the final 100% and a timestamp.
@@ -94,12 +89,12 @@ export default function Game() {
             // triggering the AUTH_LOCK above.
             updateProgress({
                 progress: isComplete ? 100 : Math.min(99, progress),
-                wpm: isComplete ? player?.wpm || wpm : wpm, // Keep last WPM
-                accuracy: isComplete ? player?.accuracy || accuracy : Math.min(100, accuracy),
+                wpm: isComplete ? player.wpm || wpm : wpm, // Keep last WPM
+                accuracy: isComplete ? player.accuracy || accuracy : Math.min(100, accuracy),
                 finishedAt: isComplete ? Date.now() : null
             });
         }
-    }, [progress, wpm, accuracy, isComplete, status, playerId, updateProgress, player?.finishedAt, player?.wpm, player?.accuracy]);
+    }, [progress, wpm, accuracy, isComplete, status, playerId, updateProgress, player, player?.finishedAt, player?.wpm, player?.accuracy]);
 
     // Handle game end
     useEffect(() => {
@@ -131,6 +126,7 @@ export default function Game() {
 
     // Host: Force transition to racing when countdown ends
     useEffect(() => {
+        const isHost = room && playerId ? room.hostId === playerId : false;
         if (status === 'countdown' && room?.raceStartAt && isHost) {
             const now = Date.now();
             const delay = Math.max(0, room.raceStartAt - now);
@@ -148,7 +144,7 @@ export default function Game() {
 
             return () => clearTimeout(timer);
         }
-    }, [status, room?.raceStartAt, isHost, roomId]);
+    }, [status, room?.raceStartAt, room?.hostId, playerId, roomId]);
 
     useEffect(() => {
         if (status !== 'racing' || !room?.raceStartAt) {
@@ -171,7 +167,11 @@ export default function Game() {
         return `${mins.toString().padStart(2, '0')}:${secs.toString().padStart(2, '0')}`;
     };
 
-    if (isLoading || !room || !playerId) return <LoadingScreen />;
+    if (loading || !room || isLoading || !playerId) {
+        return <LoadingScreen />;
+    }
+
+    const isHost = room.hostId === playerId;
 
     const agent = player?.agent ? AGENTS[player.agent] : null;
 

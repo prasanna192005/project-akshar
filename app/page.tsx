@@ -1,12 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { createRoom, joinRoom } from "@/lib/roomUtils";
 import { v4 as uuidv4 } from "uuid";
 import { PromptCategory } from "@/lib/prompts";
 import { ensureAuth } from "@/lib/firebase";
-import { useEffect } from "react";
+import { useEffect, Suspense } from "react";
 import Link from "next/link";
 import LoadingScreen from "@/components/LoadingScreen";
 import BunkerBackground from "@/components/BunkerBackground";
@@ -59,8 +59,10 @@ function DecryptedText({ text, hoverText }: { text: string; hoverText: string })
   );
 }
 
-export default function Home() {
+function HomeContent() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const [mounted, setMounted] = useState(false);
   const [name, setName] = useState("");
   const [roomIdInput, setRoomIdInput] = useState("");
   const [showJoinInput, setShowJoinInput] = useState(false);
@@ -79,6 +81,17 @@ export default function Home() {
 
   const { user, isGuest, loginWithGoogle, linkGoogleAccount, loading: authLoading } = useAuth();
   const [profile, setProfile] = useState<UserProfile | null>(null);
+
+  // Handle auto-join from shared link
+  useEffect(() => {
+    setMounted(true);
+    const joinId = searchParams.get('join');
+    if (joinId) {
+      setRoomIdInput(joinId.toUpperCase());
+      setShowJoinInput(true);
+      setError("Please identify yourself before joining the sector.");
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     if (user && !user.isAnonymous) {
@@ -458,5 +471,13 @@ export default function Home() {
         </div>
       </div>
     </main>
+  );
+}
+
+export default function Home() {
+  return (
+    <Suspense fallback={<BunkerBackground />}>
+      <HomeContent />
+    </Suspense>
   );
 }

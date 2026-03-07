@@ -16,7 +16,7 @@ const RoomCodeDisplay: React.FC<RoomCodeDisplayProps> = ({ code }) => {
 
     const handleShare = () => {
         const joinLink = `${window.location.origin}/lobby/${code}`;
-        const shareText = `Join the battle! Join my Valorant TypeRacer lobby: ${joinLink}`;
+        const shareText = `Join the battle! Join my AKSHAR lobby: ${joinLink}`;
         navigator.clipboard.writeText(shareText);
         setCopiedLink(true);
         setTimeout(() => setCopiedLink(false), 2000);
