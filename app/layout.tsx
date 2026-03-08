@@ -20,8 +20,22 @@ const shareTechMono = Share_Tech_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "AKSHAR | Multiplayer Battle",
-  description: "A competitive multiplayer typing race with agents and abilities.",
+  title: "AKSHAR | Tactical Multiplayer Battle",
+  description: "A competitive multiplayer typing race set in an industrial-tactical universe. Master your protocols, deploy your agents, and seize victory.",
+  keywords: ["typing racer", "multiplayer game", "tactical typing", "AKSHAR"],
+  authors: [{ name: "Prasanna" }],
+  openGraph: {
+    title: "AKSHAR | Tactical Multiplayer Battle",
+    description: "A high-stakes typing battle with agents and abilities. Compete in real-time.",
+    type: "website",
+    locale: "en_US",
+    siteName: "AKSHAR",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "AKSHAR | Tactical Multiplayer Battle",
+    description: "The ultimate tactical typing experience. Deploy your agent now.",
+  },
 };
 
 export default function RootLayout({
