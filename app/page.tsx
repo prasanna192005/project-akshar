@@ -204,7 +204,7 @@ function HomeContent() {
             <div className="absolute top-full left-0 pt-2 animate-in fade-in slide-in-from-top-2 duration-200">
               <div className="w-64 bg-[#0d0b09]/95 backdrop-blur-xl border border-[#f5a623]/20 shadow-[0_20px_50px_rgba(0,0,0,0.5)] overflow-hidden">
                 <div className="border-b border-[#f5a623]/10 px-4 py-2 bg-[#f5a623]/5">
-                  <span className="text-[7px] font-black tracking-[0.3em] uppercase opacity-40">AKSHAR_FILES_v4.2</span>
+                  <span className="text-[7px] font-black tracking-[0.3em] uppercase opacity-40">AKSHAR_FILES</span>
                 </div>
                 <div className="flex flex-col">
                   <Link href="/guide" className="px-4 py-3 flex items-center justify-between group hover:bg-[#f5a623]/10 transition-colors border-b border-white/5">
