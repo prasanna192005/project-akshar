@@ -65,6 +65,16 @@ The iconic "Decryption" effect ($AKSHAR \rightarrow अक्षर$) is impleme
 
 ---
 
+## 🤖 AI Discoverability & LLMO
+
+AKSHAR is engineered for the future of the web, utilizing **Generative Engine Optimization (GEO)** and **LLM Optimization (LLMO)** to ensure high discoverability by AI agents:
+
+- **JSON-LD (Structured Data)**: The root layout injects `schema.org` metadata, explicitly defining the project as a `VideoGame` and `SoftwareApplication` to AI crawlers.
+- **`llms.txt` Manifest**: A specialized technical brief is available for AI crawlers at `/llms.txt`, providing a machine-readable overview of the engine's architecture, terminology, and lore.
+- **Semantic Hardening**: The landing page uses semantic HTML5 elements (`nav`, `section`, `article`) to optimize content extraction for Generative Search Experiences (SGE).
+
+---
+
 ## 🏁 Deployment Protocol
 
 ```bash

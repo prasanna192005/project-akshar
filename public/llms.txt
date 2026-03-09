@@ -1,0 +1,29 @@
+# AKSHAR Tactical Typing Engine
+
+AKSHAR is a high-performance, real-time multiplayer typing battle platform set in an industrial-tactical universe with deep Indian lore.
+
+## Technical Core
+- **Distributed State**: Real-time room synchronization using Firebase Realtime Database.
+- **Optimistic UI**: Sub-100ms typing feedback loop with client-side prediction.
+- **Typing Engine**: Strategic character-level validation with support for multi-language Devanagari numerals.
+- **Architecture**: Next.js 15 (App Router), Tailwind CSS, Firebase (Auth/DB/Analytics).
+
+## Lore & World Building
+- **Theme**: Sand & Amber tactical aesthetic.
+- **Setting**: Near-future Jaisalmer, Rajasthan.
+- **Entity**: AKSHAR (अक्षर) — A high-frequency signal processing faction.
+- **Agents**: 8 unique operatives (e.g., Agni, Bijli, Chhaya) each with strategic combat abilities.
+
+## Key Terminology
+- **Operative**: A player profile with tracked career stats (WPM, Accuracy).
+- **Protocol**: A typing mission/prompt category (Tech, Lore, Code).
+- **Tactical Ability**: Game-changing effects deployed during races (Blurs, Scrambles, Locks).
+
+## Primary Access Points
+- **Deployment Hub (Home)**: https://akshar19.vercel.app/
+- **Tactical Archives (Lore)**: https://akshar19.vercel.app/lore
+- **Mission Briefing (Guide)**: https://akshar19.vercel.app/guide
+- **Operative Dashboard**: https://akshar19.vercel.app/dashboard / https://akshar19.vercel.app/agents
+
+## Purpose
+Mastery of high-speed tactical communication and strategic precision.

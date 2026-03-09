@@ -175,11 +175,11 @@ function HomeContent() {
   if (loading) return <LoadingScreen />;
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden bg-[#0d0b09] select-none">
+    <main className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden bg-[#0d0b09] select-none" role="main">
       <BunkerBackground />
 
       {/* Top Navigation */}
-      <div className="absolute top-8 left-8 z-[60]">
+      <nav className="absolute top-8 left-8 z-[60]" aria-label="Tactical Menu">
         <div
           className="relative"
           onMouseEnter={() => setShowSystemMenu(true)}
@@ -227,9 +227,9 @@ function HomeContent() {
             </div>
           )}
         </div>
-      </div>
+      </nav>
 
-      <div className="absolute top-8 right-8 z-50 flex items-center gap-4">
+      <div className="absolute top-8 right-8 z-50 flex items-center gap-4" aria-label="Operative Actions">
         <Link href="/test">
           <SkeletalButton variant="secondary" className="px-6 py-2 h-auto text-[10px] flex items-center gap-3 border-white/5 bg-white/5 backdrop-blur-sm group hover:border-yellow-500/50">
             Testing Range
@@ -286,7 +286,7 @@ function HomeContent() {
         )}
       </div>
 
-      <div className="w-full max-w-md text-center space-y-8 animate-in fade-in zoom-in duration-700 z-10">
+      <section className="w-full max-w-md text-center space-y-8 animate-in fade-in zoom-in duration-700 z-10" aria-label="Main Deployment Hub">
         <div>
           <h1 className="text-8xl font-black tracking-tighter italic text-white mb-2 uppercase leading-none drop-shadow-[0_0_30px_rgba(245,166,35,0.2)]">
             <DecryptedText text="AKSHAR" hoverText="अक्षर" />
@@ -469,7 +469,7 @@ function HomeContent() {
         <div className="pt-12 text-[10px] uppercase tracking-[0.3em] font-bold opacity-10 text-[#f5a623]">
           AKSHAR SYSTEMS // YAAO PRODUCTIONS
         </div>
-      </div>
+      </section>
     </main>
   );
 }
