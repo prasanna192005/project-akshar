@@ -1,5 +1,6 @@
 import { useState, useCallback, useMemo, useEffect } from "react";
 import { calculateWPM, calculateAccuracy } from "../lib/gameEngine";
+import { logTacticalEvent } from "../lib/firebase";
 
 export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?: number | null, blockInput?: boolean, penaltyOnErrors?: boolean) => {
     const words = useMemo(() => prompt.trim().split(/\s+/), [prompt]);
@@ -13,6 +14,32 @@ export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?:
     const [lastInputAt, setLastInputAt] = useState<number>(Date.now());
     const [typedCorrectChars, setTypedCorrectChars] = useState(0);
     const [endTime, setEndTime] = useState<number | null>(null);
+
+    // Derived live stats - NO DOUBLE COUNTING
+    const currentCorrectCount = useMemo(() => {
+        if (isComplete) return 0; // Cumulative already includes everything
+        let count = 0;
+        const targetWord = words[currentWordIndex];
+        if (targetWord) {
+            for (let i = 0; i < currentInput.length; i++) {
+                if (currentInput[i] === targetWord[i]) count++;
+                else break;
+            }
+        }
+        return count;
+    }, [currentInput, words, currentWordIndex, isComplete]);
+
+    const wpm = useMemo(() => {
+        if (!startTime) return 0;
+        const totalCorrect = correctChars + currentCorrectCount;
+        return calculateWPM(totalCorrect, startTime, endTime || Date.now());
+    }, [correctChars, currentCorrectCount, startTime, endTime]);
+
+    const accuracy = useMemo(() => {
+        if (totalTypedChars === 0) return 100;
+        const liveTypedCorrect = typedCorrectChars + currentCorrectCount;
+        return Math.min(100, Math.round((liveTypedCorrect / totalTypedChars) * 100));
+    }, [typedCorrectChars, currentCorrectCount, totalTypedChars]);
 
     // Reset all state
     const reset = useCallback(() => {
@@ -63,6 +90,7 @@ export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?:
                 if (currentWordIndex === words.length - 1) {
                     setIsComplete(true);
                     setEndTime(Date.now());
+                    logTacticalEvent("race_finished", { wpm, accuracy });
                 } else {
                     setCurrentWordIndex(prev => prev + 1);
                     setCurrentInput("");
@@ -95,35 +123,10 @@ export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?:
             setCorrectChars(prev => prev + targetWord.length);
             setIsComplete(true);
             setEndTime(Date.now());
+            logTacticalEvent("race_finished", { wpm, accuracy });
             return;
         }
-    }, [isActive, isComplete, words, currentWordIndex, currentInput, blockInput, penaltyOnErrors]);
-
-    // Derived live stats - NO DOUBLE COUNTING
-    const currentCorrectCount = useMemo(() => {
-        if (isComplete) return 0; // Cumulative already includes everything
-        let count = 0;
-        const targetWord = words[currentWordIndex];
-        if (targetWord) {
-            for (let i = 0; i < currentInput.length; i++) {
-                if (currentInput[i] === targetWord[i]) count++;
-                else break;
-            }
-        }
-        return count;
-    }, [currentInput, words, currentWordIndex, isComplete]);
-
-    const wpm = useMemo(() => {
-        if (!startTime) return 0;
-        const totalCorrect = correctChars + currentCorrectCount;
-        return calculateWPM(totalCorrect, startTime, endTime || Date.now());
-    }, [correctChars, currentCorrectCount, startTime, endTime]);
-
-    const accuracy = useMemo(() => {
-        if (totalTypedChars === 0) return 100;
-        const liveTypedCorrect = typedCorrectChars + currentCorrectCount;
-        return Math.min(100, Math.round((liveTypedCorrect / totalTypedChars) * 100));
-    }, [typedCorrectChars, currentCorrectCount, totalTypedChars]);
+    }, [isActive, isComplete, words, currentWordIndex, currentInput, blockInput, penaltyOnErrors, wpm, accuracy]);
 
     const isError = useMemo(() => {
         const targetWord = words[currentWordIndex];

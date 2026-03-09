@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import { ref, update, get } from "firebase/database";
-import { db } from "../lib/firebase";
+import { db, logTacticalEvent } from "../lib/firebase";
 import { AGENTS, AgentType } from "../lib/agents";
 import { calculateChargeIncrement } from "../lib/gameEngine";
 import { Room, RoomStatus, Player, PlayerEffects, RoomConfig } from "../types";
@@ -77,6 +77,9 @@ export const useAbility = (
 
     const activateAbility = useCallback(async () => {
         if (!agent || charge < 1 || onCooldown || opponents.length === 0) return;
+
+        // Log tactical event
+        logTacticalEvent("ability_deployed", { agent: agent.name, ability: agent.id });
 
         // Targeting logic based on config
         let targets: Player[] = [];
