@@ -1,28 +1,56 @@
-# 🪖 AKSHAR: Multiplayer Battle
+# 🪖 AKSHAR: Tactical Multiplayer Typing Battle
 
-[![Static Badge](https://img.shields.io/badge/Tactical-Typing-amber?style=for-the-badge)](https://github.com/prasanna192005/not-my-type-valorant)
-[![Next.js](https://img.shields.io/badge/Next.js-15+-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
-[![Firebase](https://img.shields.io/badge/Firebase-Realtime-orange?style=for-the-badge&logo=firebase)](https://firebase.google.com/)
-[![Aesthetic](https://img.shields.io/badge/Aesthetic-Tactical_Industrial-amber?style=for-the-badge)](#)
+[![Next.js](https://img.shields.io/badge/Next.js-15.1-black?style=for-the-badge&logo=next.js)](https://nextjs.org/)
+[![Firebase](https://img.shields.io/badge/Firebase-v11-orange?style=for-the-badge&logo=firebase)](https://firebase.google.com/)
+[![License](https://img.shields.io/badge/License-MIT-amber?style=for-the-badge)](https://opensource.org/licenses/MIT)
 
-**AKSHAR** is a high-stakes, competitive multiplayer typing racer set in a gritty industrial-tactical universe. Built for speed and precision, it blends the mechanical intensity of typing with the strategic depth of a hero shooter.
+**AKSHAR** (अक्षर) — *The Imperishable / The Letter*. 
 
----
-
-## 🚀 Mission Critical Features
-
-- **Real-Time Combat**: Synchronized lobby system powered by Firebase Realtime Database with sub-100ms latency.
-- **Operative Dashboard**: A dedicated **Command Center** to track your tactical stats (WPM, Accuracy, Level) and manage your operative profile.
-- **Tactical System Protocols**: A consolidated hover-menu for seamless navigation through mission briefings, archives, and operative files.
-- **Identity Enforcement**: Secure shared links that automatically pre-fill room codes while ensuring every operative is identified before entry.
-- **Elite UI/UX**: A signature **Sand-Amber** industrial aesthetic featuring glassmorphism, micro-animations, and custom typography (Orbitron/Rajdhani).
-- **Testing Range**: A standalone sandbox sector (`/test`) for mastering agent abilities and signature movements.
+AKSHAR is a high-performance, real-time typing engine built on a distributed state machine. It transforms the mechanical act of typing into a high-stakes tactical hero-racer.
 
 ---
 
-## 🎭 The Operatives
+## 🗃️ Mission Archives
+*Access the full technical blueprints and feature deep-dives.*
 
-Select your handle. Master your protocols. Every agent brings a unique distortion to the battlefield.
+### [📂 Sector Technical Archives](./docs/features/README.md)
+*Includes: Engine Mechanics, Ability Payloads, UI Architecture, Forensic Insights, and Field Troubleshooting.*
+
+---
+
+## 📐 System Architecture
+
+AKSHAR utilizes a **distributed reactive loop** to maintain sub-100ms synchronization across all clients.
+
+![AKSHAR System Architecture](./architecture.png)
+
+---
+
+## 🧠 Technical Deep-Dive (Engineering Insights)
+
+### 1. The Neural Loop (Distributed State)
+Standard typing games suffer from "Network Jitter." AKSHAR solves this using **Optimistic Distributed Progression**:
+- **Local Loop**: The `useTyping` hook processes keystrokes instantly, updating the local UI at 60fps for zero-latency feedback.
+- **Distributed Loop**: The `useRoom` hook debounces and broadcasts progress updates to Firebase. 
+- **Conflict Resolution**: Clients use server-stamped synchronization to resolve race conditions between ability strikes and finishing order.
+
+### 2. Tactical State Machine (Ability Payloads)
+Ability effects (Blurs, Flashes, Scrambles) are managed as **Transient Distributed States**:
+- **Atomic Operations**: When an operative uses an ability, the targeting matrix identifies the victim and performs an **Atomic Firebase Transaction** to inject the effect payload.
+- **Self-Healing Decay**: The client-side `EffectOverlay` monitors the distributed state. Once an effect is cleared (via client-side timeout logic), the global state "decays" back to the baseline profile.
+
+### 3. Forensic Performance & SVG Mapping
+We bypassed the Virtual DOM for high-frequency elements to ensure 60fps smooth rendering:
+- **SVG Coordinate Mapping**: Performance charts are rendered using calculated SVG polyline paths, ensuring they are infinitely scalable and lightweight.
+- **Ref Persistence**: High-frequency animations (like ability charge bars) use **React Refs** to update the DOM directly, preventing the overhead of full React re-renders during intensive typing bouts.
+
+### 4. Decryption Layer (अक्षर Logic)
+The iconic "Decryption" effect ($AKSHAR \rightarrow अक्षर$) is implemented using a custom **Phased Text Scrambler**:
+- It uses a seeded randomizer to transition characters between Latin, Cyrillic, and Devanagari scripts before settling on the target string, creating the signature "Industrial Decryption" feel.
+
+---
+
+## 🎭 The operatives
 
 | Operative | Tactical Ability (`TAB`) | Passive Protocol |
 | :--- | :--- | :--- |
@@ -37,81 +65,22 @@ Select your handle. Master your protocols. Every agent brings a unique distortio
 
 ---
 
-## 🛠️ How We Made This
-
-AKSHAR was built by combining traditional typing mechanics with high-latency reactive networking.
-
-- **The Vision**: We wanted to turn typing into a "Tactical Hero Shooter" experience.
-- **The Execution**: Developed using **Next.js 15** for optimized performance and **Firebase Realtime Database** for sub-100ms cross-client communication.
-- **The Aesthetic**: A custom **Sand & Amber** industrial theme carefully crafted using CSS variables, noise grain textures, and SVG-based forensic charting.
-
-### 📜 Development Deep-Dive
-For a detailed look at how each system was built, the errors we crushed, and our technical solutions, check out our **[Feature Documentation Archives](./docs/features/README.md)**.
-
----
-
-## ⚙️ Tactical Architecture
-
-AKSHAR is built on a stabilized hook-based engine designed for competitive integrity.
-
-### 1. 🧠 The Engine (`useTyping.ts`)
-The core processing unit handles real-time WPM calculation, accuracy tracking, and the atomic `skipWords` callback for movement abilities.
-
-### 2. ⚡ Ability Synchronization (`useAbility.ts`)
-Calculates **Ability Charge** exponentially based on "Perfect Typing" performance.
-- **Targeting Matrix**: Advanced logic to resolve `leader`, `random`, or `all` targeting modes mid-race.
-- **Payload Execution**: Atomic Firebase updates ensure that effects (Blurs, Flashes, Locks) are applied to opponents with zero race conditions.
-
-### 3. 🛡️ Secure Uplink (Authentication)
-Integrated Firebase Auth allows operatives to:
-- **Link Google Accounts** for persistent profile tracking.
-- **Level Up**: Earn experience through thermal precision and speed.
-- **Custom Identity**: Manage operative handles and tactical avatars.
-
----
-
-## 🛠️ Tech Stack
-
-- **Core**: [Next.js 15](https://nextjs.org/) (App Router, Server Actions)
-- **Neural Link**: [Firebase Realtime Database](https://firebase.google.com/docs/database)
-- **Identity**: [Firebase Auth](https://firebase.google.com/docs/auth)
-- **Visuals**: [Tailwind CSS](https://tailwindcss.com/) & [Vanilla CSS](https://developer.mozilla.org/en-US/docs/Web/CSS)
-- **Dynamics**: [Framer Motion](https://www.framer.com/motion/)
-
----
-
 ## 🏁 Deployment Protocol
 
-### Prerequisites
-- Node.js 18.x / 20.x
-- Firebase Project (Auth + Realtime DB)
+```bash
+# Clone and enter the sector
+git clone https://github.com/prasanna192005/not-my-type-valorant.git
+cd not-my-type-valorant
 
-### Installation
-1. Clone the sector:
-   ```bash
-   git clone https://github.com/prasanna192005/not-my-type-valorant.git
-   cd not-my-type-valorant
-   ```
-2. Install dependencies:
-   ```bash
-   npm install
-   ```
-3. Establish environment variables (`.env.local`):
-   ```env
-   NEXT_PUBLIC_FIREBASE_API_KEY=xxx
-   NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=xxx
-   NEXT_PUBLIC_FIREBASE_DATABASE_URL=xxx
-   NEXT_PUBLIC_FIREBASE_PROJECT_ID=xxx
-   # ... [Standard Firebase Config]
-   ```
-4. Initialize local uplink:
-   ```bash
-   npm run dev
-   ```
+# Establish Neural Uplink (.env.local)
+NEXT_PUBLIC_FIREBASE_API_KEY=xxx
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=xxx
+NEXT_PUBLIC_FIREBASE_DATABASE_URL=xxx
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=xxx
+NEXT_PUBLIC_DEBUG_ACCESS_KEY=admin123
 
----
-
-## 📜 Sector Rules (MIT License)
-Distributed under the MIT License. Tactical assets and lore are property of their respective creators.
+# Engage Uplink
+npm install && npm run dev
+```
 
 **System established by [Prasanna](https://github.com/prasanna192005) // AKSHAR SYSTEMS**
