@@ -18,7 +18,7 @@ export default function LoadingScreen() {
 
             {/* Logo/Name */}
             <div className="mb-12 text-center relative z-10">
-                <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter text-white mb-2 animate-pulse">
+                <h1 className="text-6xl md:text-8xl font-black italic tracking-tighter text-[#f5a623] mb-2 animate-pulse drop-shadow-[0_0_30px_rgba(245,166,35,0.3)]">
                     AKSHAR
                 </h1>
                 <div className="h-1.5 w-32 bg-[#f5a623] mx-auto shadow-[0_0_15px_rgba(245,166,35,0.5)]" />

@@ -31,13 +31,20 @@ const DEFAULT_STATS = {
     accuracy: 0,
 };
 
-export const saveUserStats = async (uid: string, result: { wpm: number; accuracy: number; placement: number; roomId: string }) => {
+export const saveUserStats = async (uid: string, result: { wpm: number; accuracy: number; placement: number; roomId: string; finishedAt: number }) => {
     const userRef = ref(db, `users/${uid}`);
     const snapshot = await get(userRef);
     const currentData = snapshot.val() as UserProfile | null;
 
     const stats = currentData?.stats || { ...DEFAULT_STATS };
     const recentMatches = currentData?.recentMatches || [];
+
+    // Duplicate Protection: Check if this specific finish event has already been recorded
+    const isDuplicate = recentMatches.some(m => m.id === result.roomId && m.timestamp === result.finishedAt);
+    if (isDuplicate) {
+        console.log(`[userService] Duplicate match detected for room ${result.roomId}. Tracking aborted.`);
+        return;
+    }
 
     // Update aggregate stats
     const totalMatches = stats.totalMatches + 1;
@@ -50,7 +57,7 @@ export const saveUserStats = async (uid: string, result: { wpm: number; accuracy
         id: result.roomId,
         wpm: result.wpm,
         accuracy: result.accuracy,
-        timestamp: Date.now(),
+        timestamp: result.finishedAt, // Use the actual finish timestamp as the record ID
         placement: result.placement
     };
 

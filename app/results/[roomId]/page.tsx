@@ -51,28 +51,41 @@ export default function Results() {
                 wpm: userPlayer.wpm,
                 accuracy: userPlayer.accuracy,
                 placement: userPlacement + 1,
-                roomId
+                roomId,
+                finishedAt: userPlayer.finishedAt
             }).catch(console.error);
         }
     }, [loading, user, userPlayer, userPlacement, roomId]);
     const userAgent = userPlayer?.agent ? AGENTS[userPlayer.agent] : null;
     const commentary = userAgent ? (userPlacement === 0 ? userAgent.commentary.win : userAgent.commentary.loss) : null;
 
+    // Redirection logic: If status changes to 'lobby', navigate to lobby
+    useEffect(() => {
+        if (!loading && status === 'lobby') {
+            router.push(`/lobby/${roomId}`);
+        }
+    }, [status, loading, roomId, router]);
+
     const handlePlayAgain = async () => {
         if (room?.hostId === playerId) {
-            // Reset all players
-            for (const p of players) {
-                await updatePlayerState(roomId, p.id, {
+            // Reset all players locally before the room status change kicks in
+            const resetPromises = players.map(p =>
+                updatePlayerState(roomId, p.id, {
                     ready: false,
                     progress: 0,
                     wpm: 0,
                     accuracy: 100,
                     abilityCharge: 0,
+                    abilityCooldown: false,
                     finishedAt: null,
                     placement: null,
                     effects: INITIAL_EFFECTS
-                });
-            }
+                })
+            );
+
+            await Promise.all(resetPromises);
+
+            // Trigger the global status change which redirects everyone
             await updateRoomStatus(roomId, 'lobby', {
                 prompt: getRandomPrompt((room?.promptCategory as any) || 'tech'),
                 countdownStartAt: null,
