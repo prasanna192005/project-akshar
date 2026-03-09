@@ -1,4 +1,4 @@
-import { ref, update, get, onValue } from "firebase/database";
+import { ref, update, get, onValue, query, orderByChild, limitToLast } from "firebase/database";
 import { db } from "./firebase";
 
 export interface UserProfile {
@@ -31,7 +31,7 @@ const DEFAULT_STATS = {
     accuracy: 0,
 };
 
-export const saveUserStats = async (uid: string, result: { wpm: number; accuracy: number; placement: number; roomId: string; finishedAt: number }) => {
+export const saveUserStats = async (uid: string, result: { wpm: number; accuracy: number; placement: number; roomId: string; finishedAt: number }, isAnonymous: boolean = false) => {
     const userRef = ref(db, `users/${uid}`);
     const snapshot = await get(userRef);
     const currentData = snapshot.val() as UserProfile | null;
@@ -75,6 +75,24 @@ export const saveUserStats = async (uid: string, result: { wpm: number; accuracy
         },
         recentMatches: updatedRecent
     });
+
+    // If the user is registered (not anonymous), sync to the public leaderboard node
+    if (!isAnonymous) {
+        const leaderboardRef = ref(db, `leaderboard/${uid}`);
+        await update(leaderboardRef, {
+            uid,
+            displayName: currentData?.displayName || null,
+            operativeHandle: currentData?.operativeHandle || (currentData?.displayName ? currentData.displayName.split(' ')[0].toUpperCase() : null),
+            selectedAvatar: currentData?.selectedAvatar || null,
+            stats: {
+                totalWins,
+                totalMatches,
+                peakWpm,
+                careerAvgWpm,
+                accuracy: totalAccuracy
+            }
+        });
+    }
 };
 
 export const updateOperativeHandle = async (uid: string, handle: string) => {
@@ -98,4 +116,22 @@ export const subscribeToUserProfile = (uid: string, callback: (profile: UserProf
     return onValue(userRef, (snapshot) => {
         callback(snapshot.val());
     });
+};
+export const getGlobalLeaderboard = async (sortBy: 'totalWins' | 'peakWpm' | 'totalMatches' = 'totalWins', limit: number = 10): Promise<UserProfile[]> => {
+    const leaderboardRef = ref(db, 'leaderboard');
+    const leaderboardQuery = query(
+        leaderboardRef,
+        orderByChild(`stats/${sortBy}`),
+        limitToLast(limit)
+    );
+
+    const snapshot = await get(leaderboardQuery);
+    const users: UserProfile[] = [];
+
+    snapshot.forEach((childSnapshot) => {
+        users.push(childSnapshot.val() as UserProfile);
+    });
+
+    // Firebase returns in ascending order, so reverse for descending
+    return users.reverse();
 };

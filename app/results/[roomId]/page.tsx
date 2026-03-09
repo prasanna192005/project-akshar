@@ -53,7 +53,7 @@ export default function Results() {
                 placement: userPlacement + 1,
                 roomId,
                 finishedAt: userPlayer.finishedAt
-            }).catch(console.error);
+            }, user.isAnonymous).catch(console.error);
         }
     }, [loading, user, userPlayer, userPlacement, roomId]);
     const userAgent = userPlayer?.agent ? AGENTS[userPlayer.agent] : null;

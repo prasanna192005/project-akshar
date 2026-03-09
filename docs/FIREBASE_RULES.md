@@ -51,6 +51,16 @@ To ensure the integrity of the **AKSHAR** battlefield and protect operative data
           ".validate": "newData.isString() && newData.val().length <= 20"
         }
       }
+    },
+    "leaderboard": {
+      // Publicly viewable by everyone (signed in or not)
+      ".read": true,
+      "$userId": {
+        // Only registered (non-anonymous) users can sync their data to the leaderboard
+        ".write": "auth != null && auth.token.firebase.sign_in_provider != 'anonymous' && auth.uid === $userId",
+        ".validate": "newData.hasChildren(['displayName', 'stats'])"
+      },
+      ".indexOn": ["stats/totalWins", "stats/peakWpm", "stats/totalMatches"]
     }
   }
 }

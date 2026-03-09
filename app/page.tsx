@@ -215,8 +215,12 @@ function HomeContent() {
                     <span className="text-[10px] font-bold uppercase tracking-widest text-white/60 group-hover:text-[#f5a623]">Tactical Archives</span>
                     <div className="w-1 h-1 bg-white/10 group-hover:bg-white rounded-full" />
                   </Link>
-                  <Link href="/agents" className="px-4 py-3 flex items-center justify-between group hover:bg-[#f5a623]/10 transition-colors">
+                  <Link href="/agents" className="px-4 py-3 flex items-center justify-between group hover:bg-[#f5a623]/10 transition-colors border-b border-white/5">
                     <span className="text-[10px] font-bold uppercase tracking-widest text-white/60 group-hover:text-[#f5a623]">Operative Files</span>
+                    <div className="w-1 h-1 bg-white/10 group-hover:bg-white rounded-full" />
+                  </Link>
+                  <Link href="/leaderboard" className="px-4 py-3 flex items-center justify-between group hover:bg-[#f5a623]/10 transition-colors">
+                    <span className="text-[10px] font-bold uppercase tracking-widest text-white/60 group-hover:text-[#f5a623]">Global Leaderboard</span>
                     <div className="w-1 h-1 bg-white/10 group-hover:bg-white rounded-full" />
                   </Link>
                 </div>
