@@ -69,8 +69,8 @@ The iconic "Decryption" effect ($AKSHAR \rightarrow अक्षर$) is impleme
 
 ```bash
 # Clone and enter the sector
-git clone https://github.com/prasanna192005/not-my-type-valorant.git
-cd not-my-type-valorant
+git clone https://github.com/prasanna192005/project-akshar.git
+cd project-akshar
 
 # Establish Neural Uplink (.env.local)
 NEXT_PUBLIC_FIREBASE_API_KEY=xxx
