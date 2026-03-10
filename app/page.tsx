@@ -15,6 +15,7 @@ import { subscribeToUserProfile, UserProfile } from "@/lib/userService";
 import { PREMADE_AVATARS } from "@/lib/avatars";
 import { createSoloRoom } from "@/lib/roomUtils";
 import OnboardingGuide from "@/components/OnboardingGuide";
+import MusicToggle from "@/components/MusicToggle";
 
 
 function DecryptedText({ text, hoverText }: { text: string; hoverText: string }) {
@@ -211,6 +212,11 @@ function HomeContent() {
   return (
     <main className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 relative overflow-hidden bg-[#0d0b09] select-none" role="main">
       <BunkerBackground />
+
+      {/* Global Audio Control */}
+      <div className="fixed bottom-10 left-10 z-[100]">
+        <MusicToggle />
+      </div>
 
       {/* Top Navigation */}
       <nav className="absolute top-8 left-8 z-[60]" aria-label="Tactical Menu">

@@ -15,7 +15,9 @@ import CountdownOverlay from "@/components/CountdownOverlay";
 import EffectOverlay from "@/components/EffectOverlay";
 import LoadingScreen from "@/components/LoadingScreen";
 import BunkerBackground from "@/components/BunkerBackground";
+import MusicToggle from "@/components/MusicToggle";
 import { botIntelligence } from "@/lib/botService";
+import { useAudio } from "@/context/AudioContext";
 import { ref, update as dbUpdate } from "firebase/database";
 import { db } from "@/lib/firebase";
 import { Player } from "@/types";
@@ -37,6 +39,7 @@ export default function Game() {
 
     const { room, players, status, loading } = useRoom(roomId);
     const { player, updateProgress, clearEffect } = usePlayer(roomId, playerId || "");
+    const { setMode } = useAudio();
 
     const opponents = players.filter(p => p.id !== playerId);
     const {
@@ -50,7 +53,8 @@ export default function Game() {
         words,
         lastInputAt,
         skipWords,
-        isError
+        isError,
+        endTime
     } = useTyping(room?.prompt || "", status === 'racing', room?.raceStartAt, player?.effects?.inputLocked, player?.effects?.empress);
 
     const { charge, onCooldown, cooldownRemaining, activateAbility } = useAbility(
@@ -86,14 +90,14 @@ export default function Game() {
         if (!player || player.finishedAt) return;
 
         if (status === 'racing' && playerId) {
-            // When isComplete is true, we send the final 100% and a timestamp.
+            // When isComplete is true, we send the final 100% and the precise endTime.
             // Firebase will update, and then on next render, player?.finishedAt will be non-null,
             // triggering the AUTH_LOCK above.
             updateProgress({
                 progress: isComplete ? 100 : Math.min(99, progress),
                 wpm: isComplete ? player.wpm || wpm : wpm, // Keep last WPM
                 accuracy: isComplete ? player.accuracy || accuracy : Math.min(100, accuracy),
-                finishedAt: isComplete ? Date.now() : null
+                finishedAt: isComplete ? (endTime || Date.now()) : null
             });
         }
     }, [progress, wpm, accuracy, isComplete, status, playerId, updateProgress, player, player?.finishedAt, player?.wpm, player?.accuracy]);
@@ -106,8 +110,18 @@ export default function Game() {
         if (status === 'finished') {
             // Clean up all bot states so next match starts fresh
             botIntelligence.resetAll();
+            setMode('chill');
         }
-    }, [status, players, roomId]);
+    }, [status, players, roomId, setMode]);
+
+    // Handle Music Transition
+    useEffect(() => {
+        if (status === 'racing' || status === 'countdown') {
+            setMode('intense');
+        } else if (status === 'finished') {
+            setMode('chill');
+        }
+    }, [status, setMode]);
 
     // Redirect to results with a generous delay for celebration
     useEffect(() => {
@@ -192,7 +206,7 @@ export default function Game() {
                 if (bot.finishedAt) continue;
                 if (!bot.agent) continue; // skip if agent not yet set
 
-                const botUpdate = botIntelligence.update(bot.id, bot, bot.agent!, promptLength);
+                const botUpdate = botIntelligence.update(bot.id, bot, bot.agent!, room.prompt.length);
                 if (!botUpdate) continue;
 
                 const { _triggerAbility, ...stats } = botUpdate as any;
@@ -310,6 +324,11 @@ export default function Game() {
     return (
         <main className="min-h-screen grid grid-cols-1 lg:grid-cols-4 overflow-hidden bg-[#0d0b09] relative">
             <BunkerBackground />
+
+            {/* Global Audio Control */}
+            <div className="fixed bottom-10 left-10 z-[100]">
+                <MusicToggle />
+            </div>
 
             {/* Game Area */}
             <div className="lg:col-span-3 flex flex-col p-12 justify-center relative z-10">

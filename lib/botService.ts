@@ -102,8 +102,9 @@ export class BotIntelligence {
             ? 0
             : Math.max(8, (state.targetWpm + variance) * wpmMultiplier);
 
-        const wordsPerSecond = state.currentWpm / 60;
-        let progressIncrement = (wordsPerSecond / promptLength) * 100 * deltaTime;
+        // Standard WPM to CPS: (WPM * 5) / 60
+        const charactersPerSecond = (state.currentWpm * 5) / 60;
+        let progressIncrement = (charactersPerSecond / promptLength) * 100 * deltaTime;
 
         // Reyna devour penalty — every 10% chance per second, bot "types a typo" and goes back 1 word
         if (player.effects?.empress && Math.random() < (0.1 * deltaTime)) {

@@ -1,3 +1,5 @@
+import { AudioProvider } from "@/context/AudioContext";
+import { Analytics } from "@vercel/analytics/react";
 import type { Metadata } from "next";
 import { Orbitron, Rajdhani, Share_Tech_Mono } from "next/font/google";
 import "./globals.css";
@@ -110,7 +112,10 @@ export default function RootLayout({
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {children}
+        <AudioProvider>
+          {children}
+          <Analytics />
+        </AudioProvider>
       </body>
     </html>
   );

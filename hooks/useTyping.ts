@@ -179,6 +179,7 @@ export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?:
         words,
         lastInputAt,
         reset,
-        skipWords
+        skipWords,
+        endTime
     };
 };
