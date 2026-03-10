@@ -19,7 +19,7 @@ import { useAbility } from "@/hooks/useAbility";
 
 const TEST_PROMPT = "The quick brown fox jumps over the lazy dog. Programming is the art of algorithm design and the craft of debugging errant code. Mastery of the keyboard is the first step towards digital dominance.";
 
-export default function TestingRange() {
+function TestingRangeContent() {
     const [selectedAgentId, setSelectedAgentId] = useState<string>("PYRA");
     const [effects, setEffects] = useState<PlayerEffects>({
         flashed: false,
@@ -384,5 +384,13 @@ export default function TestingRange() {
                 <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-[300px] font-black tracking-tighter italic text-[#f5a623]">SANDBOX</div>
             </div>
         </main>
+    );
+}
+
+export default function TestingRange() {
+    return (
+        <React.Suspense fallback={<BunkerBackground />}>
+            <TestingRangeContent />
+        </React.Suspense>
     );
 }
