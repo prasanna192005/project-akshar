@@ -54,7 +54,7 @@ export default function Results() {
                 placement: userPlacement + 1,
                 roomId,
                 finishedAt: userPlayer.finishedAt
-            }, user.isAnonymous).catch(console.error);
+            }, user.isAnonymous, user.displayName, user.photoURL).catch(console.error);
         }
     }, [loading, user, userPlayer, userPlacement, roomId]);
     const userAgent = userPlayer?.agent ? AGENTS[userPlayer.agent] : null;

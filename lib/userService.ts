@@ -31,7 +31,13 @@ const DEFAULT_STATS = {
     accuracy: 0,
 };
 
-export const saveUserStats = async (uid: string, result: { wpm: number; accuracy: number; placement: number; roomId: string; finishedAt: number }, isAnonymous: boolean = false) => {
+export const saveUserStats = async (
+    uid: string,
+    result: { wpm: number; accuracy: number; placement: number; roomId: string; finishedAt: number },
+    isAnonymous: boolean = false,
+    fallbackName: string | null = null,
+    fallbackPhoto: string | null = null
+) => {
     const userRef = ref(db, `users/${uid}`);
     const snapshot = await get(userRef);
     const currentData = snapshot.val() as UserProfile | null;
@@ -79,10 +85,13 @@ export const saveUserStats = async (uid: string, result: { wpm: number; accuracy
     // If the user is registered (not anonymous), sync to the public leaderboard node
     if (!isAnonymous) {
         const leaderboardRef = ref(db, `leaderboard/${uid}`);
+        const finalDisplayName = currentData?.displayName || fallbackName || "OPERATIVE";
+        const finalHandle = currentData?.operativeHandle || (finalDisplayName !== "OPERATIVE" ? finalDisplayName.split(' ')[0].toUpperCase() : "SOLO_UNIT");
+
         await update(leaderboardRef, {
             uid,
-            displayName: currentData?.displayName || null,
-            operativeHandle: currentData?.operativeHandle || (currentData?.displayName ? currentData.displayName.split(' ')[0].toUpperCase() : null),
+            displayName: finalDisplayName,
+            operativeHandle: finalHandle,
             selectedAvatar: currentData?.selectedAvatar || null,
             stats: {
                 totalWins,
@@ -92,6 +101,7 @@ export const saveUserStats = async (uid: string, result: { wpm: number; accuracy
                 accuracy: totalAccuracy
             }
         });
+        console.log(`[userService] Global leaderboard sync complete for ${uid}`);
     }
 };
 
