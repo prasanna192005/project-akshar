@@ -5,7 +5,6 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { createRoom, joinRoom } from "@/lib/roomUtils";
 import { v4 as uuidv4 } from "uuid";
 import { PromptCategory } from "@/lib/prompts";
-import { ensureAuth } from "@/lib/firebase";
 import { useEffect, Suspense } from "react";
 import Link from "next/link";
 import LoadingScreen from "@/components/LoadingScreen";
@@ -113,10 +112,6 @@ function HomeContent() {
       if (savedName) setName(savedName);
     }
   }, [user, profile]);
-
-  useEffect(() => {
-    ensureAuth().catch(console.error);
-  }, []);
 
   const handleCreateRoom = async () => {
     if (!name.trim()) {
@@ -245,6 +240,7 @@ function HomeContent() {
           <div className="flex flex-col items-end gap-2">
             <SkeletalButton
               onClick={async () => {
+                // Note: useAuth hook already ensures we have a session (Google or Guest)
                 setAuthProcessing(true);
                 setAuthMessage("");
                 try {

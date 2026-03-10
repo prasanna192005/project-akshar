@@ -45,15 +45,4 @@ export const logTacticalEvent = (eventName: string, eventParams?: any) => {
     }
 };
 
-export const ensureAuth = async () => {
-    if (auth.currentUser) return auth.currentUser;
-    try {
-        const cred = await signInAnonymously(auth);
-        return cred.user;
-    } catch (e) {
-        console.error("Firebase Auth failed:", e);
-        return null;
-    }
-};
-
 export { app, db, auth, analytics, googleProvider, linkWithPopup, signInWithPopup };

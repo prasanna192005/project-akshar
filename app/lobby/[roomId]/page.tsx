@@ -15,7 +15,6 @@ import ChatBox from "@/components/ChatBox";
 import BunkerBackground from "@/components/BunkerBackground";
 import SkeletalButton from "@/components/SkeletalButton";
 import { useAuth } from "@/hooks/useAuth";
-import { ensureAuth } from "@/lib/firebase";
 
 export default function Lobby() {
     const { roomId } = useParams() as { roomId: string };
@@ -42,7 +41,6 @@ export default function Lobby() {
             storedId = newId;
         }
 
-        ensureAuth().catch(console.error);
         setPlayerId(storedId);
         setPlayerName(storedName);
     }, [roomId, router]);

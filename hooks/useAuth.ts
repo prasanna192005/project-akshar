@@ -9,14 +9,18 @@ export function useAuth() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        let guestTimeout: NodeJS.Timeout;
+
         const unsubscribe = onAuthStateChanged(auth, async (currentUser) => {
             if (currentUser) {
+                if (guestTimeout) clearTimeout(guestTimeout);
                 setUser(currentUser);
                 setLoading(false);
             } else {
-                // FALLBACK: Only sign in anonymously if we're not currently in the middle of a Google sign-in
-                // or if we've waited a heartbeat to ensure the session is truly gone.
-                setTimeout(async () => {
+                // FALLBACK: Only sign in anonymously if we're not currently in the middle of a session restoration
+                // We wait 1.5s to be absolutely sure Firebase has a chance to restore from local storage
+                if (guestTimeout) clearTimeout(guestTimeout);
+                guestTimeout = setTimeout(async () => {
                     const finalCheck = auth.currentUser;
                     if (!finalCheck) {
                         try {
@@ -29,11 +33,14 @@ export function useAuth() {
                         setUser(finalCheck);
                     }
                     setLoading(false);
-                }, 1000);
+                }, 1500);
             }
         });
 
-        return () => unsubscribe();
+        return () => {
+            unsubscribe();
+            if (guestTimeout) clearTimeout(guestTimeout);
+        };
     }, []);
 
     const loginWithGoogle = async () => {

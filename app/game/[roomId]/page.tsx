@@ -16,8 +16,6 @@ import EffectOverlay from "@/components/EffectOverlay";
 import LoadingScreen from "@/components/LoadingScreen";
 import BunkerBackground from "@/components/BunkerBackground";
 
-import { ensureAuth } from "@/lib/firebase";
-
 export default function Game() {
     const { roomId } = useParams() as { roomId: string };
     const router = useRouter();
@@ -26,7 +24,6 @@ export default function Game() {
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
-        ensureAuth().catch(console.error);
         setPlayerId(sessionStorage.getItem('typeagents_player_id'));
 
         // Show loading screen for at least 2 seconds for tips to be read
