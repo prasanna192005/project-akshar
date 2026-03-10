@@ -107,11 +107,13 @@ export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?:
             setTotalTypedChars(prev => prev + 1);
             if (value !== targetWord.substring(0, value.length)) {
                 setErrors(prev => prev + 1);
-                if (penaltyOnErrors && currentWordIndex > 0) {
-                    setCurrentWordIndex(prev => prev - 1);
-                    const prevWord = words[currentWordIndex - 1];
-                    setTypedCorrectChars(prev => Math.max(0, prev - prevWord.length - 1));
-                    setCorrectChars(prev => Math.max(0, prev - prevWord.length - 1));
+                if (penaltyOnErrors) {
+                    if (currentWordIndex > 0) {
+                        setCurrentWordIndex(prev => prev - 1);
+                        const prevWord = words[currentWordIndex - 1];
+                        setTypedCorrectChars(prev => Math.max(0, prev - prevWord.length - 1));
+                        setCorrectChars(prev => Math.max(0, prev - prevWord.length - 1));
+                    }
                     setCurrentInput("");
                     return;
                 }

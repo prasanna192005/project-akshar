@@ -6,10 +6,11 @@ export const PROMPTS = {
         "Web development has evolved from static HTML pages to dynamic, interactive applications. Modern frameworks like React and Next.js allow developers to build performant user interfaces with reusable components and efficient state management."
     ],
     lore: [
-        "In the world of Valorant, agents from across the globe gather to protect or seize the mysterious substance known as Radianite. Each agent possesses unique abilities fueled by advanced technology or supernatural powers, turning every encounter into a high-stakes battle of wits and skill.",
-        "The Radiant are individuals who have been altered by Radianite, granting them extraordinary abilities. Some use their powers for good, while others seek to dominate the world. The Kingdom Corporation plays a central role in researching and harnessing this powerful mystery.",
-        "Zephyr moves like the wind, striking before the enemy even knows she is there. Pyra commands the flames, reborn from the ashes of every duel. Sage stands as a bulwark, healing the wounded and shielding the innocent from the chaos of battle.",
-        "Omen drifts through the shadows, a specter of the past haunting the battlefield. Viper chokes the air with toxic gas, controlling the territory with ruthless efficiency. Breach shatters the ground beneath his feet, breaking through any defense with brute force."
+        "In the unified network of AKSHAR, elite operatives are deployed to secure high-value data sectors. Each operative, from the neon streets of Delhi to the ancient ghats of Varanasi, wields specialized tactical abilities to gain the upper hand in the relentless pursuit of information dominance.",
+        "The emergence of Radianite tech has birthed a new breed of tactical racers. These operatives, trained in the harshest environments of the Indian subcontinent, utilize localized phenomenon—from Mumbai's rhythmic flames to Bangalore's architectural AI—to rewrite the rules of the grid.",
+        "Vayu streaks across the Delhi skyline, a blur of aerodynamic precision. Agni commands the rebellious fires of Mumbai, while Sutra maintains the ancient linguistic balance of Kerala. Together, they form the vanguard of the Sector 7 defense initiative.",
+        "Chhaya haunts the mist-shrouded ghats of Varanasi, striking from the void. Visha deploys lethal biochemical logic from the heart of Bhopal, and Bijli shatters any defensive firewall with the raw bionic power of Punjab's wrestling heritage.",
+        "Kali harvests tactical soul-data from the tea estates of Assam, turning enemy mistakes into raw speed. Yantra, the rogue genius of Bangalore, deploys turret-based logic gates to lock down any contested domain before the opposition can even react."
     ],
     quotes: [
         "To be or not to be, that is the question: Whether 'tis nobler in the mind to suffer the slings and arrows of outrageous fortune, or to take arms against a sea of troubles and by opposing end them.",

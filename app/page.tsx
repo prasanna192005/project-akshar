@@ -13,6 +13,8 @@ import SkeletalButton from "@/components/SkeletalButton";
 import { useAuth } from "@/hooks/useAuth";
 import { subscribeToUserProfile, UserProfile } from "@/lib/userService";
 import { PREMADE_AVATARS } from "@/lib/avatars";
+import { createSoloRoom } from "@/lib/roomUtils";
+import OnboardingGuide from "@/components/OnboardingGuide";
 
 
 function DecryptedText({ text, hoverText }: { text: string; hoverText: string }) {
@@ -75,8 +77,11 @@ function HomeContent() {
   const [showSettings, setShowSettings] = useState(false);
   const [authProcessing, setAuthProcessing] = useState(false);
   const [authMessage, setAuthMessage] = useState("");
+  const [showOnboarding, setShowOnboarding] = useState(false);
+  const [showDifficultyPicker, setShowDifficultyPicker] = useState(false);
 
   const [showSystemMenu, setShowSystemMenu] = useState(false);
+  const [hubView, setHubView] = useState<'main' | 'multiplayer'>('main');
 
   const { user, isGuest, loginWithGoogle, linkGoogleAccount, loading: authLoading } = useAuth();
   const [profile, setProfile] = useState<UserProfile | null>(null);
@@ -89,6 +94,17 @@ function HomeContent() {
       setRoomIdInput(joinId.toUpperCase());
       setShowJoinInput(true);
       setError("Please identify yourself before joining the sector.");
+    }
+
+    // Show onboarding for first-time visitors
+    const hasSeenGuide = localStorage.getItem('akshar_guide_seen');
+    if (!hasSeenGuide && !joinId) {
+      setShowOnboarding(true);
+    }
+
+    if (searchParams.get('invite') === 'true') {
+      setAuthMessage("SOLO_TRAINING_COMPLETE // DEPLOY_WITH_SQUAD_FOR_MAXIMUM_XP");
+      setTimeout(() => setAuthMessage(""), 5000);
     }
   }, [searchParams]);
 
@@ -167,10 +183,33 @@ function HomeContent() {
     }
   };
 
+  const handleSoloPractice = async (difficulty: 'CADET' | 'OPERATIVE' | 'VETERAN' | 'WARLORD' = 'OPERATIVE') => {
+    if (!name.trim()) {
+      setError("Please enter your name first!");
+      return;
+    }
+
+    setLoading(true);
+    try {
+      let playerId = sessionStorage.getItem('typeagents_player_id');
+      if (!playerId) {
+        playerId = uuidv4();
+        sessionStorage.setItem('typeagents_player_id', playerId);
+      }
+      localStorage.setItem('typeagents_player_name', name);
+
+      const soloRoomId = await createSoloRoom(playerId, name, difficulty, user ? !user.isAnonymous : false);
+      router.push(`/lobby/${soloRoomId}`);
+    } catch (err: any) {
+      setError(err.message);
+      setLoading(false);
+    }
+  };
+
   if (loading) return <LoadingScreen />;
 
   return (
-    <main className="min-h-screen flex flex-col items-center justify-center p-4 relative overflow-hidden bg-[#0d0b09] select-none" role="main">
+    <main className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 relative overflow-hidden bg-[#0d0b09] select-none" role="main">
       <BunkerBackground />
 
       {/* Top Navigation */}
@@ -419,23 +458,104 @@ function HomeContent() {
             </div>
           )}
 
-          <div className="grid grid-cols-1 gap-3">
+          <div className="flex flex-col gap-4">
             {!showJoinInput ? (
-              <>
-                <SkeletalButton
-                  disabled={loading}
-                  onClick={handleCreateRoom}
-                >
-                  Create Room
-                </SkeletalButton>
-                <SkeletalButton
-                  variant="secondary"
-                  disabled={loading}
-                  onClick={() => setShowJoinInput(true)}
-                >
-                  Join Room
-                </SkeletalButton>
-              </>
+              <div className="flex flex-col gap-4">
+                {hubView === 'main' ? (
+                  <>
+                    {/* Solo Mode — Difficulty Picker */}
+                    <div className="flex flex-col gap-2">
+                      <SkeletalButton
+                        id="btn-solo"
+                        variant="primary"
+                        disabled={loading}
+                        onClick={() => setShowDifficultyPicker(v => !v)}
+                        className="h-16"
+                      >
+                        <div className="flex flex-col items-center">
+                          <span className="text-xl font-black italic tracking-tighter">SINGLE_PLAYER (SOLO)</span>
+                          <span className="text-[9px] font-black tracking-[0.4em] opacity-60 group-hover:opacity-100 transition-opacity text-black/40 group-hover:text-black">SELECT_DIFFICULTY ▾</span>
+                        </div>
+                      </SkeletalButton>
+
+                      {showDifficultyPicker && (
+                        <div className="grid grid-cols-2 gap-2 animate-in fade-in slide-in-from-top-2 duration-200">
+                          {([
+                            { id: 'CADET', label: 'CADET', sub: '~30 WPM  Easy // Warm Up', color: '#74D7B8' },
+                            { id: 'OPERATIVE', label: 'OPERATIVE', sub: '~60 WPM  Standard', color: '#f5a623' },
+                            { id: 'VETERAN', label: 'VETERAN', sub: '~90 WPM  Ruthless', color: '#FF6B2B' },
+                            { id: 'WARLORD', label: 'WARLORD', sub: '~120 WPM  God Mode', color: '#C84FA8' },
+                          ] as const).map(diff => (
+                            <button
+                              key={diff.id}
+                              disabled={loading}
+                              onClick={() => handleSoloPractice(diff.id)}
+                              className="flex flex-col items-start px-4 py-3 border border-white/10 bg-white/5 hover:border-white/30 hover:bg-white/10 transition-all group text-left"
+                            >
+                              <span className="text-[11px] font-black uppercase tracking-widest" style={{ color: diff.color }}>{diff.label}</span>
+                              <span className="text-[8px] font-bold uppercase tracking-widest text-white/30 group-hover:text-white/50 transition-colors leading-tight mt-0.5">{diff.sub}</span>
+                            </button>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    <SkeletalButton
+                      variant="secondary"
+                      disabled={loading}
+                      onClick={() => setHubView('multiplayer')}
+                      className="h-16"
+                    >
+                      <div className="flex flex-col items-center">
+                        <span className="text-xl font-black italic tracking-tighter text-white">MULTIPLAYER (SQUAD)</span>
+                        <span className="text-[9px] font-black tracking-[0.4em] opacity-60 group-hover:opacity-100 transition-opacity text-[#f5a623]">DEPLOY_WITH_OPERATIVES</span>
+                      </div>
+                    </SkeletalButton>
+                  </>
+                ) : (
+                  <>
+                    <div className="grid grid-cols-2 gap-3">
+                      <SkeletalButton
+                        disabled={loading}
+                        variant="secondary"
+                        onClick={handleCreateRoom}
+                        className="h-16"
+                      >
+                        CREATE_ROOM
+                      </SkeletalButton>
+                      <SkeletalButton
+                        variant="secondary"
+                        disabled={loading}
+                        onClick={() => setShowJoinInput(true)}
+                        className="h-16"
+                      >
+                        JOIN_ROOM
+                      </SkeletalButton>
+                    </div>
+                    <SkeletalButton
+                      variant="secondary"
+                      onClick={() => setHubView('main')}
+                      className="h-10 border-white/5 text-[9px] opacity-40 hover:opacity-100"
+                    >
+                      RETURN_TO_MAIN_MENU
+                    </SkeletalButton>
+                  </>
+                )}
+
+                <div className="pt-4 text-center">
+                  <div className="h-px bg-white/5 w-24 mx-auto mb-4" />
+                  <p className="text-[8px] font-black uppercase tracking-[0.4em] text-[#f5a623]/40 mb-3 italic">
+                    [ NEW_OPERATIVE_DETECTION ]
+                  </p>
+                  <button
+                    id="btn-training"
+                    onClick={() => router.push('/test?tutorial=true')}
+                    className="text-[10px] font-black uppercase tracking-[0.5em] text-[#f5a623] hover:text-white transition-all py-2 px-6 bg-[#f5a623]/10 border border-[#f5a623]/20 rounded-full hover:bg-[#f5a623]/20 hover:border-[#f5a623]/40 hover:shadow-[0_0_20px_rgba(245,166,35,0.1)] active:scale-95"
+                  >
+                    INITIATE_TRAINING_PROTOCOL
+                  </button>
+                </div>
+              </div>
             ) : (
               <div className="space-y-3 animate-in slide-in-from-top-4 duration-300">
                 <input
@@ -455,6 +575,7 @@ function HomeContent() {
                     Back
                   </SkeletalButton>
                   <SkeletalButton
+                    disabled={loading || roomIdInput.length < 5}
                     onClick={handleJoinRoom}
                     className="h-14"
                   >
@@ -465,11 +586,26 @@ function HomeContent() {
             )}
           </div>
         </div>
-
-        <div className="pt-12 text-[10px] uppercase tracking-[0.3em] font-bold opacity-10 text-[#f5a623]">
-          AKSHAR SYSTEMS // YAAO PRODUCTIONS
-        </div>
       </section>
+
+      {/* Production Credits - Absolute Positioning for perfect Hub centering */}
+      <div className="absolute bottom-10 left-1/2 -translate-x-1/2 text-[10px] uppercase tracking-[0.3em] font-bold opacity-40 text-[#f5a623] z-10 hover:opacity-100 hover:text-white transition-all duration-500 cursor-default select-none">
+        AKSHAR SYSTEMS // YAAO PRODUCTIONS
+      </div>
+
+      {showOnboarding && (
+        <OnboardingGuide
+          onComplete={() => {
+            setShowOnboarding(false);
+            localStorage.setItem('akshar_guide_seen', 'true');
+          }}
+          onStartTraining={() => {
+            setShowOnboarding(false);
+            localStorage.setItem('akshar_guide_seen', 'true');
+            router.push('/test?tutorial=true');
+          }}
+        />
+      )}
     </main>
   );
 }

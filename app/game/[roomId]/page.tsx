@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useRoom } from "@/hooks/useRoom";
 import { usePlayer } from "@/hooks/usePlayer";
@@ -15,6 +15,10 @@ import CountdownOverlay from "@/components/CountdownOverlay";
 import EffectOverlay from "@/components/EffectOverlay";
 import LoadingScreen from "@/components/LoadingScreen";
 import BunkerBackground from "@/components/BunkerBackground";
+import { botIntelligence } from "@/lib/botService";
+import { ref, update as dbUpdate } from "firebase/database";
+import { db } from "@/lib/firebase";
+import { Player } from "@/types";
 
 export default function Game() {
     const { roomId } = useParams() as { roomId: string };
@@ -58,6 +62,7 @@ export default function Game() {
         opponents,
         lastInputAt,
         isError,
+        progress,
         room?.config,
         skipWords
     );
@@ -97,6 +102,10 @@ export default function Game() {
     useEffect(() => {
         if (status === 'racing' && players.length > 0 && players.every(p => p.finishedAt)) {
             updateRoomStatus(roomId, 'finished');
+        }
+        if (status === 'finished') {
+            // Clean up all bot states so next match starts fresh
+            botIntelligence.resetAll();
         }
     }, [status, players, roomId]);
 
@@ -143,6 +152,132 @@ export default function Game() {
         }
     }, [status, room?.raceStartAt, room?.hostId, playerId, roomId]);
 
+    const playersRef = useRef(players);
+    useEffect(() => {
+        playersRef.current = players;
+    }, [players]);
+
+    // Bot Control Logic (Host Only)
+    useEffect(() => {
+        if (!room || !playerId) return;
+        const isHost = room.hostId === playerId;
+        if (!isHost || status !== 'racing') return;
+
+        const initialBots = playersRef.current.filter(p => (p as any).isBot);
+        if (initialBots.length === 0) return;
+
+        // Initialize bots — pass raceStartAt and botIndex for staggered WPM spread.
+        // Guard inside initializeBot ensures already-running bots are NOT reset.
+        const raceStart = room.raceStartAt ?? Date.now();
+        initialBots.forEach((bot, idx) => {
+            botIntelligence.initializeBot(
+                bot.id,
+                (bot as any).difficulty || 'OPERATIVE',
+                raceStart,
+                idx
+            );
+        });
+
+        // Capture stable primitives for the interval closure
+        const prompt = room.prompt;
+        const promptLength = prompt.split(' ').length;
+        const isTargetAll = room.config?.targeting === 'all';
+
+        const interval = setInterval(async () => {
+            const updates: Record<string, any> = {};
+            const currentPlayers = playersRef.current;
+            const bots = currentPlayers.filter(p => (p as any).isBot);
+
+            for (const bot of bots) {
+                if (bot.finishedAt) continue;
+                if (!bot.agent) continue; // skip if agent not yet set
+
+                const botUpdate = botIntelligence.update(bot.id, bot, bot.agent!, promptLength);
+                if (!botUpdate) continue;
+
+                const { _triggerAbility, ...stats } = botUpdate as any;
+
+                Object.entries(stats).forEach(([key, value]) => {
+                    updates[`rooms/${roomId}/players/${bot.id}/${key}`] = value;
+                });
+
+                if (_triggerAbility) {
+                    const agent = AGENTS[bot.agent!];
+                    const livePlayers = playersRef.current;
+                    const humanPlayer = livePlayers.find(p => !(p as any).isBot);
+                    const botOpponents = livePlayers.filter(p => p.id !== bot.id);
+
+                    if (botOpponents.length > 0) {
+                        let targets: Player[] = [];
+                        const isSolo = !!humanPlayer && livePlayers.some(p => (p as any).isBot);
+                        const targetHuman = isSolo && Math.random() < 0.85;
+
+                        if (isTargetAll) {
+                            targets = [...botOpponents];
+                        } else if (targetHuman && humanPlayer) {
+                            targets = [humanPlayer];
+                            console.log(`[BOT_STRIKE] ${bot.name} fires ${agent.id} on player!`);
+                        } else {
+                            targets = [[...botOpponents].sort((a, b) => b.progress - a.progress)[0]];
+                        }
+
+                        const duration = agent.duration * 1000;
+                        let effectField = '';
+                        let effectValue: any = true;
+
+                        switch (agent.id) {
+                            case 'PYRA': effectField = 'effects/blurred'; break;
+                            case 'BREACH': effectField = 'effects/flashed'; break;
+                            case 'KILLJOY': effectField = 'effects/inputLocked'; break;
+                            case 'OMEN': effectField = 'effects/paranoia'; break;
+                            case 'REYNA': effectField = 'effects/empress'; break;
+                            case 'VIPER': effectField = 'effects/scrambledWords'; effectValue = ['SCRAMBLED']; break;
+                            case 'ZEPHYR': {
+                                // Teleport bot forward 5 words
+                                const jump = (5 / promptLength) * 100;
+                                const newProg = Math.min(100, (stats.progress || bot.progress) + jump);
+                                updates[`rooms/${roomId}/players/${bot.id}/progress`] = newProg;
+                                break;
+                            }
+                            case 'SAGE':
+                                // SAGE protects itself: give it a temporary speed boost instead of freeze
+                                // (freezing itself was blocking its own progress)
+                                console.log(`[BOT SAGE] ${bot.name} activates FORETOLD — self-shielded`);
+                                break;
+                        }
+
+                        if (effectField && targets.length > 0) {
+                            targets.forEach(t => {
+                                const path = `rooms/${roomId}/players/${t.id}/${effectField}`;
+                                updates[path] = effectValue;
+                                setTimeout(() => {
+                                    dbUpdate(ref(db), {
+                                        [path]: effectField === 'effects/scrambledWords' ? [] : false
+                                    });
+                                }, duration);
+                            });
+                        }
+                    }
+                }
+
+                if (stats.progress >= 100 && !bot.finishedAt) {
+                    updates[`rooms/${roomId}/players/${bot.id}/finishedAt`] = Date.now();
+                    updates[`rooms/${roomId}/players/${bot.id}/progress`] = 100;
+                }
+            }
+
+            if (Object.keys(updates).length > 0) {
+                await dbUpdate(ref(db), updates);
+            }
+        }, 200);
+
+        return () => clearInterval(interval);
+        // IMPORTANT: only primitive/stable deps here — room?.config is an object and would
+        // cause this effect to re-run on every Firebase update, resetting bot state.
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [status, roomId, playerId, room?.hostId, room?.prompt, room?.raceStartAt]);
+
+    // Mission Timer Logic
     useEffect(() => {
         if (status !== 'racing' || !room?.raceStartAt) {
             setElapsedTime(0);

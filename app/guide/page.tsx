@@ -225,18 +225,19 @@ export default function GuidePage() {
                     </section>
 
                     {/* Footer / Call to Action */}
-                    <footer className="text-center pt-16 pb-32">
-                        <div className="p-12 border border-white/5 bg-white/[0.02]">
-                            <h2 className="text-3xl font-black italic uppercase mb-6">Ready to Rebuild?</h2>
-                            <div className="flex flex-wrap justify-center gap-4">
+                    <footer className="text-center pt-20 pb-32">
+                        <div className="p-12 border border-white/5 bg-white/[0.02] rounded-sm backdrop-blur-sm relative overflow-hidden group">
+                            <div className="absolute top-0 left-0 w-full h-1 bg-[#f5a623]/20" />
+                            <h2 className="text-3xl font-black italic uppercase mb-8 relative z-10">Combat Ready?</h2>
+                            <div className="flex flex-wrap justify-center gap-6 relative z-10">
                                 <Link href="/test">
-                                    <SkeletalButton className="px-12">
-                                        Enter Training Grounds
+                                    <SkeletalButton className="px-16 h-16">
+                                        ENTER_TRAINING_GROUNDS
                                     </SkeletalButton>
                                 </Link>
                                 <Link href="/">
-                                    <SkeletalButton variant="secondary" className="px-12">
-                                        Back to HQ
+                                    <SkeletalButton variant="secondary" className="px-16 h-16">
+                                        RETURN_TO_BASE
                                     </SkeletalButton>
                                 </Link>
                             </div>

@@ -2,7 +2,7 @@
 
 import React, { useState, useEffect, useCallback, useMemo } from "react";
 import Link from "next/link";
-import { AGENTS, Agent } from "@/lib/agents";
+import { AGENTS, Agent, AgentType } from "@/lib/agents";
 import { useTyping } from "@/hooks/useTyping";
 import TypingInput from "@/components/TypingInput";
 import AbilityBar from "@/components/AbilityBar";
@@ -11,6 +11,11 @@ import { PlayerEffects } from "@/types";
 import { calculateChargeIncrement } from "@/lib/gameEngine";
 import BunkerBackground from "@/components/BunkerBackground";
 import SkeletalButton from "@/components/SkeletalButton";
+import { useRouter, useSearchParams } from "next/navigation";
+import { createSoloRoom } from "@/lib/roomUtils";
+import { v4 as uuidv4 } from "uuid";
+
+import { useAbility } from "@/hooks/useAbility";
 
 const TEST_PROMPT = "The quick brown fox jumps over the lazy dog. Programming is the art of algorithm design and the craft of debugging errant code. Mastery of the keyboard is the first step towards digital dominance.";
 
@@ -27,11 +32,11 @@ export default function TestingRange() {
         empress: false
     });
 
-    // Mock Charge state for testing
-    const [charge, setCharge] = useState(0);
-    const [onCooldown, setOnCooldown] = useState(false);
-    const [cooldownRemaining, setCooldownRemaining] = useState(0);
-    const [effectRemaining, setEffectRemaining] = useState(0);
+    const router = useRouter();
+    const searchParams = useSearchParams();
+    const isTutorial = searchParams.get('tutorial') === 'true';
+    const [tutorialStep, setTutorialStep] = useState(0);
+    const [hasFiredAbility, setHasFiredAbility] = useState(false);
 
     const agent = AGENTS[selectedAgentId as keyof typeof AGENTS];
 
@@ -46,52 +51,37 @@ export default function TestingRange() {
         reset,
         skipWords,
         lastInputAt,
-        isError
+        isError,
+        progress
     } = useTyping(TEST_PROMPT, true, null, effects.inputLocked, effects.empress);
 
-    // Charge logic mock
-    useEffect(() => {
-        if (onCooldown) {
-            const timer = setInterval(() => {
-                setCooldownRemaining(prev => {
-                    if (prev <= 1) {
-                        setOnCooldown(false);
-                        return 0;
-                    }
-                    return prev - 1;
-                });
-            }, 1000);
-            return () => clearInterval(timer);
-        }
+    const {
+        charge,
+        setCharge,
+        onCooldown,
+        cooldownRemaining,
+        activateAbility: triggerAbilityBase
+    } = useAbility(
+        selectedAgentId as AgentType,
+        wpm,
+        accuracy,
+        "tutorial",
+        "tutorial-player",
+        [],
+        lastInputAt,
+        isError,
+        progress || 0,
+        undefined,
+        skipWords
+    );
 
-        const chargeTimer = setInterval(() => {
-            if (charge < 1 && !onCooldown) {
-                // Restrictions:
-                // 1. Only charge if player has typed in the last 2 seconds
-                // 2. ONLY charge if there is NO error in their current input
-                if (Date.now() - lastInputAt > 2000) return;
-                if (isError) return;
-
-                // Sync with production 8s base fill logic
-                // Delta time is 0.2s for 200ms updates
-                const increment = calculateChargeIncrement(
-                    wpm,
-                    accuracy,
-                    agent.chargeRateModifier,
-                    0.2
-                );
-                setCharge(prev => Math.min(1, prev + increment));
-            }
-        }, 200);
-
-        return () => clearInterval(chargeTimer);
-    }, [wpm, accuracy, charge, onCooldown, agent, lastInputAt, isError]);
+    // Dynamic effect timer for UI feedback
+    const [effectRemaining, setEffectRemaining] = useState(0);
 
     const activateAbility = useCallback(() => {
         if (charge < 1 || onCooldown) return;
 
         // In test mode, we apply the effect to OURSELVES to see what it looks like
-        // (unless it's a self-buff, which already hits self)
         const effectUpdate: Partial<PlayerEffects> = {};
 
         switch (agent.id) {
@@ -102,40 +92,57 @@ export default function TestingRange() {
             case 'VIPER': effectUpdate.scrambledWords = ['SCRAMBLED']; break;
             case 'ZEPHYR': skipWords(5); break;
             case 'REYNA': effectUpdate.empress = true; break;
+            case 'SAGE': effectUpdate.frozen = true; break;
         }
 
         setEffects(prev => ({ ...prev, ...effectUpdate }));
-        setCharge(0);
-        setOnCooldown(true);
-        setCooldownRemaining(agent.cooldown);
+        setEffectRemaining(agent.duration);
 
-        // Sync duration with production values from agent data
+        // Use the base hook's activation for cooldown sync and charge reset
+        triggerAbilityBase();
+
+        // Precise state clearance
         const durationSeconds = agent.duration;
-        setEffectRemaining(durationSeconds);
-
-        // Precise state clearance using setTimeout
         const clearTimer = setTimeout(() => {
-            setEffects({ flashed: false, blurred: false, inputLocked: false, scrambledWords: [], frozen: false, progressHidden: false, paranoia: false, empress: false });
+            setEffects({
+                flashed: false,
+                blurred: false,
+                inputLocked: false,
+                scrambledWords: [],
+                frozen: false,
+                progressHidden: false,
+                paranoia: false,
+                empress: false
+            });
             setEffectRemaining(0);
         }, durationSeconds * 1000);
 
-        // UI countdown using higher precision interval
+        // UI countdown
         const effectTimer = setInterval(() => {
-            setEffectRemaining(prev => {
-                const next = Math.max(0, prev - 0.1);
-                if (next <= 0) {
-                    clearInterval(effectTimer);
-                    return 0;
-                }
-                return next;
-            });
+            setEffectRemaining(prev => Math.max(0, prev - 0.1));
         }, 100);
 
         return () => {
             clearTimeout(clearTimer);
             clearInterval(effectTimer);
         };
-    }, [charge, onCooldown, agent, wpm, skipWords]);
+    }, [charge, onCooldown, agent, triggerAbilityBase, skipWords]);
+
+    const handleDeployToSolo = async () => {
+        let playerId = sessionStorage.getItem('typeagents_player_id');
+        if (!playerId) {
+            playerId = uuidv4();
+            sessionStorage.setItem('typeagents_player_id', playerId);
+        }
+        const playerName = localStorage.getItem('typeagents_player_name') || "OPERATIVE";
+
+        try {
+            const rid = await createSoloRoom(playerId, playerName);
+            router.push(`/lobby/${rid}`);
+        } catch (err) {
+            console.error("Solo deployment failed:", err);
+        }
+    };
 
     // Handle Tab key for abilities
     useEffect(() => {
@@ -143,11 +150,22 @@ export default function TestingRange() {
             if (e.key === 'Tab') {
                 e.preventDefault();
                 activateAbility();
+                if (isTutorial && tutorialStep === 2) {
+                    setHasFiredAbility(true);
+                    setTutorialStep(3);
+                }
             }
         };
         window.addEventListener('keydown', handleKeyDown);
         return () => window.removeEventListener('keydown', handleKeyDown);
-    }, [activateAbility]);
+    }, [activateAbility, isTutorial, tutorialStep]);
+
+    // Auto-advance tutorial if charged
+    useEffect(() => {
+        if (isTutorial && tutorialStep === 1 && charge >= 1) {
+            setTutorialStep(2);
+        }
+    }, [charge, isTutorial, tutorialStep]);
 
     return (
         <main className="min-h-screen bg-[#0d0b09] text-white p-8 relative overflow-hidden">
@@ -189,8 +207,11 @@ export default function TestingRange() {
                             {Object.values(AGENTS).map((a) => (
                                 <button
                                     key={a.id}
-                                    onClick={() => setSelectedAgentId(a.id)}
-                                    className={`p-3 text-left border transition-all relative overflow-hidden group ${selectedAgentId === a.id ? 'bg-[#f5a623] border-[#f5a623]' : 'bg-white/5 border-white/10 hover:border-[#f5a623]/40'}`}
+                                    onClick={() => {
+                                        setSelectedAgentId(a.id);
+                                        if (isTutorial && tutorialStep === 0) setTutorialStep(1);
+                                    }}
+                                    className={`p-3 text-left border transition-all relative overflow-hidden group ${selectedAgentId === a.id ? 'bg-[#f5a623] border-[#f5a623]' : 'bg-white/5 border-white/10 hover:border-[#f5a623]/40'} ${isTutorial && tutorialStep === 0 ? 'ring-2 ring-[#f5a623] animate-pulse' : ''}`}
                                 >
                                     <span className={`text-xs font-black uppercase tracking-widest relative z-10 ${selectedAgentId === a.id ? 'text-black' : 'text-white/60'}`}>
                                         {a.name}
@@ -207,7 +228,7 @@ export default function TestingRange() {
                     <div className="lg:col-span-3 space-y-8">
                         {/* Agent Summary Card */}
                         <div className="bg-white/5 border border-white/10 p-6 rounded-sm relative overflow-hidden">
-                            <div className="absolute top-0 right-0 p-4 text-[40px] font-black text-white/[0.03] pointer-events-none select-none">
+                            <div className="absolute top-0 right-0 p-4 text-[40px] font-black text-white/[0.03] pointer-events-none select-none uppercase">
                                 {agent.name}
                             </div>
                             <div className="flex items-center gap-4 mb-4">
@@ -266,9 +287,22 @@ export default function TestingRange() {
                                         cooldownRemaining={cooldownRemaining}
                                     />
                                 </div>
+                                {/* Admin/Debug Mock Logic - Sync with state */}
+                                <div className="flex gap-4 mb-4">
+                                    <SkeletalButton
+                                        variant="secondary"
+                                        className="h-10 px-6 text-[10px]"
+                                        onClick={reset}
+                                    >
+                                        RESET_TRIAL
+                                    </SkeletalButton>
+                                </div>
                                 <div className="flex gap-4">
                                     <button
-                                        onClick={() => setCharge(1)}
+                                        onClick={() => {
+                                            setCharge(1);
+                                        }}
+                                        className={isTutorial && tutorialStep === 1 ? 'ring-4 ring-[#f5a623] animate-pulse rounded-lg' : ''}
                                     >
                                         <SkeletalButton variant="secondary" className="h-14 px-6 text-[10px]">
                                             FORCE_CHARGE
@@ -278,9 +312,6 @@ export default function TestingRange() {
                                         onClick={() => {
                                             reset();
                                             setEffects({ flashed: false, blurred: false, inputLocked: false, scrambledWords: [], frozen: false, progressHidden: false, paranoia: false, empress: false });
-                                            setCharge(0);
-                                            setOnCooldown(false);
-                                            setCooldownRemaining(0);
                                         }}
                                     >
                                         <SkeletalButton className="h-14 px-8 text-[10px]">
@@ -308,6 +339,45 @@ export default function TestingRange() {
 
             {/* Effect Overlays */}
             <EffectOverlay effects={effects} />
+
+            {/* Tutorial HUD Overlay */}
+            {isTutorial && (
+                <div className="fixed bottom-12 left-1/2 -translate-x-1/2 z-[100] w-full max-w-xl">
+                    <div className="bg-[#0b0907] border-2 border-[#f5a623] p-6 shadow-[0_0_40px_rgba(245,166,35,0.2)] animate-in slide-in-from-bottom-4 duration-500">
+                        <div className="flex items-start gap-4">
+                            <div className="w-10 h-10 border border-[#f5a623] flex items-center justify-center font-black italic text-[#f5a623]">
+                                0{tutorialStep + 1}
+                            </div>
+                            <div className="flex-1">
+                                <h4 className="text-[10px] font-black tracking-[0.4em] uppercase text-[#f5a623] mb-1">Training_Module</h4>
+                                <p className="text-sm font-bold text-white leading-tight uppercase tracking-tight">
+                                    {tutorialStep === 0 && "Select your specialist from the roster on the left."}
+                                    {tutorialStep === 1 && "Generate tactical power: either start typing the sector below or use the [FORCE_CHARGE] override."}
+                                    {tutorialStep === 2 && "Power normalized. Press [TAB] to engage your specialist ultimate."}
+                                    {tutorialStep === 3 && "Training complete. You are ready for live combat."}
+                                </p>
+                            </div>
+                            {tutorialStep === 3 && (
+                                <div className="flex gap-3">
+                                    <SkeletalButton
+                                        onClick={handleDeployToSolo}
+                                        className="px-6 h-12 text-[10px] !border-[#f5a623]"
+                                    >
+                                        DEPLOY_SOLO_MISSION
+                                    </SkeletalButton>
+                                    <SkeletalButton
+                                        variant="secondary"
+                                        onClick={() => router.push('/')}
+                                        className="px-6 h-12 text-[10px]"
+                                    >
+                                        RETURN_TO_HUB
+                                    </SkeletalButton>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            )}
 
             {/* Background Decorations */}
             <div className="fixed top-0 left-0 w-full h-full pointer-events-none -z-10 opacity-[0.02]">

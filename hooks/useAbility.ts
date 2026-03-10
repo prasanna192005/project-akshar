@@ -14,6 +14,7 @@ export const useAbility = (
     opponents: Player[],
     lastInputAt: number,
     isError: boolean,
+    progress: number,
     config?: RoomConfig,
     onSkipWords?: (count: number) => void
 ) => {
@@ -28,11 +29,14 @@ export const useAbility = (
     const accuracyRef = useRef(accuracy);
     const lastInputAtRef = useRef(lastInputAt);
     const isErrorRef = useRef(isError);
+    const progressRef = useRef(progress);
+    const prevProgressRef = useRef(progress);
 
     useEffect(() => { wpmRef.current = wpm; }, [wpm]);
     useEffect(() => { accuracyRef.current = accuracy; }, [accuracy]);
     useEffect(() => { lastInputAtRef.current = lastInputAt; }, [lastInputAt]);
     useEffect(() => { isErrorRef.current = isError; }, [isError]);
+    useEffect(() => { progressRef.current = progress; }, [progress]);
 
     // Charge logic
     useEffect(() => {
@@ -42,8 +46,15 @@ export const useAbility = (
             // Restrictions:
             // 1. Only charge if player has typed in the last 2 seconds
             // 2. ONLY charge if there is NO error in their current input
+            // 3. ONLY charge if they are making forward progress (avoid backspace farming)
             if (Date.now() - lastInputAtRef.current > 2000) return;
             if (isErrorRef.current) return;
+
+            const currentProgress = progressRef.current;
+            if (currentProgress <= prevProgressRef.current) return;
+
+            // Advance the baseline for the next charging tick
+            prevProgressRef.current = currentProgress;
 
             setCharge(prev => {
                 if (prev >= 1) return 1;
@@ -76,19 +87,21 @@ export const useAbility = (
     }, [charge, roomId, playerId]);
 
     const activateAbility = useCallback(async () => {
-        if (!agent || charge < 1 || onCooldown || opponents.length === 0) return;
+        if (!agent || charge < 1 || onCooldown) return;
 
         // Log tactical event
         logTacticalEvent("ability_deployed", { agent: agent.name, ability: agent.id });
 
         // Targeting logic based on config
         let targets: Player[] = [];
-        if (config?.targeting === 'all') {
-            targets = [...opponents];
-        } else if (config?.targeting === 'leader') {
-            targets = [[...opponents].sort((a, b) => b.progress - a.progress)[0]];
-        } else {
-            targets = [opponents[Math.floor(Math.random() * opponents.length)]];
+        if (opponents.length > 0) {
+            if (config?.targeting === 'all') {
+                targets = [...opponents];
+            } else if (config?.targeting === 'leader') {
+                targets = [[...opponents].sort((a, b) => b.progress - a.progress)[0]];
+            } else {
+                targets = [opponents[Math.floor(Math.random() * opponents.length)]];
+            }
         }
 
         // Apply effect based on agent
@@ -112,24 +125,23 @@ export const useAbility = (
             case 'KILLJOY':
                 effectUpdate = { 'effects/inputLocked': true };
                 break;
+            case 'SAGE':
+                effectUpdate = { 'effects/frozen': true }; // Sage's current implementation prevents targeting if frozen
+                break;
             case 'ZEPHYR':
                 if (onSkipWords) onSkipWords(5);
                 break;
         }
 
-        if (Object.keys(effectUpdate).length > 0) {
+        if (Object.keys(effectUpdate).length > 0 && targets.length > 0 && roomId !== 'tutorial') {
             const updates: Record<string, any> = {};
             targets.forEach(t => {
-                // Apply specific fields instead of whole object
                 Object.entries(effectUpdate).forEach(([field, value]) => {
                     updates[`rooms/${roomId}/players/${t.id}/${field}`] = value;
                 });
             });
             await update(ref(db), updates);
-            console.log(`[useAbility] Effect activated. Duration set to: ${agent.duration * 1000}ms`);
-            const startTime = Date.now();
 
-            // Auto-clear effect after duration (e.g. 8s for Empress)
             const duration = agent.duration * 1000;
             setTimeout(async () => {
                 const clearUpdates: Record<string, any> = {};
@@ -140,9 +152,9 @@ export const useAbility = (
                     if (agent.id === 'KILLJOY') clearUpdates[`rooms/${roomId}/players/${t.id}/effects/inputLocked`] = false;
                     if (agent.id === 'OMEN') clearUpdates[`rooms/${roomId}/players/${t.id}/effects/paranoia`] = false;
                     if (agent.id === 'VIPER') clearUpdates[`rooms/${roomId}/players/${t.id}/effects/scrambledWords`] = [];
+                    if (agent.id === 'SAGE') clearUpdates[`rooms/${roomId}/players/${t.id}/effects/frozen`] = false;
                 });
                 await update(ref(db), clearUpdates);
-                console.log(`[useAbility] Effect cleared. Actual elapsed time: ${Date.now() - startTime}ms`);
             }, duration);
         }
 
@@ -164,5 +176,5 @@ export const useAbility = (
 
     }, [agent, charge, onCooldown, opponents, roomId, playerId, config, onSkipWords]);
 
-    return { charge, isReady: charge >= 1, onCooldown, cooldownRemaining, activateAbility };
+    return { charge, setCharge, isReady: charge >= 1, onCooldown, cooldownRemaining, activateAbility };
 };

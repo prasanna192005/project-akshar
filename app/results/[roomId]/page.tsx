@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { useRoom } from "@/hooks/useRoom";
-import { AGENTS } from "@/lib/agents";
+import { AGENTS, AgentType } from "@/lib/agents";
 import { Player } from "@/types";
 import { updateRoomStatus, updatePlayerState, INITIAL_EFFECTS } from "@/lib/roomUtils";
 import { getRandomPrompt } from "@/lib/prompts";
@@ -43,6 +43,7 @@ export default function Results() {
 
     const userPlacement = sortedPlayers.findIndex((p: Player) => p.id === playerId);
     const userPlayer = players.find(p => p.id === playerId);
+    const isSoloRoom = players.some(p => (p as any).isBot);
 
     // Save stats for authenticated users
     useEffect(() => {
@@ -68,10 +69,16 @@ export default function Results() {
 
     const handlePlayAgain = async () => {
         if (room?.hostId === playerId) {
+            const botAgentTypes: AgentType[] = ['PYRA', 'ZEPHYR', 'SAGE', 'VIPER', 'OMEN', 'BREACH', 'REYNA', 'KILLJOY'];
+
             // Reset all players locally before the room status change kicks in
-            const resetPromises = players.map(p =>
-                updatePlayerState(roomId, p.id, {
-                    ready: false,
+            const resetPromises = players.map(p => {
+                const isBot = (p as any).isBot;
+                const newAgent = isBot ? botAgentTypes[Math.floor(Math.random() * botAgentTypes.length)] : p.agent;
+
+                return updatePlayerState(roomId, p.id, {
+                    ready: isBot ? true : false, // Bots are always ready
+                    agent: newAgent,
                     progress: 0,
                     wpm: 0,
                     accuracy: 100,
@@ -80,8 +87,8 @@ export default function Results() {
                     finishedAt: null,
                     placement: null,
                     effects: INITIAL_EFFECTS
-                })
-            );
+                });
+            });
 
             await Promise.all(resetPromises);
 
@@ -288,13 +295,20 @@ export default function Results() {
                         </SkeletalButton>
                     </button>
                     {room?.hostId === playerId ? (
-                        <button
-                            onClick={handlePlayAgain}
-                        >
-                            <SkeletalButton className="h-14 px-12">
-                                Initiate Next Sequence
-                            </SkeletalButton>
-                        </button>
+                        <div className="flex flex-col gap-4">
+                            <button onClick={handlePlayAgain}>
+                                <SkeletalButton className="h-14 px-12">
+                                    Initiate Next Sequence
+                                </SkeletalButton>
+                            </button>
+                            {isSoloRoom && (
+                                <button onClick={() => router.push('/?invite=true')}>
+                                    <SkeletalButton variant="primary" className="h-14 px-12">
+                                        DEPLOY_WITH_SQUAD
+                                    </SkeletalButton>
+                                </button>
+                            )}
+                        </div>
                     ) : (
                         <div className="h-14 px-12 flex items-center bg-white/5 border border-white/10 text-white/40 font-black uppercase tracking-widest gap-3">
                             <div className="w-2 h-2 bg-[#f5a623] rounded-full animate-ping" />

@@ -104,3 +104,51 @@ export const updateRoomStatus = async (roomId: string, status: RoomStatus, extra
         throw e;
     }
 };
+
+export const createSoloRoom = async (hostId: string, hostName: string, difficulty: 'CADET' | 'OPERATIVE' | 'VETERAN' | 'WARLORD' = 'OPERATIVE', isVerified: boolean = false) => {
+    // 1. Create a standard room
+    const roomId = await createRoom(hostId, hostName, 'random', {
+        targeting: 'leader',
+        abilitySpeed: 'normal'
+    }, isVerified);
+
+    const roomRef = ref(db, `rooms/${roomId}`);
+
+    // 2. Add 3 Tactical Bots — all set to the chosen difficulty
+    const botAgentTypes: (keyof typeof import('./agents').AGENTS)[] = ['PYRA', 'ZEPHYR', 'SAGE', 'VIPER', 'OMEN', 'BREACH', 'REYNA', 'KILLJOY'];
+
+    const botUpdates: Record<string, Player> = {};
+
+    // Shuffle agents so each bot has a unique agent
+    const shuffled = [...botAgentTypes].sort(() => Math.random() - 0.5);
+
+    for (let i = 0; i < 3; i++) {
+        const botId = `bot_${Math.random().toString(36).substring(2, 7)}`;
+        const agentId = shuffled[i];
+
+        const tacticalNames = ['STRYKER', 'VANGUARD', 'TITAN', 'SPECTER', 'GHOST', 'ECHO', 'ONYX'];
+        const randomName = tacticalNames[Math.floor(Math.random() * tacticalNames.length)];
+
+        botUpdates[`players/${botId}`] = {
+            id: botId,
+            name: `${randomName}_${i + 1}`,
+            agent: agentId as any,
+            ready: true,
+            progress: 0,
+            wpm: 0,
+            accuracy: 100,
+            abilityCharge: 0,
+            abilityCooldown: false,
+            finishedAt: null,
+            placement: null,
+            effects: INITIAL_EFFECTS,
+            isVerified: false,
+            // @ts-ignore
+            isBot: true,
+            difficulty: difficulty
+        };
+    }
+
+    await update(roomRef, botUpdates);
+    return roomId;
+};
