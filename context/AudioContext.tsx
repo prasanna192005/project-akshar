@@ -25,7 +25,13 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     const chillAudio = useRef<HTMLAudioElement | null>(null);
     const intenseAudio = useRef<HTMLAudioElement | null>(null);
+    const modeRef = useRef<AudioMode>('none');
     const hasInteracted = useRef(false);
+
+    // Sync modeRef to avoid effect re-runs
+    useEffect(() => {
+        modeRef.current = mode;
+    }, [mode]);
 
     // Initialize audio on mount
     useEffect(() => {
@@ -39,26 +45,27 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         intense.preload = "auto";
         intenseAudio.current = intense;
 
-        console.log("[AudioEngine] Audio instances initialized. Default Volume: 0.15");
+        console.log("[AudioEngine] Initialized. Default Volume: 0.15");
 
-        // Failsafe: Try to play on first user interaction if blocked
         const handleFirstInteraction = () => {
             if (hasInteracted.current) return;
             hasInteracted.current = true;
 
-            console.log("[AudioEngine] First interaction detected. Syncing audio state...");
-            if (mode === 'chill' && chillAudio.current?.paused) {
-                chillAudio.current.play().catch(e => console.warn("Failed to play chill on interaction:", e));
-            } else if (mode === 'intense' && intenseAudio.current?.paused) {
-                intenseAudio.current.play().catch(e => console.warn("Failed to play intense on interaction:", e));
+            console.log("[AudioEngine] First interaction. Syncing state for mode:", modeRef.current);
+            if (modeRef.current === 'chill') {
+                chill.play().catch(() => { });
+            } else if (modeRef.current === 'intense') {
+                intense.play().catch(() => { });
             }
 
             window.removeEventListener('click', handleFirstInteraction);
             window.removeEventListener('keydown', handleFirstInteraction);
+            window.removeEventListener('touchstart', handleFirstInteraction);
         };
 
         window.addEventListener('click', handleFirstInteraction);
         window.addEventListener('keydown', handleFirstInteraction);
+        window.addEventListener('touchstart', handleFirstInteraction);
 
         // Load preferences
         const savedMute = localStorage.getItem('akshar_audio_muted');
@@ -71,8 +78,9 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
             intense.pause();
             window.removeEventListener('click', handleFirstInteraction);
             window.removeEventListener('keydown', handleFirstInteraction);
+            window.removeEventListener('touchstart', handleFirstInteraction);
         };
-    }, [mode]); // Re-run failsafe listener if mode changes while waiting for interaction
+    }, []); // FIXED: Sync only once on mount
 
     // Handle Mute/Volume changes
     useEffect(() => {
@@ -88,25 +96,21 @@ export const AudioProvider: React.FC<{ children: React.ReactNode }> = ({ childre
         localStorage.setItem('akshar_audio_volume', volume.toString());
     }, [isMuted, volume]);
 
-    // Mode Transition logic (Cross-fade)
+    // Mode Transition logic
     useEffect(() => {
         if (!chillAudio.current || !intenseAudio.current) return;
 
-        console.log(`[AudioEngine] Transitioning to mode: ${mode}`);
+        console.log(`[AudioEngine] Mode Transition -> ${mode}`);
 
         if (mode === 'chill') {
             intenseAudio.current.pause();
-            chillAudio.current.play().then(() => {
-                console.log("[AudioEngine] Playing chill_menu");
-            }).catch((err) => {
-                console.warn("[AudioEngine] Chill playback blocked:", err);
+            chillAudio.current.play().catch(() => {
+                console.log("[AudioEngine] Play blocked. Awaiting interaction.");
             });
         } else if (mode === 'intense') {
             chillAudio.current.pause();
-            intenseAudio.current.play().then(() => {
-                console.log("[AudioEngine] Playing intense_race");
-            }).catch((err) => {
-                console.warn("[AudioEngine] Intense playback blocked:", err);
+            intenseAudio.current.play().catch(() => {
+                console.log("[AudioEngine] Play blocked. Awaiting interaction.");
             });
         } else {
             chillAudio.current.pause();

@@ -22,6 +22,7 @@ const shareTechMono = Share_Tech_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://akshar19.vercel.app"),
   title: "AKSHAR | Tactical Multiplayer Typing Battle",
   description: "A high-performance, real-time tactical typing engine. Master your protocols, deploy agents with unique abilities, and compete in the ultimate distributed typing race.",
   keywords: [
