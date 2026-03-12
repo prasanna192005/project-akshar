@@ -65,6 +65,23 @@ The iconic "Decryption" effect ($AKSHAR \rightarrow अक्षर$) is impleme
 
 ---
 
+## 📊 Operative Progression
+
+AKSHAR features a persistent progression loop designed to reward consistent tactical performance.
+
+### 1. Daily Operations (Missions)
+Operatives are assigned 3 randomized missions every 24 hours. Objectives vary from raw bandwidth targets (WPM) to signal integrity (Accuracy) and combat endurance (Matches Played).
+
+### 2. Tactical XP & Leveling
+Performance data is converted into **Tactical XP**. 
+- **Dynamic Scaling**: The system utilizes a compound scaling factor (1.25x), making early advancement rapid while high-tier ranks require elite-level grind.
+- **Ranks**: Progress from **INITIATE** to **GHOST_PROTOCOL**, unlocking unique network titles along the way.
+
+### 3. Akshar Credits (Economy)
+Strategic credits are earned through mission completion and used in the **Tactical Roster** for cosmetics and interface mods.
+
+---
+
 ## 🤖 AI Discoverability & LLMO
 
 AKSHAR is engineered for the future of the web, utilizing **Generative Engine Optimization (GEO)** and **LLM Optimization (LLMO)** to ensure high discoverability by AI agents:

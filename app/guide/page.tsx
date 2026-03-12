@@ -126,6 +126,51 @@ export default function GuidePage() {
                         </div>
                     </section>
 
+                    {/* Daily Operations & Economy */}
+                    <section>
+                        <div className="flex items-center gap-4 mb-8">
+                            <div className="w-1.5 h-8 bg-[#f5a623]" />
+                            <h2 className="text-3xl font-black tracking-tighter uppercase italic">Daily Operations & Economy</h2>
+                        </div>
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+                            <div className="space-y-6">
+                                <p className="text-white/70 leading-relaxed italic text-sm">
+                                    The AKSHAR network generates daily assignments for all operatives. Completion triggers resource allocation in the form of XP and Credits.
+                                </p>
+                                <div className="space-y-4">
+                                    <div className="bg-white/5 border border-white/10 p-4 rounded-sm">
+                                        <h4 className="text-[10px] font-black uppercase text-[#f5a623] mb-1">Tactical XP</h4>
+                                        <p className="text-[11px] text-white/50 italic">Used to increase your Operative Level and unlock prestigious network titles.</p>
+                                    </div>
+                                    <div className="bg-white/5 border border-white/10 p-4 rounded-sm">
+                                        <h4 className="text-[10px] font-black uppercase text-blue-400 mb-1">Akshar Credits</h4>
+                                        <p className="text-[11px] text-white/50 italic">Strategic currency used in the Roster Marketplace for avatar recruitment and interface custom mods.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className="bg-[#f5a623]/5 border border-[#f5a623]/20 p-6 rounded-sm">
+                                <h3 className="text-xs font-black uppercase tracking-[0.2em] mb-4 text-[#f5a623]">RANK_SPECIFICATIONS</h3>
+                                <div className="space-y-3">
+                                    {[
+                                        { range: "01-05", rank: "INITIATE" },
+                                        { range: "06-15", rank: "FIELD_AGENT" },
+                                        { range: "16-30", rank: "TACTICAL_ELITE" },
+                                        { range: "31-50", rank: "VANGUARD" },
+                                        { range: "51+", rank: "GHOST_PROTOCOL" },
+                                    ].map((r, i) => (
+                                        <div key={i} className="flex justify-between text-[10px] font-mono border-b border-white/5 pb-1">
+                                            <span className="text-white/30">LEVEL_{r.range}</span>
+                                            <span className="text-white font-black">{r.rank}</span>
+                                        </div>
+                                    ))}
+                                </div>
+                                <p className="text-[9px] text-white/20 mt-4 italic font-bold uppercase tracking-tighter text-right">
+                                    *XP requirement scales at a compound rate of 1.25x per level.
+                                </p>
+                            </div>
+                        </div>
+                    </section>
+
                     {/* The Math */}
                     <section className="bg-[#f5a623]/5 border-y border-[#f5a623]/20 py-12 -mx-8 px-8">
                         <div className="flex items-center gap-4 mb-8">

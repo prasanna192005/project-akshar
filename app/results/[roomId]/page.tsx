@@ -285,6 +285,48 @@ export default function Results() {
                 </div>
             )}
 
+            {/* Daily Mission Progress */}
+            {user && !user.isAnonymous && profile?.missions && (
+                <div className="w-full max-w-4xl mb-12 animate-in fade-in slide-in-from-bottom-4 duration-1000 delay-900">
+                    <div className="flex items-center gap-4 mb-4">
+                        <div className="h-px flex-1 bg-white/10" />
+                        <h3 className="text-[10px] font-black uppercase tracking-[0.5em] text-[#f5a623] italic">Mission Progress</h3>
+                        <div className="h-px flex-1 bg-white/10" />
+                    </div>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                        {profile.missions.map(mission => (
+                            <div key={mission.id} className={`p-4 bg-white/[0.02] border ${mission.progress >= mission.goal && !mission.claimed ? 'border-[#f5a623]/30 bg-[#f5a623]/5' : 'border-white/5'} transition-all relative overflow-hidden group`}>
+                                <div className="text-[9px] font-black uppercase tracking-widest text-white/60 mb-2 truncate group-hover:text-white transition-colors">
+                                    {mission.description}
+                                </div>
+                                <div className="flex justify-between items-end">
+                                    <div className="text-[8px] font-bold text-white/20 uppercase tracking-widest">
+                                        {mission.claimed ? 'COMPLETED' : `${Math.floor(mission.progress)} / ${mission.goal}`}
+                                    </div>
+                                    <div className="h-1 w-24 bg-white/5 relative overflow-hidden">
+                                        <div
+                                            className={`h-full transition-all duration-1000 ${mission.progress >= mission.goal ? 'bg-[#f5a623]' : 'bg-white/20'}`}
+                                            style={{ width: `${Math.min(100, (mission.progress / mission.goal) * 100)}%` }}
+                                        />
+                                    </div>
+                                </div>
+                                {mission.progress >= mission.goal && !mission.claimed && (
+                                    <div className="absolute top-1 right-1">
+                                        <div className="w-1 h-1 bg-[#f5a623] rounded-full animate-ping" />
+                                    </div>
+                                )}
+                            </div>
+                        ))}
+                    </div>
+                    <div className="mt-4 text-right">
+                        <button onClick={() => router.push('/dashboard')} className="text-[8px] font-black text-[#f5a623] uppercase tracking-widest hover:underline cursor-pointer group flex items-center gap-2 ml-auto">
+                            <span>View details & claim rewards in Dashboard</span>
+                            <span className="group-hover:translate-x-1 transition-transform">→</span>
+                        </button>
+                    </div>
+                </div>
+            )}
+
             <div className="flex flex-col items-center gap-6 mt-12 pb-20 animate-in fade-in duration-500 delay-1000 relative z-10">
                 <div className="flex gap-4">
                     <button
