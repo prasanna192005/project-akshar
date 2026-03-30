@@ -172,10 +172,10 @@ function HomeContent() {
     <main className="min-h-screen flex flex-col items-center justify-center p-4 md:p-8 relative overflow-hidden bg-[#0d0b09] select-none" role="main">
       <BunkerBackground />
       
-      {/* Product Hunt Featured Badge - Bottom Right Deployment */}
+      {/* Product Hunt Featured Badge - Bottom Left (Right of Music Control) */}
       <div 
-        className="fixed bottom-10 right-10 z-[999999] transition-all duration-300 hover:scale-102 active:scale-95 drop-shadow-[0_0_0px_rgba(255,97,84,0.3)]"
-        dangerouslySetInnerHTML={{ __html: `<a href="https://www.producthunt.com/products/akshar?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-akshar" target="_blank" rel="noopener noreferrer"><img alt="AKSHAR - Multiplayer typing battle with sabotage abilities.  | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1111045&amp;theme=dark&amp;t=1774851732650" style="width: 200px; height: 40px;"></a>` }}
+        className="fixed bottom-10 left-24 z-[999999] transition-all duration-300 hover:scale-101 active:scale-95 drop-shadow-[0_0_0px_rgba(255,97,84,0.3)]"
+        dangerouslySetInnerHTML={{ __html: `<a href="https://www.producthunt.com/products/akshar?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-akshar" target="_blank" rel="noopener noreferrer"><img alt="AKSHAR - Multiplayer typing battle with sabotage abilities.  | Product Hunt" width="200" height="40" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1111045&amp;theme=dark&amp;t=1774851732650" style="width: 200px; height: 40px; border-radius: 8px;"></a>` }}
       />
 
       {/* Global Audio Control */}
