@@ -94,7 +94,7 @@ export default function Results() {
 
             // Trigger the global status change which redirects everyone
             await updateRoomStatus(roomId, 'lobby', {
-                prompt: getRandomPrompt((room?.promptCategory as any) || 'tech'),
+                prompt: getRandomPrompt((room?.promptCategory as any) || 'tech', room?.prompt),
                 countdownStartAt: null,
                 raceStartAt: null
             });

@@ -115,8 +115,8 @@ export default function RootLayout({
         />
         <AudioProvider>
           {children}
-          <Analytics />
         </AudioProvider>
+        <Analytics />
       </body>
     </html>
   );
