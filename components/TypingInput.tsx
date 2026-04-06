@@ -88,11 +88,16 @@ const TypingInput: React.FC<TypingInputProps> = ({
                         >
                             <div className={`relative text-2xl font-black italic tracking-tighter ${isCurrent ? 'scale-110' : 'scale-100'} transition-all`}>
                                 <div className="flex">
-                                    {word.split('').map((char, charIdx) => {
+                                    {Array.from({ length: Math.max(word.length, isCurrent ? currentInput.length : 0) }).map((_, charIdx) => {
+                                        const char = word[charIdx] || "";
+                                        const inputChar = isCurrent ? currentInput[charIdx] : undefined;
+                                        const isOverflow = charIdx >= word.length;
+                                        
                                         let charColor = 'inherit';
                                         let isError = false;
-                                        if (isCurrent && charIdx < currentInput.length) {
-                                            isError = currentInput[charIdx] !== char;
+                                        
+                                        if (isCurrent && inputChar !== undefined) {
+                                            isError = inputChar !== char;
 
                                             if (agentId === 'PYRA') {
                                                 charColor = isError ? '#FFFFFF' : accentColor;
@@ -101,7 +106,7 @@ const TypingInput: React.FC<TypingInputProps> = ({
                                             }
                                         }
 
-                                        const showHighContrastError = agentId === 'PYRA' && isError;
+                                        const showHighContrastError = (agentId === 'PYRA' && isError) || isOverflow;
 
                                         return (
                                             <span
@@ -110,11 +115,15 @@ const TypingInput: React.FC<TypingInputProps> = ({
                                                     color: charColor,
                                                     backgroundColor: showHighContrastError ? '#FF4655' : 'transparent',
                                                     padding: showHighContrastError ? '0 2px' : '0',
-                                                    borderRadius: showHighContrastError ? '2px' : '0'
+                                                    borderRadius: showHighContrastError ? '2px' : '0',
+                                                    opacity: isOverflow ? 0.8 : 1
                                                 }}
-                                                className={isCurrent && isScrambled ? 'animate-pulse scale-105 inline-block origin-center opacity-80 backdrop-invert-0' : ''}
+                                                className={`
+                                                    ${isCurrent && isScrambled ? 'animate-pulse scale-105 inline-block origin-center opacity-80 backdrop-invert-0' : ''}
+                                                    ${isOverflow ? 'text-white' : ''}
+                                                `}
                                             >
-                                                {getScrambledChar(char, charIdx)}
+                                                {isOverflow ? (inputChar === ' ' ? '␣' : inputChar) : getScrambledChar(char, charIdx)}
                                             </span>
                                         );
                                     })}

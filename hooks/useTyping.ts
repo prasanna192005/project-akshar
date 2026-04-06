@@ -82,8 +82,6 @@ export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?:
         const targetWord = words[currentWordIndex];
         const isBackspace = value.length < currentInput.length;
 
-        if (value === " ") return;
-
         if (value.endsWith(" ")) {
             const inputWord = value.trim();
             
@@ -103,10 +101,11 @@ export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?:
                     setCurrentWordIndex(prev => prev + 1);
                     setCurrentInput("");
                 }
+                return;
             } else {
                 setErrors(prev => prev + 1);
+                // DO NOT return here, let setCurrentInput update the state so backspace works
             }
-            return;
         }
 
         setCurrentInput(value);

@@ -53,7 +53,7 @@ export default function GuidePage() {
                                     </li>
                                     <li className="flex items-start gap-3">
                                         <span className="text-[#f5a623] font-black">02</span>
-                                        <span><b className="text-white">Precision = Efficiency:</b> Maintaining 100% accuracy maximizes ability resonance. Every key, including space, counts as vital signal data. Any typo stalls charging for 2 seconds.</span>
+                                        <span><b className="text-white">Forward Resonance</b> Only forward-moving characters generate resonance. Resonance generation pauses immediately if an error is present or after 2.0s of inactivity.</span>
                                     </li>
                                 </ul>
                             </div>
@@ -68,9 +68,9 @@ export default function GuidePage() {
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
                             {[
-                                { title: "Resonance Core", desc: "Bottom-center bar. Shows current ability charge % and cooldown state." },
-                                { title: "Uplink Metrics", desc: "Top-left readout. Real-time WPM, Accuracy, and Grid Progress." },
-                                { title: "Network Status", desc: "The progress bars behind your text track your position relative to other operatives." }
+                                { title: "Resonance Core", desc: "Bottom-center bar. Tracks neural ability charge % and cooldown state." },
+                                { title: "Uplink Metrics", desc: "Top-left readout. Real-time WPM, Accuracy, and Session Timer." },
+                                { title: "Squad Progress", desc: "Right sidebar. Monitor the live progress and signal strength of all networked operatives." }
                             ].map((item, i) => (
                                 <div key={i} className="bg-white/5 border border-white/10 p-5 rounded-sm hover:border-[#f5a623]/40 transition-colors">
                                     <div className="w-8 h-1 bg-[#f5a623]/20 mb-3" />
@@ -152,11 +152,11 @@ export default function GuidePage() {
                                 <h3 className="text-xs font-black uppercase tracking-[0.2em] mb-4 text-[#f5a623]">RANK_SPECIFICATIONS</h3>
                                 <div className="space-y-3">
                                     {[
-                                        { range: "01-05", rank: "INITIATE" },
-                                        { range: "06-15", rank: "FIELD_AGENT" },
-                                        { range: "16-30", rank: "TACTICAL_ELITE" },
-                                        { range: "31-50", rank: "VANGUARD" },
-                                        { range: "51+", rank: "GHOST_PROTOCOL" },
+                                        { range: "01-10", rank: "INITIATE" },
+                                        { range: "11-20", rank: "FIELD_AGENT" },
+                                        { range: "21-30", rank: "SPECIALIST" },
+                                        { range: "31-40", rank: "VANGUARD" },
+                                        { range: "41-50+", rank: "GHOST_PROTOCOL" },
                                     ].map((r, i) => (
                                         <div key={i} className="flex justify-between text-[10px] font-mono border-b border-white/5 pb-1">
                                             <span className="text-white/30">LEVEL_{r.range}</span>
@@ -225,7 +225,7 @@ export default function GuidePage() {
                                 </div>
                             </div>
                             <div className="flex flex-col justify-center items-center text-center p-8 border border-white/10 bg-white/5 rounded-sm">
-                                <div className="text-5xl font-black text-[#f5a623] mb-2">10s</div>
+                                <div className="text-5xl font-black text-[#f5a623] mb-2">8s</div>
                                 <div className="text-[10px] font-black uppercase tracking-widest opacity-40">Average Uplink<br />Generation Time</div>
                             </div>
                         </div>
