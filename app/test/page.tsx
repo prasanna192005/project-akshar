@@ -13,14 +13,17 @@ import BunkerBackground from "@/components/BunkerBackground";
 import SkeletalButton from "@/components/SkeletalButton";
 import { useRouter, useSearchParams } from "next/navigation";
 import { createSoloRoom } from "@/lib/roomUtils";
+import { getRandomPrompt } from "@/lib/prompts";
 import { v4 as uuidv4 } from "uuid";
 
 import { useAbility } from "@/hooks/useAbility";
 
-const TEST_PROMPT = "The quick brown fox jumps over the lazy dog. Programming is the art of algorithm design and the craft of debugging errant code. Mastery of the keyboard is the first step towards digital dominance.";
+// The default starting prompt for the range
+const INITIAL_PROMPT = "The quick brown fox jumps over the lazy dog. Programming is the art of algorithm design and the craft of debugging errant code. Mastery of the keyboard is the first step towards digital dominance.";
 
 function TestingRangeContent() {
     const [selectedAgentId, setSelectedAgentId] = useState<string>("PYRA");
+    const [currentPrompt, setCurrentPrompt] = useState(() => getRandomPrompt('lore'));
     const [effects, setEffects] = useState<PlayerEffects>({
         flashed: false,
         blurred: false,
@@ -53,7 +56,20 @@ function TestingRangeContent() {
         lastInputAt,
         isError,
         progress
-    } = useTyping(TEST_PROMPT, true, null, effects.inputLocked, effects.empress);
+    } = useTyping(currentPrompt, true, null, effects.inputLocked, effects.empress);
+
+    // CONTINUOUS_RANGE PROTOCOL: Load next prompt when current one is finished
+    useEffect(() => {
+        if (isComplete) {
+            console.log("[TestingRange] Sector complete. Syncing next sector...");
+            const timer = setTimeout(() => {
+                const nextPrompt = getRandomPrompt('lore', currentPrompt);
+                setCurrentPrompt(nextPrompt);
+                reset(); // Clear input for the next round
+            }, 1200);
+            return () => clearTimeout(timer);
+        }
+    }, [isComplete, reset, currentPrompt]);
 
     const {
         charge,

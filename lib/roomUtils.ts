@@ -107,9 +107,9 @@ export const updateRoomStatus = async (roomId: string, status: RoomStatus, extra
 
 export const createSoloRoom = async (hostId: string, hostName: string, difficulty: 'CADET' | 'OPERATIVE' | 'VETERAN' | 'WARLORD' = 'OPERATIVE', isVerified: boolean = false) => {
     // 1. Create a standard room
-    const roomId = await createRoom(hostId, hostName, 'random', {
+    const roomId = await createRoom(hostId, hostName, 'lore', {
         targeting: 'leader',
-        abilitySpeed: 'normal'
+        abilitySpeed: 'fast' // TRAINING BOOST: 1.5x charge rate for solo test range
     }, isVerified);
 
     const roomRef = ref(db, `rooms/${roomId}`);
@@ -151,4 +151,44 @@ export const createSoloRoom = async (hostId: string, hostName: string, difficult
 
     await update(roomRef, botUpdates);
     return roomId;
+};
+
+export const leaveRoom = async (roomId: string, playerId: string) => {
+    const roomRef = ref(db, `rooms/${roomId}`);
+    const snapshot = await get(roomRef);
+    if (!snapshot.exists()) return;
+
+    const room = snapshot.val() as Room;
+    const players = room.players || {};
+    
+    // 1. Remove the player
+    delete players[playerId];
+    
+    // 2. Identify if any human players remain
+    const remainingHumanIds = Object.keys(players).filter(id => {
+        // @ts-ignore - Handle bot check
+        return !id.startsWith('bot_') && !players[id].isBot;
+    });
+
+    if (remainingHumanIds.length === 0) {
+        // No human players left in the squad. Termination sequence.
+        await update(roomRef, { 
+            status: 'finished',
+            players: players // Still update to show bots/remaining data if needed
+        });
+        return;
+    }
+
+    // 3. Host Migration: If current host left, pass command to next human
+    let newHostId = room.hostId;
+    if (room.hostId === playerId) {
+        newHostId = remainingHumanIds[0];
+        console.log(`[Host Migration] ${playerId} left. New host: ${newHostId}`);
+    }
+
+    // 4. Update the Grid
+    await update(roomRef, {
+        players,
+        hostId: newHostId
+    });
 };

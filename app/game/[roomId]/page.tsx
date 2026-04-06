@@ -7,7 +7,7 @@ import { usePlayer } from "@/hooks/usePlayer";
 import { useTyping } from "@/hooks/useTyping";
 import { useAbility } from "@/hooks/useAbility";
 import { AGENTS } from "@/lib/agents";
-import { updateRoomStatus, updatePlayerState, INITIAL_EFFECTS } from "@/lib/roomUtils";
+import { updateRoomStatus, updatePlayerState, leaveRoom, INITIAL_EFFECTS } from "@/lib/roomUtils";
 import TypingInput from "@/components/TypingInput";
 import Leaderboard from "@/components/Leaderboard";
 import AbilityBar from "@/components/AbilityBar";
@@ -130,6 +130,12 @@ export default function Game() {
             return () => clearTimeout(timer);
         }
     }, [status, roomId, router, loading]);
+
+    const handleAbortMission = async () => {
+        if (!playerId) return;
+        await leaveRoom(roomId, playerId);
+        router.push('/');
+    };
 
     // Effect auto-clear timers
     useEffect(() => {
@@ -359,6 +365,12 @@ export default function Game() {
                             </button>
                         )}
                         <div className="flex items-center gap-3">
+                            <button
+                                onClick={handleAbortMission}
+                                className="px-4 py-1.5 border border-red-500/20 text-red-500/50 hover:text-red-500 hover:border-red-500/50 text-[9px] font-black uppercase tracking-widest bg-red-500/5 rounded-sm transition-all mr-4"
+                            >
+                                ABORT_MISSION
+                            </button>
                             <span className="text-xs font-bold opacity-30 uppercase tracking-widest">MISSION TIME</span>
                             <span className="text-2xl font-mono font-black animate-pulse">
                                 {formatTime(elapsedTime)}

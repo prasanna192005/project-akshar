@@ -61,19 +61,24 @@ export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?:
         reset();
     }, [prompt, reset]);
 
-    // Sync startTime with override
+    // Sync startTime ONLY with override. 
+    // If no override, we wait for the first keystroke in handleInput.
     useEffect(() => {
         if (startTimeOverride) {
             setStartTime(startTimeOverride);
-        } else if (isActive && !startTime) {
-            setStartTime(Date.now());
         }
-    }, [isActive, startTime, startTimeOverride]);
+    }, [startTimeOverride]);
 
     const handleInput = useCallback((value: string) => {
         if (!isActive || isComplete || blockInput) return;
 
         setLastInputAt(Date.now());
+        
+        // Initialize startTime on the very first character if not already set
+        if (!startTime) {
+            setStartTime(Date.now());
+        }
+
         const targetWord = words[currentWordIndex];
         const isBackspace = value.length < currentInput.length;
 
@@ -81,6 +86,9 @@ export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?:
 
         if (value.endsWith(" ")) {
             const inputWord = value.trim();
+            
+            // Count the space as a typed character for accuracy
+            setTotalTypedChars(prev => prev + 1);
 
             if (inputWord === targetWord) {
                 // Correct word finished
@@ -128,7 +136,7 @@ export const useTyping = (prompt: string, isActive: boolean, startTimeOverride?:
             logTacticalEvent("race_finished", { wpm, accuracy });
             return;
         }
-    }, [isActive, isComplete, words, currentWordIndex, currentInput, blockInput, penaltyOnErrors, wpm, accuracy]);
+    }, [isActive, isComplete, words, currentWordIndex, currentInput, blockInput, penaltyOnErrors, wpm, accuracy, startTime, setStartTime]);
 
     const isError = useMemo(() => {
         const targetWord = words[currentWordIndex];

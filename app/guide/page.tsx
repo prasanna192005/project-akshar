@@ -53,7 +53,7 @@ export default function GuidePage() {
                                     </li>
                                     <li className="flex items-start gap-3">
                                         <span className="text-[#f5a623] font-black">02</span>
-                                        <span><b className="text-white">Precision = Efficiency:</b> Maintaining 100% accuracy maximizes ability resonance. Any typo stalls charging for 2 seconds.</span>
+                                        <span><b className="text-white">Precision = Efficiency:</b> Maintaining 100% accuracy maximizes ability resonance. Every key, including space, counts as vital signal data. Any typo stalls charging for 2 seconds.</span>
                                     </li>
                                 </ul>
                             </div>
@@ -182,9 +182,9 @@ export default function GuidePage() {
                                 <div>
                                     <h3 className="text-xs font-black uppercase tracking-[0.3em] text-[#f5a623] mb-4 underline">Resonance_Charge_Formula</h3>
                                     <div className="bg-black/40 p-6 rounded-sm font-mono text-sm leading-relaxed border border-white/5 relative overflow-hidden">
-                                        <div className="absolute top-0 right-0 text-[10px] p-2 bg-white/5 uppercase opacity-30">V.04_ALGO</div>
+                                        <div className="absolute top-0 right-0 text-[10px] p-2 bg-white/5 uppercase opacity-30">V.05_ALGO</div>
                                         <code className="text-[#f5a623]">
-                                            Charge_Inc = (WPM / 60) * (Acc / 100)^2 * Mod / 5
+                                            Charge_Inc = (WPM / 60) * (Acc / 100) * Mod / 8
                                         </code>
                                     </div>
                                     <div className="grid grid-cols-2 gap-4 mt-6">
@@ -202,7 +202,7 @@ export default function GuidePage() {
                                         </div>
                                     </div>
                                     <p className="text-[10px] text-white/30 mt-4 font-mono italic">
-                                        *Integrity is squared. High signal quality (Accuracy) is significantly more important than raw speed for ability generation. Errors cause a 2-second lockout.
+                                        *Zero-Latency Start: The clock only ticks when you press your first key. Logic includes a 1-second signal stabilization shield to prevent initial WPM artifacts.
                                     </p>
                                 </div>
                                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-8">
@@ -225,7 +225,7 @@ export default function GuidePage() {
                                 </div>
                             </div>
                             <div className="flex flex-col justify-center items-center text-center p-8 border border-white/10 bg-white/5 rounded-sm">
-                                <div className="text-5xl font-black text-[#f5a623] mb-2">8s</div>
+                                <div className="text-5xl font-black text-[#f5a623] mb-2">10s</div>
                                 <div className="text-[10px] font-black uppercase tracking-widest opacity-40">Average Uplink<br />Generation Time</div>
                             </div>
                         </div>
