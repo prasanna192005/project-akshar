@@ -23,20 +23,20 @@ const shareTechMono = Share_Tech_Mono({
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://akshar19.vercel.app"),
-  title: "AKSHAR | Tactical Multiplayer Typing Battle",
-  description: "A high-performance, real-time tactical typing engine. Master your protocols, deploy agents with unique abilities, and compete in the ultimate distributed typing race.",
+  title: "AKSHAR Typing Game | Tactical Multiplayer Battle",
+  description: "Experience the ultimate tactical typing racer with AKSHAR. Deploy agents with unique abilities, master real-time protocols, and compete in the web's most distributed typing engine. Free online multiplayer typing game.",
   keywords: [
-    "AKSHAR", "tactical typing racer", "multiplayer typing game",
-    "real-time distributed state", "cyberpunk typing game",
+    "AKSHAR", "AKSHAR Typing Game", "tactical typing racer", "multiplayer typing game",
+    "real-time distributed state", "cyberpunk typing game", "online typing contest",
     "competitive typing", "coding typing game", "Indian-themed agents"
   ],
   authors: [{ name: "Prasanna", url: "https://github.com/prasanna192005" }],
   publisher: "AKSHAR SYSTEMS",
   openGraph: {
-    title: "AKSHAR | Tactical Multiplayer Battle",
-    description: "High-stakes tactical hero-racer. Experience sub-100ms synchronization and strategic agent abilities.",
+    title: "AKSHAR Typing Game | Tactical Multiplayer Battle",
+    description: "High-stakes tactical hero-racer. Experience sub-100ms synchronization and strategic agent abilities in the AKSHAR Typing Engine.",
     url: "https://akshar19.vercel.app",
-    siteName: "AKSHAR",
+    siteName: "AKSHAR Typing",
     images: [
       {
         url: "/architecture.png",
@@ -50,8 +50,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "AKSHAR | Tactical Multiplayer Battle",
-    description: "Seize victory in the industrial-tactical typing arena.",
+    title: "AKSHAR Typing Game | Tactical Multiplayer Battle",
+    description: "Seize victory in the industrial-tactical typing arena with AKSHAR.",
     images: ["/architecture.png"],
   },
   alternates: {
