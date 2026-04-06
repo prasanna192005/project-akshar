@@ -1,4 +1,4 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 
 interface TypingInputProps {
     words: string[];
@@ -26,6 +26,22 @@ const TypingInput: React.FC<TypingInputProps> = ({
     agentId
 }) => {
     const inputRef = useRef<HTMLInputElement>(null);
+    const [shiverActive, setShiverActive] = useState(false);
+    const [glitchKey, setGlitchKey] = useState(0);
+
+    // Calculate error state and trigger effects
+    useEffect(() => {
+        const currentTarget = words[currentWordIndex] || "";
+        const hasError = currentInput !== "" && !currentTarget.startsWith(currentInput);
+        
+        if (hasError) {
+            // Force re-trigger of shiver animation
+            setGlitchKey(prev => prev + 1);
+            setShiverActive(true);
+            const timer = setTimeout(() => setShiverActive(false), 250);
+            return () => clearTimeout(timer);
+        }
+    }, [currentInput, currentWordIndex, words]);
 
     // Characters for scrambling
     const GLITCH_CHARS = "01$#%&@*?><{}[]";
@@ -61,7 +77,8 @@ const TypingInput: React.FC<TypingInputProps> = ({
     return (
         <div
             onClick={handleContainerClick}
-            className={`relative w-full p-8 rounded-2xl bg-white/5 border border-white/10 transition-all duration-500 cursor-text ${isBlurred ? 'blur-md' : 'blur-0'} ${!isActive ? 'opacity-40 grayscale-[0.5]' : 'opacity-100'}`}
+            className={`relative w-full p-8 rounded-2xl bg-white/5 border border-white/10 transition-all duration-500 cursor-text ${isBlurred ? 'blur-md' : 'blur-0'} ${!isActive ? 'opacity-40 grayscale-[0.5]' : 'opacity-100'} ${shiverActive ? 'animate-shiver' : ''}`}
+            key={glitchKey}
         >
             {!isActive && (
                 <div className="absolute inset-x-0 -top-6 text-center text-[9px] uppercase font-black text-[#FF4655] tracking-[0.3em] animate-pulse">
@@ -87,26 +104,26 @@ const TypingInput: React.FC<TypingInputProps> = ({
                             }}
                         >
                             <div className={`relative text-2xl font-black italic tracking-tighter ${isCurrent ? 'scale-110' : 'scale-100'} transition-all`}>
-                                <div className="flex">
-                                    {Array.from({ length: Math.max(word.length, isCurrent ? currentInput.length : 0) }).map((_, charIdx) => {
+                                <div className="flex relative">
+                                    {Array.from({ length: Math.min(Math.max(word.length, isCurrent ? currentInput.length : 0), word.length + 10) }).map((_, charIdx) => {
                                         const char = word[charIdx] || "";
                                         const inputChar = isCurrent ? currentInput[charIdx] : undefined;
                                         const isOverflow = charIdx >= word.length;
                                         
                                         let charColor = 'inherit';
-                                        let isError = false;
+                                        let charError = false;
                                         
                                         if (isCurrent && inputChar !== undefined) {
-                                            isError = inputChar !== char;
+                                            charError = inputChar !== char;
 
                                             if (agentId === 'PYRA') {
-                                                charColor = isError ? '#FFFFFF' : accentColor;
+                                                charColor = charError ? '#FFFFFF' : accentColor;
                                             } else {
-                                                charColor = isError ? '#FF4655' : accentColor;
+                                                charColor = charError ? '#FF4655' : accentColor;
                                             }
                                         }
 
-                                        const showHighContrastError = (agentId === 'PYRA' && isError) || isOverflow;
+                                        const showHighContrastError = (agentId === 'PYRA' && charError) || isOverflow;
 
                                         return (
                                             <span
@@ -127,6 +144,11 @@ const TypingInput: React.FC<TypingInputProps> = ({
                                             </span>
                                         );
                                     })}
+                                    
+                                    {/* Truncation Indicator for extreme overflow */}
+                                    {isCurrent && currentInput.length > word.length + 10 && (
+                                        <span className="text-[#FF4655] animate-pulse ml-1">...</span>
+                                    )}
                                 </div>
                                 {/* Omen Paranoia Shadow */}
                                 {isParanoid && !isCurrent && idx > currentWordIndex && (
